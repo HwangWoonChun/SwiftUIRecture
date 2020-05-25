@@ -39,7 +39,7 @@ Button(action: {
 * 자동화 : 많은 기능들을 API로 제공하여 자동으로 수행될 수 있게끔 제공
 * 일관성 : 데이터와 UI 동기화하여 일관성 유지
 * * *
-===========
+
 1-2. Hello Swfit UI
 ===========
 1. 프로젝트 생성 후 코드
@@ -129,7 +129,7 @@ protocol ExProtocol {
 * class UIHostingController<Content> : UIViewController where Content : View
   - UIViewController를 상속받고, 뷰 프로토콜을 준수하는 제네릭 매개변수 Content를 전달하는 제네릭 클래스
 * * *
-===========
+
 1-3. MVC?
 ===========
 1. 컨트롤러없ㄷ이 뷰와 모델만 이용하여 뷰 개발이 가능하기 때문에 아직 애플 공식 패턴이 없기 때문에 여러 논의가 필요

@@ -80,58 +80,56 @@ public protocol View {
 ```
 * SwiftUI의 컨텐트뷰는 뷰 프로토콜을 준수해야한다.
 * UIKit와 비교
-- UIKit 은 UIView 클래스가 상당히 많은 수의 프로퍼티를 가지며 상속을 받으면 그대로 편리하게 사용하지만, 사용하지 않는 프로퍼티들도 가지고 있어야 한다는 단점을 지닌다.
-- SwiftUI 는 각각의 뷰 객체가 각자 자신에게 필요한 속성만 가지고 뷰를 생성하도록 구현한다. 
-* Body 타입을 
-* * *
-
-
-
-
-2. Why Rx : 코드가 새로운 데이터에 반응하고 순차적으로 분리된 방식으로 처리 하기 때문에 비동기 프로그래밍이 간소화 된다.
-* * *
-3. 기존 비동기 코드를 지원 하는 Swift
-* Notification Center
-* Delegate
-* GCD : 운영체제가 스레드 풀을 관리 하는 C 기반의 API
-  - ConcurrencyQueue(Global, Main) : 스레드 작업을 동시 실행(비동기)
-  - SerialQueue : 스레드 작업을 순서대로 실생
-* Closure
-* NSThread : 스레드 풀을 직접 관리하는 API
-* OperationQueue : 스레드를 큐에 넣고 운영체제가 알아서 꺼내도록 하는 API
+  - UIKit 은 UIView 클래스가 상당히 많은 수의 프로퍼티를 가지며 상속을 받으면 그대로 편리하게 사용하지만, 사용하지 않는 프로퍼티들도 가지고 있어야 한다는 단점을 지닌다.
+  - SwiftUI 는 각각의 뷰 객체가 각자 자신에게 필요한 속성만 가지고 뷰를 생성하도록 구현한다. 
+* Body 타입을 또 다시 준수해야 하는 재귀구조
+  - body에서 반환한 타입은 내부에서 또 다시 프로토콜을 준수하는 body 프로퍼티를 구현해 View 타입을 반환해야 하는 무한 재귀호출 구조
+  - Text, Stack, Group, GeometryReader 같은 컨테이너 뷰에는 더는 재귀호출이 일어 나지 않도록 Never 타입이 사용된다.
 ``` swift
-    //동기
-    @IBAction func onLoadSync(_ sender: Any) {
-        
-        guard let url = URL(string: imageUrl) else { return }
-        guard let data = try? Data(contentsOf: url) else { return }
-        
-        let image = loadImage(from: IMAGE_URL)
-        imageView.image = image
-    }
-    
-    //비동기
-    private func loadImage(from imageUrl: String) {
-        DispatchQueue.global().async {
-            guard let url = URL(string: imageUrl) else { return }
-            guard let data = try? Data(contentsOf: url) else { return }
-            
-            let image = UIImage(data: data)
-        
-            DispatchQueue.main.async {
-                self.imageView.image = image
-            }
+extension Text : View {
+
+    /// The type of view representing the body of this view.
+    ///
+    /// When you create a custom view, Swift infers this type from your
+    /// implementation of the required `body` property.
+    public typealias Body = Never
+}
+```
+* associatedtype
+``` swift
+protocol ExProtocol{
+    var name: String { get }
+}
+//수트링, Int 등의 다양한 타입으로 받을수있다면
+protocol ExProtocol {
+    associatedtype MyType
+    var name: MyType { get }
+}
+```
+* * *
+3. UIHostingController
+``` swift
+    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
+        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
+        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
+
+        // Create the SwiftUI view that provides the window contents.
+        let contentView = ContentView()
+
+        // Use a UIHostingController as window root view controller.
+        if let windowScene = scene as? UIWindowScene {
+            let window = UIWindow(windowScene: windowScene)
+            window.rootViewController = UIHostingController(rootView: contentView) // window.rootViewController와 동일
+            self.window = window
+            window.makeKeyAndVisible()
         }
     }
 ```
+* class UIHostingController<Content> : UIViewController where Content : View
+  - UIViewController를 상속받고, 뷰 프로토콜을 준수하는 제네릭 매개변수 Content를 전달하는 제네릭 클래스
 * * *
-4. RxSwift의 기초
-  * Observable : Observable<T> 는 T형태의 데이터를 전달 할 수 있는 일련의 이벤트를 비동기적으로 생성
-    * Observable 프로토콜 준수한다는 의미는 next, completed, error 3가지 이벤트를 수신 한다는 의미
-    * 유한한 이벤트와 무한한 이벤트를 관찰 할 수 있는 Observable이 존재 한다.
-  * Operator : 비동기 작업을 추상화 하는 메소드들의 모임
-  * Schedulers : DispatchQueue와 동일하며 메인, 백그라운드 스레드 처리
-* * *
-5. App Architecture : MVVM은 데이터 바인딩(UI와 데이터 연결)을 제공하는 플렛폼에서 이벤트 기반의 소프트웨어용으로 개발되어 Rx와 잘 어울린다.
-* * *
-6. RxCocoa : UIKit, Cocoa 프레임워크 기반으로 UI/UX 개발 지원
+===========
+1-3. MVC?
+===========
+1. 컨트롤러없ㄷ이 뷰와 모델만 이용하여 뷰 개발이 가능하기 때문에 아직 애플 공식 패턴이 없기 때문에 여러 논의가 필요

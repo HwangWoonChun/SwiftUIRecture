@@ -68,4 +68,4 @@ struct ContentView: View {
     }
 }
 ```
-<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect2_2.png" width = 150 height = 250>
+<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect2_2.png" width = 250 height = 450>

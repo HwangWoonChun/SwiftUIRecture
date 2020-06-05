@@ -195,7 +195,9 @@ struct ContentView: View {
 * 리딩 50 적용
 
 <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect2_9.png" width = 178 height = 166>
+
 ``` swift
+
 struct ContentView: View {
     var body: some View {
         HStack {

@@ -159,3 +159,17 @@ struct ContentView: View {
 ```
 
 ## 3. Image(이미지)
+
+
+<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect2_8.png" width = 150 height = 200>
+
+``` swift
+struct ContentView: View {
+    var body: some View {
+        HStack {
+            Image("dummyImgLifestyleHimart010243X43")
+            Image("dummyImgLifestyleHimart010243X43").frame(width: 150, height: 150)
+        }
+    }
+}
+```

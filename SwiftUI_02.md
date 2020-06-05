@@ -259,7 +259,7 @@ struct ContentView: View {
         }
     }
 }
-``` swift
+```
 
 * scaledToFill : 이미지 원본의 비율을 그대로 유지 한체 가능한 최대 크기까지 늘어난다. 이때 최대 크기는 주어진 공간의 너비와 높이 중 큰 것으로 결정(이미지의 가로 세로 크기 같아 fit과 동일하게 표현됨)
 
@@ -275,6 +275,6 @@ struct ContentView: View {
         }
     }
 }
-``` swift
+```
 
 * aspectRatio : 이미지의 비율에 세부적인 조정 설정

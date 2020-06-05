@@ -207,7 +207,7 @@ struct ContentView: View {
     }
 }
 ```
-* resizingMode : .title
+* resizingMode : .title, 기본 사이즈 만큼 쪼개어 표현한다.
 
 <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect2_11.png" width = 178 height = 166>
 
@@ -217,6 +217,22 @@ struct ContentView: View {
         HStack {
             Image("dummyImgLifestyleHimart010243X43")
                 .resizable(resizingMode: .tile) //Image
+            .frame(width: 150, height: 150) //View
+        }
+    }
+}
+```
+
+* resizingMode : .stretch, 꽉채워 표현한다.
+
+<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect2_12.png" width = 178 height = 166>
+
+``` swift
+struct ContentView: View {
+    var body: some View {
+        HStack {
+            Image("dummyImgLifestyleHimart010243X43")
+                .resizable(resizingMode: .stretch) //Image
             .frame(width: 150, height: 150) //View
         }
     }

@@ -337,6 +337,7 @@ struct ContentView: View {
 ```
 
 <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect2_16.png" width = 242 height = 82>
+
 ``` swift
 struct ContentView: View {
     var body: some View {
@@ -353,3 +354,4 @@ struct ContentView: View {
     }
 }
 ```
+* * *

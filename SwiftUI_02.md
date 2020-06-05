@@ -77,4 +77,44 @@ struct ContentView: View {
   - baseLineOffSet : 기준선(텍스트 상하 간격)
   
 2. 수식어 순서 유의사항(1) : 순서가 중요하다!  
- 
+
+``` swift
+struct ContentView: View {
+    let egde = EdgeInsets(top: 50, leading: 5, bottom: 5, trailing: 5)
+    var body: some View {
+        VStack(spacing: 30) {
+            Text("폰트 설정, 폰트의 굵기")
+                .font(.title)   //Text 프로토콜
+                .bold()         //Text 프로토콜
+                .padding()      //View 프로토콜
+        }
+    }
+}
+```
+``` swift
+struct ContentView: View {
+    let egde = EdgeInsets(top: 50, leading: 5, bottom: 5, trailing: 5)
+    var body: some View {
+        VStack(spacing: 30) {
+            Text("폰트 설정, 폰트의 굵기")
+                .bold()         //Text 프로토콜
+                .padding()      //View 프로토콜
+                .font(.title)   //View 프로토콜
+        }
+    }
+}
+```
+``` swift
+struct ContentView: View {
+    let egde = EdgeInsets(top: 50, leading: 5, bottom: 5, trailing: 5)
+    var body: some View {
+        VStack(spacing: 30) {
+            Text("SwiftUI")
+                .padding()      //View 프로토콜
+                .bold()         //컴파일 오류 : View 프로토콜에는 bold 수식어가 없다.
+                .font(.title)   //View 프로토콜에는 font 수식어가 있다.
+        }
+    }
+}
+```
+* 

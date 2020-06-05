@@ -23,7 +23,7 @@ UIScrollView | ScrollView |
 UITableView(Plain, Grouped) | List(none, GroupedListStyle) |
 UICollectionView | 동일요소없음 |
 
-* ViewControllers
+2. ViewControllers
 
 UIKit | SwiftUI |
 ---- | ---- |
@@ -72,9 +72,7 @@ struct ContentView: View {
 }
 ```
   - fixedSize : 주어진 공간의 크기가 작아도 텍스트를 생력하지 않고 표현(오른쪽 스크린샷 참조)
-
   - kernering : 자간(텍스트 좌우 간격)
-
   - baseLineOffSet : 기준선(텍스트 상하 간격)
   
 2. 수식어 순서 유의사항(1) : 순서가 중요하다!  

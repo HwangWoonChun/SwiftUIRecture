@@ -128,7 +128,8 @@ struct ContentView: View {
 
 3. 수식어 순서 유의사항(1) : 순서에 따라 화면이 달라진다! 
 
-<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect2_3.png" width = 250 height = 100>
+<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect2_5.png" width = 250 height = 100>
+
 ``` swift
 struct ContentView: View {
     var body: some View {
@@ -140,7 +141,8 @@ struct ContentView: View {
     }
 }
 ```
-<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect2_4.png" width = 250 height = 100>
+<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect2_6.png" width = 250 height = 100>
+
 ``` swift
 struct ContentView: View {
     var body: some View {

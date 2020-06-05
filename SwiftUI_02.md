@@ -197,12 +197,26 @@ struct ContentView: View {
 <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect2_10.png" width = 178 height = 166>
 
 ``` swift
-
 struct ContentView: View {
     var body: some View {
         HStack {
             Image("dummyImgLifestyleHimart010243X43")
                 .resizable(capInsets: .init(top: 0, leading: 50, bottom: 0, trailing: 0)) //Image
+            .frame(width: 150, height: 150) //View
+        }
+    }
+}
+```
+* resizingMode : .title
+
+<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect2_11.png" width = 178 height = 166>
+
+``` swift
+struct ContentView: View {
+    var body: some View {
+        HStack {
+            Image("dummyImgLifestyleHimart010243X43")
+                .resizable(resizingMode: .tile) //Image
             .frame(width: 150, height: 150) //View
         }
     }

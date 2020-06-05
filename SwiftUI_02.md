@@ -175,7 +175,9 @@ struct ContentView: View {
 }
 ```
 
-2. Resizeable : aspect Fill과 비슷 꽉 채워진다.
+2. Resizeable : 사이즈를 조절하는 수식어
+
+* 기본은 Stretch 되어 나온다.
 
 <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect2_9.png" width = 150 height = 200>
 
@@ -185,6 +187,21 @@ struct ContentView: View {
         VStack {
             Image("dummyImgLifestyleHimart010243X43")
             .resizable() //Image
+        }
+    }
+}
+```
+
+* 리딩 50 적용
+
+<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect2_9.png" width = 178 height = 166>
+``` swift
+struct ContentView: View {
+    var body: some View {
+        HStack {
+            Image("dummyImgLifestyleHimart010243X43")
+                .resizable(capInsets: .init(top: 0, leading: 50, bottom: 0, trailing: 0)) //Image
+            .frame(width: 150, height: 150) //View
         }
     }
 }

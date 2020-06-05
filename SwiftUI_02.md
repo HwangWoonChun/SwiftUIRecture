@@ -125,3 +125,30 @@ struct ContentView: View {
 * 수식어는 이전 뷰를 감싼 새로운 뷰를 만들어 내고 다시 그 뷰를 감싼다.
 
 * * *
+
+3. 수식어 순서 유의사항(1) : 순서에 따라 화면이 달라진다! 
+
+<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect2_3.png" width = 250 height = 100>
+``` swift
+struct ContentView: View {
+    var body: some View {
+        VStack(spacing: 30) {
+            Text("SwiftUI")
+                .background(Color.yellow)
+                .padding()
+        }
+    }
+}
+```
+<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect2_4.png" width = 250 height = 100>
+``` swift
+struct ContentView: View {
+    var body: some View {
+        VStack(spacing: 30) {
+            Text("SwiftUI")
+                .padding()
+                .background(Color.yellow)
+        }
+    }
+}
+```

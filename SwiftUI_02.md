@@ -314,7 +314,7 @@ Image(systemName: "star.circle")
 
 7. Font, ImageScale 를 통한 사이즈 조절
 
-<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect2_15.png" width = 312 height = 216>
+<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect2_15.png" width = 352 height = 216>
 
 ``` swift
 struct ContentView: View {

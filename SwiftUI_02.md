@@ -157,3 +157,5 @@ struct ContentView: View {
     }
 }
 ```
+
+## 3. Image(이미지)

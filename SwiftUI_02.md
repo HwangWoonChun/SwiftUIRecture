@@ -160,6 +160,7 @@ struct ContentView: View {
 
 ## 3. Image(이미지)
 
+1. Default가 이미지 사이드 대로 노출된다.
 
 <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect2_8.png" width = 150 height = 200>
 
@@ -169,6 +170,21 @@ struct ContentView: View {
         HStack {
             Image("dummyImgLifestyleHimart010243X43")
             Image("dummyImgLifestyleHimart010243X43").frame(width: 150, height: 150)
+        }
+    }
+}
+```
+
+2. Resizeable : aspect Fill과 비슷 꽉 채워진다.
+
+<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect2_9.png" width = 150 height = 200>
+
+``` swift
+struct ContentView: View {
+    var body: some View {
+        VStack {
+            Image("dummyImgLifestyleHimart010243X43")
+            .resizable() //Image
         }
     }
 }

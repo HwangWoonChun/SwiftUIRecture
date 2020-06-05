@@ -36,7 +36,7 @@ UICollectionViewController | 동일요소없음 |
 UIAlertController(actionSheet style) | ActionSheet |
 UIAlertController(alert style) | Alert |
 
-* * *
+
 ## 2. Text(텍스트)
 1. UILabel과 비슷하지만, Button, Picker, Toggle 등 에서 UI 구성할때 텍스트를 사용하는 경우가 많다.
 
@@ -76,6 +76,8 @@ struct ContentView: View {
   - kernering : 자간(텍스트 좌우 간격)
   - baseLineOffSet : 기준선(텍스트 상하 간격)
   
+* * *
+
 2. 수식어 순서 유의사항(1) : 순서가 중요하다!  
 
 ``` swift
@@ -117,4 +119,7 @@ struct ContentView: View {
     }
 }
 ```
-* 
+* 해당 수식어의 반환 타입이 무엇인지 확인이 필요하다. 
+* 수식어는 이전 뷰를 감싼 새로운 뷰를 만들어 내고 다시 그 뷰를 감싼다.
+
+* * *

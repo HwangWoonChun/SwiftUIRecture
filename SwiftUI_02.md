@@ -335,3 +335,21 @@ struct ContentView: View {
     }
 }
 ```
+
+<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect2_16.png" width = 242 height = 82>
+``` swift
+struct ContentView: View {
+    var body: some View {
+        HStack {
+            Image(systemName: "star.circle")
+                .font(Font.title.weight(.black))
+            Image(systemName: "star.circle")
+                .font(Font.title.weight(.semibold))
+            Image(systemName: "star.circle")
+                .font(Font.title.weight(.light))
+            Image(systemName: "star.circle")
+                .font(Font.title.weight(.ultraLight))
+        }
+    }
+}
+```

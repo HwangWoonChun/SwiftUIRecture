@@ -23,6 +23,8 @@ UIScrollView | ScrollView |
 UITableView(Plain, Grouped) | List(none, GroupedListStyle) |
 UICollectionView | 동일요소없음 |
 
+* * *
+
 2. ViewControllers
 
 UIKit | SwiftUI |

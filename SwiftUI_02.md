@@ -3,9 +3,9 @@ AutoLayout Recture
 
 2강 뷰 구성하기
 ===========
-1. UIKit VS SwiftUI
+## 1. UIKit VS SwifUI
 
-* View and Controls
+1. View and Controls
 
 UIKit | SwiftUI |
 ---- | ---- |
@@ -37,8 +37,8 @@ UIAlertController(actionSheet style) | ActionSheet |
 UIAlertController(alert style) | Alert |
 
 * * *
-2. 텍스트(Text)
-* UILabel과 비슷하지만, Button, Picker, Toggle 등 에서 UI 구성할때 텍스트를 사용하는 경우가 많다.
+## 2. Text(텍스트)
+1. UILabel과 비슷하지만, Button, Picker, Toggle 등 에서 UI 구성할때 텍스트를 사용하는 경우가 많다.
 
 <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect2_3.png" width = 250 height = 450> <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect2_4.png" width = 350 height = 450>
 
@@ -75,5 +75,5 @@ struct ContentView: View {
   - kernering : 자간(텍스트 좌우 간격)
   - baseLineOffSet : 기준선(텍스트 상하 간격)
   
-* 수식어 순서 유의사항(1) : 순서가 중요하다!  
+2. 수식어 순서 유의사항(1) : 순서가 중요하다!  
  

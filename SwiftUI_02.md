@@ -7,15 +7,10 @@ AutoLayout Recture
 * View and Controls
 
 UIKit | SWiftUI |
----- | ---- |
 UILabel | Text |
----- | ---- |
 UITextField | TextField |
----- | ---- |
 UITextField(secure) | SecureField |
----- | ---- |
 UIButton | Button |
----- | ---- |
 UImageView | Slider |
 ---- | ---- |
 UISlider | Text |

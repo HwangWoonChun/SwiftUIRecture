@@ -71,6 +71,7 @@ struct ContentView: View {
     }
 }
 ```
+* 주요 수식어
   - fixedSize : 주어진 공간의 크기가 작아도 텍스트를 생력하지 않고 표현(오른쪽 스크린샷 참조)
   - kernering : 자간(텍스트 좌우 간격)
   - baseLineOffSet : 기준선(텍스트 상하 간격)

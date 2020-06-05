@@ -38,4 +38,34 @@ UIAlertController(alert style) | Alert |
 
 * * *
 2. 텍스트(Text)
-
+* UILabel과 비슷하지만, Button, Picker, Toggle 등 에서 UI 구성할때 텍스트를 사용하는 경우가 많다.
+``` swift
+struct ContentView: View {
+    let egde = EdgeInsets(top: 50, leading: 5, bottom: 5, trailing: 5)
+    var body: some View {
+        VStack(spacing: 30) {
+            Text("폰트 설정, 폰트의 굵기")
+                .font(.title)
+                .fontWeight(.black)
+            Text("글자색, 패딩, 백그라운드 색")
+                .foregroundColor(.white)
+                .padding(egde)
+                .background(Color.blue)
+            Text("커스텀 폰트")
+                .bold()
+                .italic()
+                .underline()
+                .strikethrough()
+            Text("라인수 제한asdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfaasdfasdf\n하하\nkk")
+                .lineLimit(2)
+                .multilineTextAlignment(.trailing)
+                .background(Color.blue)
+                //.fixedSize() //주어진공간의 크기가 작아도 텍스트 생략하지 않고 표현되도록 설정
+            Text("자간, 기준선").kerning(19)
+                + Text("조정").baselineOffset(8)
+                    .font(.system(size:30))
+        }
+    }
+}
+```
+<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect2_2.png" width = 150 height = 250>

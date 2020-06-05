@@ -175,6 +175,8 @@ struct ContentView: View {
 }
 ```
 
+* * *
+
 2. Resizeable : 사이즈를 조절하는 수식어
 
 * 기본은 Stretch 되어 나온다.
@@ -238,3 +240,10 @@ struct ContentView: View {
     }
 }
 ```
+
+* * *
+
+3. ContentMode : 이미지 컨텐츠를 보여주는 2가지 방식, Resizeable은 좀더 커스텀이 가능한 수식어라면 ContentMode는 OS가 결정해준다.
+* scaledToFit == aspectFit
+* scaledToFill == aspectFil
+* aspectRatio = 

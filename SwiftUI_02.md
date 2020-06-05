@@ -247,7 +247,7 @@ struct ContentView: View {
 
 * scaledToFit : 이미지 원본의 비율을 그대로 유지 한체 가능한 최대 크기까지 늘어난다. 이떄 최대 크기는 주어진 공간의 너비와 높이 중 작은 것으로 결정
 
-<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect2_11.png" width = 166 height = 166>
+<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect2_13.png" width = 166 height = 166>
 
 ``` swift
 struct ContentView: View {
@@ -263,7 +263,7 @@ struct ContentView: View {
 
 * scaledToFill : 이미지 원본의 비율을 그대로 유지 한체 가능한 최대 크기까지 늘어난다. 이때 최대 크기는 주어진 공간의 너비와 높이 중 큰 것으로 결정(이미지의 가로 세로 크기 같아 fit과 동일하게 표현됨)
 
-<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect2_11.png" width = 166 height = 166>
+<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect2_13.png" width = 166 height = 166>
 
 ``` swift
 struct ContentView: View {

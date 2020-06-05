@@ -277,4 +277,59 @@ struct ContentView: View {
 }
 ```
 
-* aspectRatio : 이미지의 비율에 세부적인 조정 설정
+* * *
+
+4. aspectRatio : 이미지의 비율에 세부적인 조정 설정
+
+``` swift
+struct ContentView: View {
+    var body: some View {
+        HStack {
+            Image("dummyImgLifestyleHimart010243X43")
+            .resizable() //꽉채운뒤, 너비가 높이보다 1.6배의 비율 가지도록
+            .aspectRatio(CGSize(width: 1.6, height: 1), contentMode: .fit)
+            .frame(width: 150, height: 150) //View
+        }
+    }
+}
+```
+
+* * *
+
+5. Clipshape : 이미지를 원하는 모양으로 수정
+
+``` swift
+                .clipShape(Circle())    //원모양으로
+                .clipShape(Rectangle().inset(by: 10)) //이미지 크기보다 사방으로 10씩 줄인 사각형
+                .clipShape(Ellipse().path(in: CGRect(x: 10, y: 10, width: 50, height: 110)))    //크기와 위치를 직접 지정(타원형)
+```
+
+* * *
+
+6. SF Symbols : 애플에서 제공하는 이미지 ios 13.0 
+
+``` swift
+Image(systemName: "star.circle")
+```
+
+7. Font, ImageScale 를 통한 사이즈 조절
+
+<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect2_15.png" width = 312 height = 216>
+
+``` swift
+struct ContentView: View {
+    var body: some View {
+        HStack {
+            Image(systemName: "star.circle")
+                .font(.body)
+            Image(systemName: "star.circle")
+                .font(.title)
+            Image(systemName: "star.circle")
+                .font(.system(size: 50))
+            Image(systemName: "star.circle")
+                .imageScale(.large)
+                .font(.system(size: 50))
+        }
+    }
+}
+```

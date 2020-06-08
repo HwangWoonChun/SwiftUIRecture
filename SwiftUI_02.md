@@ -526,6 +526,8 @@ struct ContentView: View {
     }
 }
 ``` 
+* * *
+
 6. 스택 조합하기
 
 
@@ -572,3 +574,32 @@ struct ContentView: View {
     }
 }
 ``` 
+* * *
+7. Overlay, Background
+
+* Overlay : 뷰 원본 공간 그 위에 새로운 뷰를 중첩하여 쌓는 기능
+
+<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect02_2_12.png" width = 144 height = 144>
+
+``` swift
+struct ContentView: View {
+    var body: some View {
+        Rectangle().fill(Color.green).frame(width: 100, height: 100)
+            .overlay(Rectangle().fill(Color.yellow))
+    }
+}
+``` 
+
+* Background : 뷰 원본 공간 그 아래에 새로운 뷰를 중첩하여 쌓는 기능
+
+<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect02_2_13.png" width = 111 height = 106>
+
+``` swift
+struct ContentView: View {
+    var body: some View {
+        Rectangle().fill(Color.green).frame(width: 100, height: 100)
+            .background(Rectangle().fill(Color.yellow))
+    }
+}
+``` 
+

@@ -605,7 +605,7 @@ struct ContentView: View {
 
 * Alignment : 오버레이와 백그라운드에는 alignment 수식어가 있어 위치 설정 가능
 
-<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect02_2_14.png" width = 111 height = 106>
+<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect02_2_14.png" width = 252 height = 252>
 
 ``` swift
 struct ContentView: View {

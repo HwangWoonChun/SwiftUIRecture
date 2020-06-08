@@ -449,7 +449,7 @@ struct ContentView: View {
 
 * Spacer를 제거하고 화면 비교
 
-<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect02_2_5.png" width = 373 height = 72> <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect02_2_4.png" width = 373 height = 72>
+<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_02_2_5.png" width = 373 height = 72> <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_02_2_4.png" width = 373 height = 72>
 
 ``` swift
 struct ContentView: View {
@@ -463,6 +463,7 @@ struct ContentView: View {
 ```
 
 * Spacer 크기 설정(직접 프레임 설정)
+
 ``` swift
 struct ContentView: View {
     var body: some View {
@@ -476,7 +477,8 @@ struct ContentView: View {
 
 * Spacer 크기 설정(최소 크기 설정)
 
-<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_2_6.png" width = 373 height = 101>
+<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_02_2_6.png" width = 373 height = 101>
+
 ``` swift
 struct ContentView: View {
     var body: some View {

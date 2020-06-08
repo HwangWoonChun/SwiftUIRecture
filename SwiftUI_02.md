@@ -354,4 +354,136 @@ struct ContentView: View {
     }
 }
 ```
+## 4. 뷰 레이아웃
+
+1. 스택 : 컨텐츠로 전달된 자식 뷰들을 어떤 형태로 배치 할 것인지 결정하는 뷰
+
+* 필수 적으로 사용
+* 가로, 세로, 뷰를 겹겹이 쌓아 올리는 형태로 3가지
+
 * * *
+
+2. 스택뷰는 뷰 프로토콜을 준수하는 Content를 제너릭 매개변수로 받아 자식 뷰로 표현하는 제너릭 구조체
+
+``` swift
+public struct HStack<Content> : View where Content : View
+```
+
+* * *
+
+3. 생성자 
+``` swift
+@inlinable public init(alignment: VerticalAlignment = .center, spacing: CGFloat? = nil, @ViewBuilder content: () -> Content)
+```
+
+* alignment
+
+<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect02_2_1.png" width = 158 height = 558> <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect02_2_2.png" width = 158 height = 558>
+``` swift
+struct ContentView: View {
+    var body: some View {
+        HStack(alignment: .center, spacing: 50) {    //center, top 바꿔보면 확연히 결과물을 볼 수 있다.
+            Rectangle()
+                .fill(Color.yellow)
+                .frame(width: 50, height: 50)
+            
+            Rectangle()
+                .fill(Color.yellow)
+                .frame(width: 50, height: 550)
+        }
+    }
+}
+```
+* * *
+
+4. 스택 그 자체에도 뷰 프로토콜이 가진 수식어 적용이 가능하다, 당연하지만
+``` swift
+struct ContentView: View {
+    var body: some View {
+        HStack(alignment: .center, spacing: 50) {
+            Text("hi").font(.title).foregroundColor(Color.blue)
+        }
+        .padding()
+        .border(Color.red)
+    }
+}
+```
+
+* 컨텐츠에 타이틀이 적용되어 있지 않다면 일괄 적용이 가능
+
+``` swift
+struct ContentView: View {
+    var body: some View {
+        HStack(alignment: .center, spacing: 50) {
+            Text("hi")
+        }
+        .padding()
+        .border(Color.red)
+        .font(.largeTitle)
+    }
+}
+```
+* * *
+
+5. Spacer : 뷰사이의 간격 설정을 하거나 뷰의 크기를 확정할 용도로 사용되는 레이아웃
+
+* 파란색 화면으로 채워짐
+``` swift
+struct ContentView: View {
+    var body: some View {
+        Spacer().background(Color.blue)
+    }
+}
+```
+
+* 스택에서의 Spacer는 화면에 나오지 않고 단순히 자리를 차지하게 된다.
+``` swift
+struct ContentView: View {
+    var body: some View {
+        VStack {
+            Spacer().background(Color.blue)
+        }
+    }
+}
+```
+
+* Spacer를 제거하고 화면 비교
+
+<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect02_2_5.png" width = 373 height = 72> <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect02_2_4.png" width = 373 height = 72>
+
+``` swift
+struct ContentView: View {
+    var body: some View {
+        HStack {
+            Spacer().background(Color.blue) //이부분을 주석처리
+            Text("spacer").font(.title).foregroundColor(Color.black)
+        }
+    }
+}
+```
+
+* Spacer 크기 설정(직접 프레임 설정)
+``` swift
+struct ContentView: View {
+    var body: some View {
+        HStack {
+            Spacer().background(Color.blue).frame(width: 100, height: 100)
+            Text("spacer").font(.title).foregroundColor(Color.yellow)
+        }.background(Color.blue)
+    }
+}
+``` 
+
+* Spacer 크기 설정(최소 크기 설정)
+
+<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_2_6.png" width = 373 height = 101>
+``` swift
+struct ContentView: View {
+    var body: some View {
+        HStack {
+            Spacer(minLength: 10)
+            Text("spacasdfasdfasdfasdfasfasdfasdfasasdfasdfaser").font(.title).foregroundColor(Color.yellow)
+        }.background(Color.blue)
+    }
+}
+``` 

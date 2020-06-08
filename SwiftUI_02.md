@@ -449,7 +449,7 @@ struct ContentView: View {
 
 * Spacer를 제거하고 화면 비교
 
-<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_02_2_7.png" width = 432 height = 105> <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_02_2_8.png" width = 432 height = 105>
+<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect02_2_7.png" width = 432 height = 105> <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect02_2_8.png" width = 432 height = 105>
 
 ``` swift
 struct ContentView: View {

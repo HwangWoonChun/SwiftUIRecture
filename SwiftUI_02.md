@@ -605,7 +605,7 @@ struct ContentView: View {
 
 * Alignment : 오버레이와 백그라운드에는 alignment 수식어가 있어 위치 설정 가능
 
-<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect02_2_14.png" width = 252 height = 252>
+<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect02_2_15.png" width = 252 height = 252>
 
 ``` swift
 struct ContentView: View {
@@ -617,7 +617,36 @@ struct ContentView: View {
             .overlay(Image(systemName: "arrow.up").font(.title), alignment: .trailing)
        
             .background(Image(systemName: "arrow.up").font(.title).padding(), alignment: .bottom)
-            .background(Image(systemName: "arrow.up").font(.title).padding(), alignment: .trailing)
+
+    }
+}
+```
+
+``` swift
+struct ContentView: View {
+    var body: some View {
+        ZStack {
+            VStack {
+                Spacer()
+                Image(systemName: "arrow.up").font(.title)
+            }
+
+            Rectangle().fill(Color.green.opacity(0.8)).frame(width: 250, height: 250)
+            
+            HStack {
+                Image(systemName: "arrow.up").font(.title)
+                Spacer()
+                Image(systemName: "arrow.up").font(.title)
+            }
+            
+            VStack {
+                Image(systemName: "arrow.up").font(.title)
+                Spacer()
+            }
+
+            Text("JoyStick").font(.largeTitle)
+            
+        }.frame(width: 250, height: 250)
     }
 }
 ```

@@ -492,7 +492,7 @@ struct ContentView: View {
 
 * ZStack 은 Spacer 효과가 먹히질 않는다. 그 이유는 기존에 쌓여있는 형제 뷰의 크기 만큼 확장되는 성질이 있기 때문이다. 형제 뷰인 "Spacer" Text 만큼 최대 크기를 가지게 되어 가려지게 된 것이다.
 
-<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_02_2_9.png" width = 373 height = 101>
+<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect02_2_9.png" width = 373 height = 101>
 
 ``` swift
 struct ContentView: View {
@@ -506,7 +506,7 @@ struct ContentView: View {
 ``` 
 * Spacer를 통한 배치 
 
-<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_02_2_10.png" width = 242 height = 387>
+<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect02_2_10.png" width = 242 height = 387>
 
 ``` swift
 struct ContentView: View {

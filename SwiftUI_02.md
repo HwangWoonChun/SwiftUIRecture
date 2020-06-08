@@ -603,3 +603,21 @@ struct ContentView: View {
 }
 ``` 
 
+* Alignment : 오버레이와 백그라운드에는 alignment 수식어가 있어 위치 설정 가능
+
+<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect02_2_14.png" width = 111 height = 106>
+
+``` swift
+struct ContentView: View {
+    var body: some View {
+        Rectangle().fill(Color.green.opacity(0.8)).frame(width: 250, height: 250)
+            .overlay(Text("JoyStick").font(.largeTitle))
+            .overlay(Image(systemName: "arrow.up").font(.title), alignment: .top)
+            .overlay(Image(systemName: "arrow.up").font(.title), alignment: .leading)
+            .overlay(Image(systemName: "arrow.up").font(.title), alignment: .trailing)
+       
+            .background(Image(systemName: "arrow.up").font(.title).padding(), alignment: .bottom)
+            .background(Image(systemName: "arrow.up").font(.title).padding(), alignment: .trailing)
+    }
+}
+```

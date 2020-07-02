@@ -85,7 +85,9 @@ struct Home: View {
 <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/03Rect_04.png" width = 772 height = 328>
 
 4. 형태 다듬기
+
 *. padding : 적용될 방향과 폭을 지정하면 그값을 반영하여 여백 추가
+
 ``` swift
 .padding(.vertical) == .padding([.top, .bottom])
 .padding(.horizontal) == .padding([.leading, .trailing])

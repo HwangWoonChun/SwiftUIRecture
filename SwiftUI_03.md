@@ -229,7 +229,9 @@ struct Home_Previews: PreviewProvider {
     Home()
   }
 }
+```
 
+``` swift
 struct ProductRow: View {
   var body: some View {
     HStack {
@@ -243,9 +245,8 @@ struct ProductRow: View {
     .padding(.vertical, 8)
   }
 }
-```
 
-``` swift
+
 extension ProductRow {
     
     var productImageView: some View {

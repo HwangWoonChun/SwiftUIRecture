@@ -287,3 +287,153 @@ extension ProductRow {
     }
 }
 ```
+## 2. 컬러익스텐션 활용하기
+
+``` swift
+extension Color {
+    static let peach = Color("peach")
+    static let primaryShadow = Color.primary.opacity(0.2)
+    static let secondaryText = Color(hex: "#6e6e6e")
+    static let background = Color(UIColor.systemGray6)
+    
+    init(hex: String) {
+        let scanner = Scanner(string: hex) //문자열 Parser 클래스
+        _ = scanner.scanString("#") //ios13, #문자 제거
+        
+        var rgb: UInt64 = 0
+        scanner.scanHexInt64(&rgb)  //문자열을 > Int64타입으로 변환 하고 rgb라는 변수에 저장
+        
+        let r = Double((rgb >> 16) & 0xFF) / 255.0  //비트값을 오른쪽으로 16번 이동, 좌측 문자열 2개 추출
+        let g = Double((rgb >> 8) & 0xFF) / 255.0 //중간문자열 2개 추출
+        let b = Double((rgb >> 0) & 0xFF) / 255.0 //우측 문자역 2개 추출
+        
+        self.init(red: r, green: g, blue: b)
+    }
+}
+```
+
+## 3. Product 모델 적용하기
+
+
+``` swift
+import Foundation
+
+struct Product {
+  let name: String
+  let imageName: String
+  let price: Int
+  let description: String
+  var isFavorite: Bool = false
+}
+
+
+let productSamples = [
+  Product(name: "나는야 무화과", imageName: "fig", price: 3100, description: "소화가 잘되고 변비에 좋은 달달한 국내산 무화과에요. 고기와 찰떡궁합!"),
+  Product(name: "유기농 아보카도", imageName: "avocado", price: 2900, description: "미네랄도 풍부하고, 요리 장식과 소스로도 좋은 아보카도입니다"),
+  Product(name: "바나나 안 바나나", imageName: "banana", price: 2400, description: "달콤한 맛의 바나나. 이렇게 맛있으니 내가 바나나 안 바나나?", isFavorite: true),
+  Product(name: "아임 파인애플", imageName: "pineapple", price: 3000, description: "소화와 피로회복, 비타민까지! 파인애플로 맛과 영양까지 한번에!"),
+  Product(name: "시원한 수박", imageName: "watermelon", price: 3500, description: "아이들이 너무나 좋아하는 시원하고 달콤한 하우스 수박이에요", isFavorite: true),
+  Product(name: "베리베리 블루베리", imageName: "blueberry", price: 2300, description: "타임지 선정 10대 파워 푸드. 신이 내린 선물이라 불리는 블루베리에요"),
+]
+```
+``` swift
+import SwiftUI
+
+struct ProductRow: View {
+  let product: Product
+  
+  // MARK: Body
+  
+  var body: some View {
+    HStack {
+      productImage
+      productDescription
+    }
+    .frame(height: 150)
+    .background(Color.primary.colorInvert())
+    .cornerRadius(6)
+    .shadow(color: .primaryShadow, radius: 1, x: 2, y: 2)
+    .padding(.vertical, 8)
+  }
+}
+
+
+private extension ProductRow {
+  // MARK: View
+  
+  var productImage: some View {
+    Image(product.imageName)
+      .resizable()
+      .scaledToFill()
+      .frame(width: 140)
+      .clipped()
+  }
+  
+  var productDescription: some View {
+    VStack(alignment: .leading) {
+      Text(product.name)
+        .font(.headline)
+        .fontWeight(.medium)
+        .padding(.bottom, 6)
+      
+      Text(product.description)
+        .font(.footnote)
+        .foregroundColor(.secondaryText)
+      
+      Spacer()
+      
+      footerView
+    }
+    .padding([.leading, .bottom], 12)
+    .padding([.top, .trailing])
+  }
+  
+  var footerView: some View {
+    HStack(spacing: 0) {
+      Text("₩").font(.footnote)
+        + Text("\(product.price)").font(.headline)
+      
+      Spacer()
+      
+      Image(systemName: "heart")
+        .imageScale(.large)
+        .foregroundColor(.peach)
+        .frame(width: 32, height: 32)
+      
+      Image(systemName: "cart")
+        .foregroundColor(.peach)
+        .frame(width: 32, height: 32)
+    }
+  }
+}
+
+
+// MARK: - Previews
+
+struct ProductRow_Previews: PreviewProvider {
+  static var previews: some View {
+    ProductRow(product: productSamples[0])
+  }
+}
+```
+
+``` swift
+struct Home: View {
+  var body: some View {
+    VStack {
+      ProductRow(product: productSamples[0])
+      ProductRow(product: productSamples[1])
+      ProductRow(product: productSamples[2])
+    }
+  }
+}
+
+
+// MARK: - Previews
+
+struct Home_Previews: PreviewProvider {
+  static var previews: some View {
+    Home()
+  }
+}
+```

@@ -437,3 +437,38 @@ struct Home_Previews: PreviewProvider {
   }
 }
 ```
+
+## 4. Opaque type
+
+1. some : Opaque type 의 키워드로 프로퍼티, 첨자, 함수 등의 반환 타입에 한정적으로 사용
+
+``` swift
+var body: some View { }
+```
+
+*. body는 반드시 반환타입이 some View일 필요는 없지만 some을 빼버리면 타입을 유추 할 수 없어 오류가 발생한다. 타입을 유추 할 수 있도록 body에 타입을 명시해주면 사용이 가능하다.
+
+``` swift
+struct Home: View {
+  var body: Text {
+    Text("hello")
+  }
+}
+```
+
+*. 하지만 Text가 가지고있는 수식어들을 사용하려면 반환타입을 추가해줘야 한다.
+
+``` swift
+struct Home: View {
+    var body: ModifiedContent<Text, _BackgroundModifier<Color>> {
+        Text("hello")
+        .foregroundColor(.white)
+        .background(.Color.black)
+    }
+}
+```
+
+2. Opaque type이 필요한 이유 : 
+
+    1) 타입 정보를 숨기고 프로토콜에 대한 정보만 남긴채(정보은닉) API를 사용 할 수 있도록 도와준다.
+    2) SwiftUI는 구조체와 제너릭을 활용하고 있어, 뷰를 추가 할때마다 새로운 반환타입이 만들어진다.

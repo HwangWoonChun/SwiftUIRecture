@@ -472,3 +472,98 @@ struct Home: View {
 
     1) 타입 정보를 숨기고 프로토콜에 대한 정보만 남긴채(정보은닉) API를 사용 할 수 있도록 도와준다.
     2) SwiftUI는 구조체와 제너릭을 활용하고 있어, 뷰를 추가 할때마다 새로운 반환타입이 만들어진다.
+    3) 프레임워크나 라이브러리 제공자 입장에서 구현에 사용되는 타입들을 명시하는 대신 API를 추상화하고 모듈간 결합성을 낮출 수 있다.
+
+*. 항상 텍스트만 반환 할 것인가? 뷰 프로토콜을 준수하는 뷰를 반환할 것 인가?
+
+``` swift
+func someView() -> Text {
+    Text("")
+}
+
+func someValue() -> some View {
+    Image("Hello")
+}
+```
+
+3. 타입 추상화 :
+
+    1) 불투명 타입의 다른 명칭은 "리버스 제너릭" 제너릭은 함수 Caller에서 Callle의 타입을 결정 하고, 불투명 타입은 Callee에서 Caller의 타입을 반환 한다.
+
+*. 제너릭 예제
+
+``` swift
+func genericFunction<T: Animal> (_ animal: T) {}
+genericFunction(Dog())
+```
+
+4. 정적 타입 시스템 : 
+
+    1) 제너릭이나 불투명 타입은 런타임시 타입이 결정된다.
+    
+``` swift
+protocol Animal {}
+
+struct Dog: Animal { var color = "brown" }
+
+let dog: some Animal = Dog()
+
+dog.color //컴파일 단계에서 error
+(dog as! Dog).color //ok
+```    
+
+5. 타입 정체성(불투명 타입의 단점) :
+
+    1) 함수를 호출 할때마다 서로 다른 타입이 반환 될 수 있어 타입에 대한 정보를 잃을 수 있다.
+    
+``` swift
+func protocolReturn() -> Animal {
+    .random ? Dog() : Cat()
+}
+let animal: Animal = protocolReturn() //CAT? DOG?
+```    
+
+*. foo는 실제타입인 someType 에 대한 정보를 잃어버리고, p 프로토콜 타입 정보만 가지게 되어 그 자신의 프로토콜을 준수하지 않는 것으로 여겨 컴파일 오류
+
+*. self, associatedtype(=typealias)가 선언된 프로토콜은 그 타입에 대한 명시나 추론이 가능해야 한다.
+
+``` swift
+protocol P {}
+struct SomeType: P {}
+func nested<T: P>(_ param: T) -> P {
+    param
+}
+
+let foo: P = nested(SomeType())
+let bar = nested(foo) //error
+```
+
+6. 주의사항
+
+``` swift
+func returnConcreteType() -> some Animal {
+    let result: Animal = Dog()
+    return result //error
+}
+```
+
+``` swift
+struct Home: View {
+    var body: some View{
+        .random() ? Rectangle() : Circle()  //error
+    }
+}
+
+//AnyView로 
+struct Home: View {
+    var body: some View{
+        .random() ? AnyView(Rectangle()) : AnyView(Circle())
+    }
+}
+```
+
+7. 불투명 타입내용 정리
+    
+    1) 불투명 타입은 타입은 숨기고, 구현에 대한 정보를 유저에게 숨기고, 특정 프로토콜을 따르는 API 라는 정보만 전달
+    2) 프로토콜 타입을 반환하면서도 타입에 대한 정체성을 보장
+    3) some 키워드 이용 : 프로퍼티, 첨자(script), 함수에 대한 반환 타입에만 가능 타입은 프로토콜 / 클래스 / Any, AnyObject로 한정

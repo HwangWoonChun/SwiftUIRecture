@@ -128,7 +128,7 @@
 
 **3) 버튼이 아닌 onTapGesture를 이용하여 동작 구현, 단 기본적인 애니메이션은 사용 할 수 없다.**
     
-    ``` swift
+``` swift
     struct Home: View {
         var body: some View {
             HStack{
@@ -139,7 +139,7 @@
             }
         }
     }
-    ```
+```
 
 * * *
 

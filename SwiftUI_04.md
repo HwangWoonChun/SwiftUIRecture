@@ -7,7 +7,7 @@
 
 ## 1. 버튼
 
-1) 버튼 표현하기
+**1) 버튼 표현하기**
 
 * 단순히 텍스트만 표현
 
@@ -112,7 +112,7 @@
         }
         ```
 
-2) 버튼 스타일(IOS 만 보자)
+**2) 버튼 스타일(IOS 만 보자)**
 
 <img src = "https://d33wubrfki0l68.cloudfront.net/1a47b639da7c62e0b83ddc93ba2291fcde828281/a449a/images/buttonstyle-ios.png">
 

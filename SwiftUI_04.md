@@ -9,7 +9,7 @@
 
 1) 버튼 표현하기
 
-    * 단순히 텍스트만 표현
+* 단순히 텍스트만 표현
 
     ``` swift
     struct Home: View {
@@ -23,7 +23,7 @@
     }
     ```
 
-    * 버튼을 RoundedRectangle 로 표현
+* 버튼을 RoundedRectangle 로 표현
 
     ``` swift
     struct Home: View {
@@ -39,7 +39,7 @@
     }
     ```
 
-    * 버튼을 원으로 표현
+* 버튼을 원으로 표현
 
     ``` swift
     struct Home: View {
@@ -55,7 +55,7 @@
     }
     ```
 
-    * 버튼을 이미지로 표현, 이때 원본색상을 잃어버리고 accentColor 로 덮어 버린다.
+* 버튼을 이미지로 표현, 이때 원본색상을 잃어버리고 accentColor 로 덮어 버린다.
 
        <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_04_01_4141.png" width = 41 height = 41>
 
@@ -74,7 +74,7 @@
        }
        ```
 
-      * 원본색상 찾기 첫번째 방법 : 렌더링모드 변경
+* 원본색상 찾기 첫번째 방법 : 렌더링모드 변경
 
          <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_04_02_4141.png" width = 41 height = 41>
 
@@ -93,7 +93,7 @@
             }
             ```
 
-      * 원본색상 찾기 두번째 방법 : 버튼 스타일 변경, PlainButtonStyle은 렌더링 모드가 original 이다.
+* 원본색상 찾기 두번째 방법 : 버튼 스타일 변경, PlainButtonStyle은 렌더링 모드가 original 이다.
 
                ``` swift
                struct Home: View {

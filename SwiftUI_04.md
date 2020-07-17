@@ -166,11 +166,193 @@
             }           
             ```
             
-            * display Mode : large
+            ** display Mode : large
             <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_04_03_375137.png" width = 375 height = 137>
             
-            * display Mode : inline
+            ** display Mode : inline
             <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_04_04_375137.png" width = 375 height = 137>
+            
+            ** display Mode : Automatic 은 기본값
+            
+ 
+    2) 네비게이션 바 아이템
+    
+        ``` swift
+        struct Home: View {
+            var body: some View {
+                let leadingItem = Button(action: {}) {
+                    Image(systemName: "bell").imageScale(.large)
+                }
+                let trailingItem = Button(action: {}) {
+                    Image(systemName: "gear").imageScale(.large)
+                }
+
+                return NavigationView {
+                    Image("avocado")
+                        .navigationBarItems(leading: leadingItem, trailing: trailingItem)
+                        .navigationBarTitle("Hello World", displayMode: .automatic)
+                }
+            }
+        }
+        ```
+
+        ``` swift
+        struct Home: View {
+            var body: some View {
+                let leadingItem = HStack {
+                    Button(action: {}) {
+                        Image(systemName: "bell").imageScale(.large)
+                        Image(systemName: "gear").imageScale(.large)
+                    }
+                }
+                let trailingItem = Button(action: {}) {
+                    Image(systemName: "gear").imageScale(.large)
+                }
+
+                return NavigationView {
+                    Image("avocado")
+                        .navigationBarItems(leading: leadingItem, trailing: trailingItem)
+                        .navigationBarTitle("Hello World", displayMode: .automatic)
+                }
+            }
+        }
+        ```
+        * 주의할점 : 13.4 이전은 백버튼이 리딩에 추가한 아이템을 덮어버린다. 이 경우에 제스쳐를 통한 뒤로가기가 먹히질 않는다. 아래는 13.4 버
+        
+        <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_04_05_39258.png" width = 392 height = 58>
+        
+        
+    3) 네비게이션 링크
+    
+        * 지정한 목적지로 이동 할 수 있는 네비게이션 버튼
+        
+        * 버튼과 동일하게 이미지 렌더링 모드가 template 에 맞춰져 있다.
+        
+            <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_04_06_410204.png" width = 410 height = 204>
+            
+            ``` swift
+            struct Home: View {
+                var body: some View {
+                    NavigationView {
+                        NavigationLink(destination: Text("Destination View")) {
+                            Image("apple")
+                        }
+                        .navigationBarTitle("Hello World")
+                    }
+                }
+            }
+            ```
+
+        * 렌더링모드를 오리지널 혹은 버튼스타일을 PlainButton Style로 바꾸자.
+        
+            <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_04_07_410204.png" width = 410 height = 204>
+        
+            ``` swift
+            struct Home: View {
+                var body: some View {
+                    NavigationView {
+                        NavigationLink(destination: Text("Destination View")) {
+                            Image("apple").renderingMode(.original)
+                        }
+                        //.buttonSytle(PlainButtonStyle())
+                        .navigationBarTitle("Hello World")
+                    }
+                }
+            }
+            ```
+            
+    4) 히든 수식어
+
+        ``` swift
+        struct Home: View {
+            var body: some View {
+                NavigationView {
+                    NavigationLink(destination: Text("Destination View")) {
+                        Image("lemon")
+                    }.buttonStyle(PlainButtonStyle())
+                    .navigationBarTitle("Hello World")
+                    .navigationBarHidden(true)
+                }
+            }
+        }
+
+        struct Home: View {
+            var body: some View {
+
+                let destination = Text("Destination View").navigationBarBackButtonHidden(true)
+
+                return NavigationView {
+                    NavigationLink(destination: destination) {
+                        Image("lemon").renderingMode(.original)
+                    }
+                    .navigationBarTitle("Hello World")
+                }
+            }
+        }
+        ```
+
+    5) 네비게이션 스타일
+    
+        * DefaultNavigationViewStyle : 뷰가 사용된 환경에 따라 적용
+        
+        * StackNavigationViewStyle : 네비게이션 계층 구조를 하나의 Top뷰 만으로 탐색 하는 스타일
+        
+        * DoubleColumnNavigationViewStyle : Master, Detail로 구분되는 2개의 뷰를 이용해 콘텐츠를 표현하는 스타일(내부적으로 SplitViewController 이용, 이 스타일이 사용되지 않는 기기라면 자동으로 StackNavigationStyle)
+        
+        * 스타일에 따라 네비게이션 뷰를 생성할때 인식되는 뷰의 개수에도 차이가 발생한다.
+
+            ``` swift
+            struct Home: View {
+                var body: some View {
+                    NavigationView {
+                        Text("Master”)	//이 뷰만 인식
+                        Text("View1")
+                        Text("View2")
+                        Text("Detail")
+                    }.navigationViewStyle(StackNavigationViewStyle())
+                }
+            }        
+            ```
+
+            ``` swift
+            struct Home: View {
+                var body: some View {
+                    NavigationView {
+                        Text("Master")	//인식
+                        Text("View1")
+                        Text("View2")
+                        Text("Detail")	//인식
+                    }.navigationViewStyle(DoubleColumnNavigationViewStyle())
+                }
+            }
+            ```
+
+    6) DoubleColumnNavigationViewStyle
+    
+        * UIKit 에선 마스터 디테일로 뷰를 구분해 표현 하였던 SplitViewController가 SwiftUI에선 네비게이션 뷰에 통합되어 제공된다.
+        
+        * 단 사이즈 클래스의 너비가 Regular 인 기기 경우에만 가능하다.
+        
+            <img src = "https://jcsoohwancho.github.io/img/SizeClass.png">
+        
+            <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_04_08_872397.png" width = 872 height = 397>
+            
+            ``` swift
+            struct Home: View {
+                var body: some View {
+                    NavigationView {
+                        VStack(spacing: 20) {
+                            NavigationLink(destination: Text("디테일 뷰 영역")) {
+                                Text("마스터 뷰").font(.title)
+                            }
+                            NavigationLink(destination: Text("디테일 뷰 영역")) {
+                                Text("마스터 뷰2").font(.title)
+                            }
+                        }
+                    }.navigationViewStyle(DoubleColumnNavigationViewStyle())
+                }
+            }            
+            ```
 
 * * *
 3. 리스트

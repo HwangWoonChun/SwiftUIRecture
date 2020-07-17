@@ -124,7 +124,7 @@
 
         * BorderlessButtonStyle : 테두리가 없는 버튼
 
-        * PlainButtonStyle : IDLE(유휴 상태, 아무런 동작이 없는) 상태에서는 어떠한 시각적 요소도 적용하지 않는 버튼
+        * PlainButtonStyle : IDLE(유휴 상태, 아무런 동작이 없는) 상태에서는 어떠한 시각적 요소도 적용하지 않는 버튼  
 
 
     3) 버튼이 아닌 onTapGesture를 이용하여 동작 구현, 단 기본적인 애니메이션은 사용 할 수 없다.
@@ -168,15 +168,15 @@
             }           
             ```
             
-            ** display Mode : large
+            1 display Mode : large
             
                 <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_04_03_375137.png" width = 375 height = 137>
             
-            ** display Mode : inline
+            2 display Mode : inline
             
                 <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_04_04_375137.png" width = 375 height = 137>
             
-            ** display Mode : Automatic 은 기본값
+            3 display Mode : Automatic 은 기본값  
             
  
     2) 네비게이션 바 아이템

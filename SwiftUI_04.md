@@ -143,7 +143,9 @@
 
 * * *
 
-## 2. 네비게이션 뷰 : 네비게이션 스택을 이용해 컨텐츠 뷰들을 관리 하는 컨테이너 뷰, UINavigationController, UISplitViewController 역할 수행
+## 2. 네비게이션 뷰
+
+> **네비게이션 스택을 이용해 컨텐츠 뷰들을 관리 하는 컨테이너 뷰, UINavigationController, UISplitViewController 역할 수행**
 
 **1) 네비게이션 바 타이틀**
         

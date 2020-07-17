@@ -77,20 +77,20 @@
 
         <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_04_02_4141.png" width = 41 height = 41>
 
-            ``` swift
-            struct Home: View {
-                var body: some View {
-                    Button(action: {
-                    }) {
-                        Image("avocado")
-                            .renderingMode(.original) //default가 template 모드 이다. 오리지널로 바꿔주면 제대로 나온다.
-                            .resizable()
-                            .frame(width:40,height:40)
-                            .background(Color.clear)
-                    }
+        ``` swift
+        struct Home: View {
+            var body: some View {
+                Button(action: {
+                }) {
+                    Image("avocado")
+                        .renderingMode(.original) //default가 template 모드 이다. 오리지널로 바꿔주면 제대로 나온다.
+                        .resizable()
+                        .frame(width:40,height:40)
+                        .background(Color.clear)
                 }
             }
-            ```
+        }
+        ```
 
     * 원본색상 찾기 두번째 방법 : 버튼 스타일 변경, PlainButtonStyle은 렌더링 모드가 original 이다.
 

@@ -94,35 +94,35 @@
 
     * 원본색상 찾기 두번째 방법 : 버튼 스타일 변경, PlainButtonStyle은 렌더링 모드가 original 이다.
 
-            ``` swift
-            struct Home: View {
-                var body: some View {
-                    HStack{
-                        Button(action: {
+        ``` swift
+        struct Home: View {
+            var body: some View {
+                HStack{
+                    Button(action: {
 
-                        }) {
-                            Image("avocado")
-                                .resizable()
-                                .frame(width:40,height:40)
-                                .background(Color.clear)
-                        }
-                        .buttonStyle(PlainButtonStyle())
+                    }) {
+                        Image("avocado")
+                            .resizable()
+                            .frame(width:40,height:40)
+                            .background(Color.clear)
                     }
+                    .buttonStyle(PlainButtonStyle())
                 }
             }
-            ```
+        }
+        ```
 
-    2) 버튼 스타일(IOS 만 보자)
+2) 버튼 스타일(IOS 만 보자)
 
-        <img src = "https://d33wubrfki0l68.cloudfront.net/1a47b639da7c62e0b83ddc93ba2291fcde828281/a449a/images/buttonstyle-ios.png">
+<img src = "https://d33wubrfki0l68.cloudfront.net/1a47b639da7c62e0b83ddc93ba2291fcde828281/a449a/images/buttonstyle-ios.png">
 
-        <img src = "https://d33wubrfki0l68.cloudfront.net/973c73566a73626e361f0c816017d82a7e84147a/1682d/images/buttonstyle-mac.png">
+<img src = "https://d33wubrfki0l68.cloudfront.net/973c73566a73626e361f0c816017d82a7e84147a/1682d/images/buttonstyle-mac.png">
 
-        * DefaultButtonStyle : 모든 OS 기본 스타일
+* DefaultButtonStyle : 모든 OS 기본 스타일
 
-        * BorderlessButtonStyle : 테두리가 없는 버튼
+* BorderlessButtonStyle : 테두리가 없는 버튼
 
-        * PlainButtonStyle : IDLE(유휴 상태, 아무런 동작이 없는) 상태에서는 어떠한 시각적 요소도 적용하지 않는 버튼  
+* PlainButtonStyle : IDLE(유휴 상태, 아무런 동작이 없는) 상태에서는 어떠한 시각적 요소도 적용하지 않는 버튼  
 
 
 

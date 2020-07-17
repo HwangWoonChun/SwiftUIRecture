@@ -94,23 +94,23 @@
 
     * 원본색상 찾기 두번째 방법 : 버튼 스타일 변경, PlainButtonStyle은 렌더링 모드가 original 이다.
 
-        ``` swift
-        struct Home: View {
-            var body: some View {
-                HStack{
-                    Button(action: {
+            ``` swift
+            struct Home: View {
+                var body: some View {
+                    HStack{
+                        Button(action: {
 
-                    }) {
-                        Image("avocado")
-                            .resizable()
-                            .frame(width:40,height:40)
-                            .background(Color.clear)
+                        }) {
+                            Image("avocado")
+                                .resizable()
+                                .frame(width:40,height:40)
+                                .background(Color.clear)
+                        }
+                        .buttonStyle(PlainButtonStyle())
                     }
-                    .buttonStyle(PlainButtonStyle())
                 }
             }
-        }
-        ```
+            ```
 
     2) 버튼 스타일(IOS 만 보자)
 

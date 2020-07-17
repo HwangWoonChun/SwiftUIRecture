@@ -169,15 +169,15 @@
             }           
             ```
             
-            1 display Mode : large
+            * display Mode : large
             
                 <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_04_03_375137.png" width = 375 height = 137>
             
-            2 display Mode : inline
+            * display Mode : inline
             
                 <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_04_04_375137.png" width = 375 height = 137>
             
-            3 display Mode : Automatic 은 기본값  
+            * display Mode : Automatic 은 기본값  
             
  
     2) 네비게이션 바 아이템

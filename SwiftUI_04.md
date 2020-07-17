@@ -146,9 +146,31 @@
 
     1) 네비게이션 바 타이틀
         
-        * 
+        * 네비게이션 타이틀 수식어는 네비게이션 뷰를 수식하는 곳이 아닌 내부에서 사용한다. 네비게이션 뷰를 수식하는 바깥쪽에 위치 하게 되면 모든 자식뷰가 동일한 타이틀을 가지기 때문이다.
+        
+        * 그래서 UIKit에서는 타이틀을 ViewController에서 지정 했었다.
 
-        * 단순히 텍스트만 표현
+        * 네비게이션 뷰에 사용되는 수식어들을 preference 라는 기능을 통해 하위 뷰가 상위 뷰에 데이터를 전달 하는 방식을 이용한다.
+        
+            ``` swift
+             struct Home: View {
+                var body: some View {
+                    NavigationView {
+                        Image("apple")
+                        .navigationBarTitle("Helloworld", displayMode: .large)
+                        //.navigationBarTitle("Helloworld")
+                        //.navigationBarTitle("Helloworld", displayMode: .large)
+                        //.navigationBarTitle("Helloworld", displayMode: .inline)
+                    }
+                }
+            }           
+            ```
+            
+            * display Mode : large
+            <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_04_03_375137.png" width = 375 height = 137>
+            
+            * display Mode : inline
+            <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_04_04_375137.png" width = 375 height = 137>
 
 * * *
 3. 리스트

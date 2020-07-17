@@ -217,9 +217,9 @@
             }
         }
         ```
-        * 주의할점 : 13.4 이전은 백버튼이 리딩에 추가한 아이템을 덮어버린다. 이 경우에 제스쳐를 통한 뒤로가기가 먹히질 않는다. 아래는 13.4 버
+        * 주의할점 : 13.4 이전은 백버튼이 리딩에 추가한 아이템을 덮어버린다. 이 경우에 제스쳐를 통한 뒤로가기가 먹히질 않는다. 아래는 13.4 버전
         
-        <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_04_05_39258.png" width = 392 height = 58>
+            <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_04_05_39258.png" width = 392 height = 58>
         
         
     3) 네비게이션 링크

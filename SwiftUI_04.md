@@ -141,7 +141,9 @@
         }
     }
     ```
+
 * * *
+
 2. 네비게이션 뷰 : 네비게이션 스택을 이용해 컨텐츠 뷰들을 관리 하는 컨테이너 뷰, UINavigationController, UISplitViewController 역할 수행
 
     1) 네비게이션 바 타이틀
@@ -167,10 +169,12 @@
             ```
             
             ** display Mode : large
-            <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_04_03_375137.png" width = 375 height = 137>
+            
+                <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_04_03_375137.png" width = 375 height = 137>
             
             ** display Mode : inline
-            <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_04_04_375137.png" width = 375 height = 137>
+            
+                <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_04_04_375137.png" width = 375 height = 137>
             
             ** display Mode : Automatic 은 기본값
             

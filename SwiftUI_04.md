@@ -376,8 +376,6 @@ struct Home: View {
 }  
 // 10개가 넘어가면 오류발생 Extra argument in call, 추후 다룸
 ```
-
-
 **1) 동적 컨텐츠 **
         
 1. Range<Int> : Range<Int> 타입을 넘겨주는 방식

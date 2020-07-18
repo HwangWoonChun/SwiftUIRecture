@@ -362,11 +362,9 @@ struct Home: View {
 
 * * *
 ## 3. 리스트
-* * *
-
 > **하나의 열에 여러개의 행으로 표현되는 UI를 굿겅하여 다중 데이터를 쉽게 나열 할 수 있도록 구성된 뷰**
 
-    ``` swift
+``` swift
     struct Home: View {
         var body: some View {
             List {
@@ -377,7 +375,7 @@ struct Home: View {
         }
     }  
     // 10개가 넘어가면 오류발생 Extra argument in call, 추후 다룸
-    ```
+```
 
 **1) 동적 컨텐츠 **
         

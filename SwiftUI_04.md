@@ -388,15 +388,15 @@ struct Home: View {
         
         > One-side Range Operator A...,...B
     
-            ``` swift
-            struct Home: View {
-                var body: some View {
-                    List(0..<100) {_ in 
-                        Text("1")
-                    }
-                }
-            }   
-            ```
+    ``` swift
+    struct Home: View {
+        var body: some View {
+            List(0..<100) {_ in
+                Text("1")
+            }
+        }
+    }   
+    ```
 
 2. Random Access Collection : Random Access Collection 프로토콜을 준수하는 하는 데이터를 제공하는 방식, 각 요소들은 구분이 가능하고 식별이 가능 해야한다.
 

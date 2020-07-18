@@ -363,6 +363,8 @@ struct Home: View {
 * * *
 ## 3. 리스트
 
+> **하나의 열에 여러개의 행으로 표현되는 UI를 굿겅하여 다중 데이터를 쉽게 나열 할 수 있도록 구성된 뷰**
+
 ``` swift
 struct Home: View {
     var body: some View {
@@ -376,25 +378,23 @@ struct Home: View {
 // 10개가 넘어가면 오류발생 Extra argument in call, 추후 다룸
 ```
 
-> **하나의 열에 여러개의 행으로 표현되는 UI를 굿겅하여 다중 데이터를 쉽게 나열 할 수 있도록 구성된 뷰**
-
 **1) 동적 컨텐츠 **
         
-* Range<Int> : Range<Int> 타입을 넘겨주는 방식
+1. Range<Int> : Range<Int> 타입을 넘겨주는 방식
     
-1-1) 이떄 범위는 Half-Open Range Operator 방식만 가능 A..<B
-> Closed Range Operator A..B
-> One-side Range Operator A...,...B
+    1-1) 이떄 범위는 Half-Open Range Operator 방식만 가능 A..<B
+    > Closed Range Operator A..B
+    > One-side Range Operator A...,...B
     
-    ``` swift
-    struct Home: View {
-        var body: some View {
-            List(0..<100) {_ in 
-                Text("1")
+        ``` swift
+        struct Home: View {
+            var body: some View {
+                List(0..<100) {_ in 
+                    Text("1")
+                }
             }
-        }
-    }   
-    ```
+        }   
+        ```
 
 2. Random Access Collection : Random Access Collection 프로토콜을 준수하는 하는 데이터를 제공하는 방식, 각 요소들은 구분이 가능하고 식별이 가능 해야한다.
 

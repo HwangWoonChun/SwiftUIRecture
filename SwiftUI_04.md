@@ -380,7 +380,7 @@ struct Home: View {
 
 **1) 동적 컨텐츠 **
         
-1. Range<Int> : Range<Int> 타입을 넘겨주는 방식
+* Range<Int> : Range<Int> 타입을 넘겨주는 방식
     
 1-1) 이떄 범위는 Half-Open Range Operator 방식만 가능 A..<B
 > Closed Range Operator A..B

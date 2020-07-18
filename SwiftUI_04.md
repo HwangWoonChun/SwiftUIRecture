@@ -500,13 +500,14 @@ struct Home: View {
 
 4. 리스트 스타일
 
-* GroupedListStyle
-* InsetGrouped
-* iOS 13 부턴 UITableView에선 grouped 와 insetGrouped 이 상황에 따라 결정이된다. compact width 는 grouped regular width는 insetGrouped
-> 애플 휴먼 인터페이스 "Regular width 환경에선 insetGrouped 스타일을 사용하기에 적합하다."
+    1) GroupedListStyle
+    2) InsetGrouped
+    3) iOS 13 부턴 UITableView에선 grouped 와 insetGrouped 이 상황에 따라 결정이된다. compact width 는 grouped regular width는 insetGrouped
+        > 애플 휴먼 인터페이스 "Regular width 환경에선 insetGrouped 스타일을 사용하기에 적합하다."
 
-<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_04_009.png" width = 841 height = 451>
-<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_04_010.png" width = 841 height = 451>
+    <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_04_009.png" width = 841 height = 451>
+    
+    <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_04_010.png" width = 841 height = 451>
 
     ``` swift
     let fruits = ["사과","배","수박"]
@@ -528,30 +529,30 @@ struct Home: View {
             }.listStyle(GroupedListStyle())
         }
     }  
-```
+    ```
 
-* Compact width 인 디바이스를 강제로 insetGrouped를 적용하기
+    4) Compact width 인 디바이스를 강제로 insetGrouped를 적용하기
 
-``` swift
-let fruits = ["사과","배","수박"]
-let drink = ["물","커피"]
+    ``` swift
+    let fruits = ["사과","배","수박"]
+    let drink = ["물","커피"]
 
-let data = [fruits, drink]
-let titles = ["과일","음료"]
+    let data = [fruits, drink]
+    let titles = ["과일","음료"]
 
-struct Home: View {
-    var body: some View {
-        List {
-            ForEach(data.indices) { index in
-                Section(header: Text(titles[index]), footer: HStack{ Spacer(); Text("\(data[index].count) 건") } ) {
-                    ForEach(data[index], id: \.self) {
-                        Text($0)
+    struct Home: View {
+        var body: some View {
+            List {
+                ForEach(data.indices) { index in
+                    Section(header: Text(titles[index]), footer: HStack{ Spacer(); Text("\(data[index].count) 건") } ) {
+                        ForEach(data[index], id: \.self) {
+                            Text($0)
+                        }
                     }
                 }
             }
+            .listStyle(GroupedListStyle())
+            .environment(\.horizontalSizeClass, .regular)
         }
-        .listStyle(GroupedListStyle())
-        .environment(\.horizontalSizeClass, .regular)
-    }
-}  
-```
+    }  
+    ```

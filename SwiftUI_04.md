@@ -366,86 +366,189 @@ struct Home: View {
 
 > **하나의 열에 여러개의 행으로 표현되는 UI를 굿겅하여 다중 데이터를 쉽게 나열 할 수 있도록 구성된 뷰**
 
-``` swift
-struct Home: View {
-    var body: some View {
-        List {
-            Text("1")
-            Text("2")
-            Text("3")
+    ``` swift
+    struct Home: View {
+        var body: some View {
+            List {
+                Text("1")
+                Text("2")
+                Text("3")
+            }
         }
-    }
-}  
-// 10개가 넘어가면 오류발생 Extra argument in call, 추후 다룸
-```
+    }  
+    // 10개가 넘어가면 오류발생 Extra argument in call, 추후 다룸
+    ```
 
 **1) 동적 컨텐츠 **
         
 1. Range<Int> : Range<Int> 타입을 넘겨주는 방식
     
-    1-1) 이떄 범위는 Half-Open Range Operator 방식만 가능 A..<B
-    > Closed Range Operator A..B
-    > One-side Range Operator A...,...B
+1-1) 이떄 범위는 Half-Open Range Operator 방식만 가능 A..<B
+> Closed Range Operator A..B
+> One-side Range Operator A...,...B
     
-``` swift
-struct Home: View {
-    var body: some View {
-        List(0..<100) {_ in 
-            Text("1")
+    ``` swift
+    struct Home: View {
+        var body: some View {
+            List(0..<100) {_ in 
+                Text("1")
+            }
         }
-    }
-}   
-```
+    }   
+    ```
 
 2. Random Access Collection : Random Access Collection 프로토콜을 준수하는 하는 데이터를 제공하는 방식, 각 요소들은 구분이 가능하고 식별이 가능 해야한다.
 
-    2-1) id 식별자 지정 방식 : id로 사용 할 값을 직접 인수로 제공, id 매개변수에는 Hashablee 프로토콜을 준수하는 프로퍼티를 지정 할 수 있다. 타입자체가 Hasable 하다면 self도 무방
-        > Hashable : 정수 Hash 값을 제공하는 타입
-        > Hash 함수 : 임의의 길이를 갖는 데이터에 대해 고정된 길이의 데이터로 매핑하는 함수
+2-1) id 식별자 지정 방식 : id로 사용 할 값을 직접 인수로 제공, id 매개변수에는 Hashablee 프로토콜을 준수하는 프로퍼티를 지정 할 수 있다. 타입자체가 Hasable 하다면 self도 무방
+> Hashable : 정수 Hash 값을 제공하는 타입
+> Hash 함수 : 임의의 길이를 갖는 데이터에 대해 고정된 길이의 데이터로 매핑하는 함수
         
-``` swift
-struct Home: View {
-    var body: some View {
-        List(["A","B"], id: \.hashValue) {
-            Text($0)
+    ``` swift
+    struct Home: View {
+        var body: some View {
+            List(["A","B"], id: \.hashValue) {
+                Text($0)
+            }
         }
-    }
-}  
-```
+    }  
+    ```
 
-``` swift
-struct Home: View {
-    var body: some View {
-        List(["A","B"], id: \.self) {
-            Text($0)
+    ``` swift
+    struct Home: View {
+        var body: some View {
+            List(["A","B"], id: \.self) {
+                Text($0)
+            }
         }
-    }
-}  
-```
+    }  
+    ```
 
-    2-2) identifitable 프로토콜 준수 방식 : 테이터 타입 자체에 Swift 5.1에 추가된 identifitable 프로토콜 채택하여 타입자체에 id 프로퍼티를 만들고 이것을 식별자로 삼게 된다.
+2-2) identifitable 프로토콜 준수 방식 : 테이터 타입 자체에 Swift 5.1에 추가된 identifitable 프로토콜 채택하여 타입자체에 id 프로퍼티를 만들고 이것을 식별자로 삼게 된다.
     
-``` swift
-struct Home: View {
-    var body: some View {
-        List([Animal(name: "1"), Animal(name: "2")]) {
-            Text($0.name)
+    ``` swift
+    struct Home: View {
+        var body: some View {
+            List([Animal(name: "1"), Animal(name: "2")]) {
+                Text($0.name)
+            }
         }
-    }
-}  
+    }  
 
-struct Animal: Identifiable {
-    let id = UUID()
-    var name: String
-}
-```
+    struct Animal: Identifiable {
+        let id = UUID()
+        var name: String
+    }
+    ```
 
 **2) 정적컨텐츠와 동적 컨텐츠의 조합 **
 
 1. For Each : id로 식별할 수 있는 데이터를 받아서 동적으로 뷰를 생성
+``` swift
+struct Home: View {
+    var body: some View {
+        List {
+            ForEach(0..<50) {
+                Text("\($0)")
+            }
+        }
+    }
+}  
+```
 
+1-1) 조합하기
+``` swift
+let fruits = ["사과","배"]
 
-* 동적 컨텐츠
+struct Home: View {
+    var body: some View {
+        List {
+            Text("Fruits").font(.largeTitle)
+            ForEach(fruits, id: \.self) {
+                Text($0)
+            }
+        }
+    }
+}  
+```
+
+**3) 섹션**
 
 ``` swift
+let fruits = ["사과","배","수박"]
+let drink = ["물","커피"]
+
+let data = [fruits, drink]
+let titles = ["과일","음료"]
+
+struct Home: View {
+    var body: some View {
+        List {
+            ForEach(data.indices) { index in
+                Section(header: Text(titles[index]), footer: HStack{ Spacer(); Text("\(data[index].count) 건") } ) {
+                    ForEach(data[index], id: \.self) {
+                        Text($0)
+                    }
+                }
+            }
+        }
+    }
+}  
+```
+
+**4) 리스트 스타일**
+
+* GroupedListStyle
+* InsetGrouped
+* iOS 13 부턴 UITableView에선 grouped 와 insetGrouped 이 상황에 따라 결정이된다. compact width 는 grouped regular width는 insetGrouped
+> 애플 휴먼 인터페이스 "Regular width 환경에선 insetGrouped 스타일을 사용하기에 적합하다."
+
+<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_04_009.png" width = 841 height = 451>
+<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_04_010.png" width = 841 height = 451>
+
+    ``` swift
+    let fruits = ["사과","배","수박"]
+    let drink = ["물","커피"]
+
+    let data = [fruits, drink]
+    let titles = ["과일","음료"]
+
+    struct Home: View {
+        var body: some View {
+            List {
+                ForEach(data.indices) { index in
+                    Section(header: Text(titles[index]), footer: HStack{ Spacer(); Text("\(data[index].count) 건") } ) {
+                        ForEach(data[index], id: \.self) {
+                            Text($0)
+                        }
+                    }
+                }
+            }.listStyle(GroupedListStyle())
+        }
+    }  
+```
+
+* Compact width 인 디바이스를 강제로 insetGrouped를 적용하기
+
+``` swift
+let fruits = ["사과","배","수박"]
+let drink = ["물","커피"]
+
+let data = [fruits, drink]
+let titles = ["과일","음료"]
+
+struct Home: View {
+    var body: some View {
+        List {
+            ForEach(data.indices) { index in
+                Section(header: Text(titles[index]), footer: HStack{ Spacer(); Text("\(data[index].count) 건") } ) {
+                    ForEach(data[index], id: \.self) {
+                        Text($0)
+                    }
+                }
+            }
+        }
+        .listStyle(GroupedListStyle())
+        .environment(\.horizontalSizeClass, .regular)
+    }
+}  
 ```

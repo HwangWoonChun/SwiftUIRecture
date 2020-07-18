@@ -401,8 +401,8 @@ struct Home: View {
 
     2-1) id 식별자 지정 방식 : id로 사용 할 값을 직접 인수로 제공, id 매개변수에는 Hashablee 프로토콜을 준수하는 프로퍼티를 지정 할 수 있다. 타입자체가 Hasable 하다면 self도 무방
         
-        > Hashable : 정수 Hash 값을 제공하는 타입
-        > Hash 함수 : 임의의 길이를 갖는 데이터에 대해 고정된 길이의 데이터로 매핑하는 함수
+    > Hashable : 정수 Hash 값을 제공하는 타입
+    > Hash 함수 : 임의의 길이를 갖는 데이터에 대해 고정된 길이의 데이터로 매핑하는 함수
         
         ``` swift
         struct Home: View {

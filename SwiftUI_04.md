@@ -363,3 +363,89 @@ struct Home: View {
 * * *
 ## 3. 리스트
 * * *
+
+> **하나의 열에 여러개의 행으로 표현되는 UI를 굿겅하여 다중 데이터를 쉽게 나열 할 수 있도록 구성된 뷰**
+
+``` swift
+struct Home: View {
+    var body: some View {
+        List {
+            Text("1")
+            Text("2")
+            Text("3")
+        }
+    }
+}  
+// 10개가 넘어가면 오류발생 Extra argument in call, 추후 다룸
+```
+
+**1) 동적 컨텐츠 **
+        
+1. Range<Int> : Range<Int> 타입을 넘겨주는 방식
+    
+    1-1) 이떄 범위는 Half-Open Range Operator 방식만 가능 A..<B
+    > Closed Range Operator A..B
+    > One-side Range Operator A...,...B
+    
+``` swift
+struct Home: View {
+    var body: some View {
+        List(0..<100) {_ in 
+            Text("1")
+        }
+    }
+}   
+```
+
+2. Random Access Collection : Random Access Collection 프로토콜을 준수하는 하는 데이터를 제공하는 방식, 각 요소들은 구분이 가능하고 식별이 가능 해야한다.
+
+    2-1) id 식별자 지정 방식 : id로 사용 할 값을 직접 인수로 제공, id 매개변수에는 Hashablee 프로토콜을 준수하는 프로퍼티를 지정 할 수 있다. 타입자체가 Hasable 하다면 self도 무방
+        > Hashable : 정수 Hash 값을 제공하는 타입
+        > Hash 함수 : 임의의 길이를 갖는 데이터에 대해 고정된 길이의 데이터로 매핑하는 함수
+        
+``` swift
+struct Home: View {
+    var body: some View {
+        List(["A","B"], id: \.hashValue) {
+            Text($0)
+        }
+    }
+}  
+```
+
+``` swift
+struct Home: View {
+    var body: some View {
+        List(["A","B"], id: \.self) {
+            Text($0)
+        }
+    }
+}  
+```
+
+    2-2) identifitable 프로토콜 준수 방식 : 테이터 타입 자체에 Swift 5.1에 추가된 identifitable 프로토콜 채택하여 타입자체에 id 프로퍼티를 만들고 이것을 식별자로 삼게 된다.
+    
+``` swift
+struct Home: View {
+    var body: some View {
+        List([Animal(name: "1"), Animal(name: "2")]) {
+            Text($0.name)
+        }
+    }
+}  
+
+struct Animal: Identifiable {
+    let id = UUID()
+    var name: String
+}
+```
+
+**2) 정적컨텐츠와 동적 컨텐츠의 조합 **
+
+1. For Each : id로 식별할 수 있는 데이터를 받아서 동적으로 뷰를 생성
+
+
+* 동적 컨텐츠
+
+``` swift
+```

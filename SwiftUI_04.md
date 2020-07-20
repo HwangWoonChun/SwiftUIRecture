@@ -578,7 +578,7 @@ struct Home: View {
 * ZStack 처럼 겹겹이 쌓이는 구조
 * 자식 뷰가 하나만 있을때는 중앙에 정렬 두개 이상 되면 좌상단을 기준으로 배치
 
-<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_04_04_01_375_670.png" width = 375 height = 670>
+* <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_04_04_01_375_670.png" width = 375 height = 670>
 
     ``` swift
     struct Home: View {
@@ -592,7 +592,7 @@ struct Home: View {
     }  
     ```
 
-<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_04_04_02_375_670.png" width = 375 height = 670>
+* <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_04_04_02_375_670.png" width = 375 height = 670>
 
     ``` swift
     struct Home: View {

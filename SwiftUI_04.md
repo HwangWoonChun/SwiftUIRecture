@@ -562,15 +562,15 @@ struct Home: View {
 
 > **자식 뷰에 부모뷰와 기기에 대한 크기 및 좌표계(Geometry Proxy)를 전달하는 기능을 수행 하는 컨테이너 뷰**
 
-``` swift
-@inlinable public init(@ViewBuilder content: @escaping (GeometryProxy) -> Content)
-```
+    ``` swift
+    @inlinable public init(@ViewBuilder content: @escaping (GeometryProxy) -> Content)
+    ```
 * init 함수를 보면 content 매개 변수 하나 있다. 보통 컨테이너 타입의 뷰들은 클로져로 받는 매개변수는 없지만 지오메트리 리더는 매개변수를 받는다. 이 GeomtryProxy를 통해 부모뷰와 기기에 대한 정보를 전달한다.
 
-``` swift
-//List 의 content
-public init(selection: Binding<Set<SelectionValue>>?, @ViewBuilder content: () -> Content)
-```
+    ``` swift
+    //List 의 content
+    public init(selection: Binding<Set<SelectionValue>>?, @ViewBuilder content: () -> Content)
+    ```
 **1) 특성 **
 
 * 뷰 빌더 속성이 선언 되어 있는 뷰를 나열 하는 것만으로 사용 가능
@@ -579,16 +579,16 @@ public init(selection: Binding<Set<SelectionValue>>?, @ViewBuilder content: () -
 
 <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_04_04_01_375_670.png" width = 375 height = 670>
 
-``` swift
-struct Home: View {
-    var body: some View {
-        GeometryReader { _ in
-            Circle().fill(Color.purple)
-                .frame(width: 200, height: 200)
-                .overlay(Text("center"))
-        }.background(Color.gray)
-    }
-}  
+    ``` swift
+    struct Home: View {
+        var body: some View {
+            GeometryReader { _ in
+                Circle().fill(Color.purple)
+                    .frame(width: 200, height: 200)
+                    .overlay(Text("center"))
+            }.background(Color.gray)
+        }
+    }  
 ```
 
 <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_04_04_02_375_670.png" width = 375 height = 670>

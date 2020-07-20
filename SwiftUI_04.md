@@ -562,9 +562,9 @@ struct Home: View {
 
 > **자식 뷰에 부모뷰와 기기에 대한 크기 및 좌표계(Geometry Proxy)를 전달하는 기능을 수행 하는 컨테이너 뷰**
 
-    ``` swift
-    @inlinable public init(@ViewBuilder content: @escaping (GeometryProxy) -> Content)
-    ```
+``` swift
+@inlinable public init(@ViewBuilder content: @escaping (GeometryProxy) -> Content)
+```
 * init 함수를 보면 content 매개 변수 하나 있다. 보통 컨테이너 타입의 뷰들은 클로져로 받는 매개변수는 없지만 지오메트리 리더는 매개변수를 받는다. 이 GeomtryProxy를 통해 부모뷰와 기기에 대한 정보를 전달한다.
 
     ``` swift

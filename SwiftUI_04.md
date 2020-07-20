@@ -556,3 +556,32 @@ struct Home: View {
         }
     }  
     ```
+    
+* * *
+## 4. 지오메트리 리더
+
+> **자식 뷰에 부모뷰와 기기에 대한 크기 및 좌표계(Geometry Proxy)를 전달하는 기능을 수행 하는 컨테이너 뷰**
+
+``` swift
+@inlinable public init(@ViewBuilder content: @escaping (GeometryProxy) -> Content)
+```
+* init 함수를 보면 content 매개 변수 하나 있다. 보통 컨테이너 타입의 뷰들은 클로져로 받는 매개변수는 없지만 지오메트리 리더는 매개변수를 받는다. 이 GeomtryProxy를 통해 부모뷰와 기기에 대한 정보를 전달한다.
+
+``` swift
+//List 의 content
+public init(selection: Binding<Set<SelectionValue>>?, @ViewBuilder content: () -> Content)
+```
+**1) 특성 **
+
+* 뷰 빌더 
+
+**1) 네비게이션 바 타이틀**
+        
+* 네비게이션 타이틀 수식어는 네비게이션 뷰를 수식하는 곳이 아닌 내부에서 사용한다. 네비게이션 뷰를 수식하는 바깥쪽에 위치 하게 되면 모든 자식뷰가 동일한 타이틀을 가지기 때문이다.
+        
+* 그래서 UIKit에서는 타이틀을 ViewController에서 지정 했었다.
+
+* 네비게이션 뷰에 사용되는 수식어들을 preference 라는 기능을 통해 하위 뷰가 상위 뷰에 데이터를 전달 하는 방식을 이용한다.
+        
+    ``` swift
+

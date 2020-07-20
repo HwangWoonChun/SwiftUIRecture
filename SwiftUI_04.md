@@ -668,13 +668,51 @@ struct Home: View {
         
 * Frame
 > Geometry Proxy는 프레임에 대한 정보도 Coordinate 구조체로 제공한다. 
-``` swift
-Local : 현재 지오메트리 기준으로 한 bounds 
-Global
-Named
+```
+Local  : 현재 지오메트리 기준으로 한 좌표 정보
+Global : 현재 윈도우(기기) 기준으로 한 좌표 정보
+Named  : 명시적으로 이름을 할당한 공간을 기준으로 한 좌표 정보 
 ```
 
-* 네비게이션 뷰에 사용되는 수식어들을 preference 라는 기능을 통해 하위 뷰가 상위 뷰에 데이터를 전달 하는 방식을 이용한다.
-        
-    ``` swift
+<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_04_04_04_375_670.png" width = 375 height = 670>
 
+``` swift
+struct Home: View {
+    var body: some View {
+        HStack {
+            Rectangle().fill(Color.yellow).frame(width: 30)
+            
+            VStack {
+                Rectangle().fill(Color.blue).frame(width: 200)
+                
+                GeometryReader {
+                    self.contents(geomtry: $0)
+                }
+                .background(Color.green)
+                .border(Color.red)
+            }
+            .coordinateSpace(name: "VStack")
+        }
+        .coordinateSpace(name: "HStack")
+    }
+    
+    func contents(geomtry g: GeometryProxy) -> some View {
+        VStack {
+            Text("local")
+            Text(stiringFormat(for: g.frame(in: .local).origin)).padding(.bottom)               //현재 Geometry가 로컬(현재 Geometry) 기준으로 기준점이 어떻게 되는가?
+            
+            Text("global")
+            Text(stiringFormat(for: g.frame(in: .global).origin)).padding(.bottom)              //현재 Geometry가 글로벌(기기) 기준으로 기준점이 어떻게 되는가?
+            
+            Text("VStack")
+            Text(stiringFormat(for: g.frame(in: .named("VStack")).origin)).padding(.bottom)     //현재 Geometry가 VStack 기준으로 기준점이 어떻게 되는가?
+            
+            Text("HStack")
+            Text(stiringFormat(for: g.frame(in: .named("HStack")).origin)).padding(.bottom)     //현재 Geometry가 HStack 기준으로 기준점이 어떻게 되는가?
+        }
+    }
+    func stiringFormat(for point: CGPoint) -> String {
+        String(format: "x: %.f, y: %.f", arguments: [point.x, point.y])
+    }
+}  
+```

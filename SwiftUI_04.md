@@ -571,7 +571,8 @@ struct Home: View {
     //List 의 content
     public init(selection: Binding<Set<SelectionValue>>?, @ViewBuilder content: () -> Content)
     ```
-**1) 특성 **
+    
+1. 특성
 
 * 뷰 빌더 속성이 선언 되어 있는 뷰를 나열 하는 것만으로 사용 가능
 * ZStack 처럼 겹겹이 쌓이는 구조
@@ -589,29 +590,29 @@ struct Home: View {
             }.background(Color.gray)
         }
     }  
-```
+    ```
 
 <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_04_04_02_375_670.png" width = 375 height = 670>
 
-``` swift
-struct Home: View {
-    var body: some View {
-        GeometryReader { _ in
-            Circle().fill(Color.purple)
-                .frame(width: 200, height: 200)
-                .overlay(Text("center"))
-            Circle().fill(Color.orange)
-                .frame(width: 150, height: 150)
-                .overlay(Text("center"))
-            Circle().fill(Color.red)
-                .frame(width: 100, height: 100)
-                .overlay(Text("center"))
-        }.background(Color.gray)
-    }
-}   
-```
+    ``` swift
+    struct Home: View {
+        var body: some View {
+            GeometryReader { _ in
+                Circle().fill(Color.purple)
+                    .frame(width: 200, height: 200)
+                    .overlay(Text("center"))
+                Circle().fill(Color.orange)
+                    .frame(width: 150, height: 150)
+                    .overlay(Text("center"))
+                Circle().fill(Color.red)
+                    .frame(width: 100, height: 100)
+                    .overlay(Text("center"))
+            }.background(Color.gray)
+        }
+    }   
+    ```
 
-**2) Geometry Proxy **
+2. Geometry Proxy
         
 * 두개의 프로퍼티와 하나의 메소드와 하나의 첨자를 제공하여 Geometry 레이아웃의 정보를 자식 뷰에게 전달 한다.
 

@@ -573,13 +573,106 @@ public init(selection: Binding<Set<SelectionValue>>?, @ViewBuilder content: () -
 ```
 **1) 특성 **
 
-* 뷰 빌더 
+* 뷰 빌더 속성이 선언 되어 있는 뷰를 나열 하는 것만으로 사용 가능
+* ZStack 처럼 겹겹이 쌓이는 구조
+* 자식 뷰가 하나만 있을때는 중앙에 정렬 두개 이상 되면 좌상단을 기준으로 배치
 
-**1) 네비게이션 바 타이틀**
+<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_04_04_01_375_670.png" width = 375 height = 670>
+
+``` swift
+struct Home: View {
+    var body: some View {
+        GeometryReader { _ in
+            Circle().fill(Color.purple)
+                .frame(width: 200, height: 200)
+                .overlay(Text("center"))
+        }.background(Color.gray)
+    }
+}  
+```
+
+<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_04_04_02_375_670.png" width = 375 height = 670>
+
+``` swift
+struct Home: View {
+    var body: some View {
+        GeometryReader { _ in
+            Circle().fill(Color.purple)
+                .frame(width: 200, height: 200)
+                .overlay(Text("center"))
+            Circle().fill(Color.orange)
+                .frame(width: 150, height: 150)
+                .overlay(Text("center"))
+            Circle().fill(Color.red)
+                .frame(width: 100, height: 100)
+                .overlay(Text("center"))
+        }.background(Color.gray)
+    }
+}   
+```
+
+**2) Geometry Proxy **
         
-* 네비게이션 타이틀 수식어는 네비게이션 뷰를 수식하는 곳이 아닌 내부에서 사용한다. 네비게이션 뷰를 수식하는 바깥쪽에 위치 하게 되면 모든 자식뷰가 동일한 타이틀을 가지기 때문이다.
+* 두개의 프로퍼티와 하나의 메소드와 하나의 첨자를 제공하여 Geometry 레이아웃의 정보를 자식 뷰에게 전달 한다.
+
+``` swift
+public struct GeometryProxy {
+
+    /// The size of the container view.
+    public var size: CGSize { get }
+
+    /// Resolves the value of `anchor` to the container view.
+    public subscript<T>(anchor: Anchor<T>) -> T { get }
+
+    /// The safe area inset of the container view.
+    public var safeAreaInsets: EdgeInsets { get }
+
+    /// The container view's bounds rectangle converted to a defined
+    /// coordinate space.
+    public func frame(in coordinateSpace: CoordinateSpace) -> CGRect
+}
+```
+
+* Size, SafeInsects
+> 아래는 SE 기준이다.
+
+<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_04_04_03_375_670.png" width = 375 height = 670>
+
+``` swift
+struct Home: View {
+    var body: some View {
+        GeometryReader { gemotry in
+            
+            Text("Geometry Reader").font(.largeTitle).bold()
+                .position(x: gemotry.size.width / 2, y: gemotry.safeAreaInsets.top)
+            
+            VStack {
+                Text("size")
+                Text("width : \(gemotry.size.width)")
+                Text("height : \(gemotry.size.height)")
+            }.position(x: gemotry.size.width / 2, y: gemotry.size.height / 2.5)
+            
+            VStack {
+                Text("safeAreaInsets")
+                Text("top : \(gemotry.safeAreaInsets.top)")
+                Text("bottom : \(gemotry.safeAreaInsets.bottom)")
+            }.position(x: gemotry.size.width / 2, y: gemotry.size.height / 1.4)
+            
+        }
+        .font(.title)
+        //.frame(height: 500)	//이부분을 풀면 pro 11 에서 잡히던 안전구역 탑 바텀 높이가 0으로 바뀐다.
+        .border(Color.green)
+    }
+}  
+```
         
-* 그래서 UIKit에서는 타이틀을 ViewController에서 지정 했었다.
+* Frame
+> Geometry Proxy는 프레임에 대한 정보도 Coordinate 구조체로 제공한다. 
+``` swift
+Local : 현재 지오메트리 기준으로 한 bounds 
+Global
+Named
+```
 
 * 네비게이션 뷰에 사용되는 수식어들을 preference 라는 기능을 통해 하위 뷰가 상위 뷰에 데이터를 전달 하는 방식을 이용한다.
         

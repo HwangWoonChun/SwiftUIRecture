@@ -859,7 +859,8 @@ Text("frame").frame(width: 200) //ModifiedContent<Text, FrameLayout> 타입
     ```
     
 * horizontal, vertical : fixedSize()를 상하, 좌우 로 적용
-
+    
+    <table><tr><td>
     <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_04_05_07.png" width = 187 height = 335>
     
     ``` swift
@@ -880,11 +881,13 @@ Text("frame").frame(width: 200) //ModifiedContent<Text, FrameLayout> 타입
         }
     }
     ```
+    <table><tr><td>
 
 **4) Layout Priority**
 
 * 레이아웃 우선순위가 높은 경우 부모 레이아웃은 그 자식 뷰에 공간 할당에 우선권을 준다. 공간이 늘어날때 먼저 늘어나고 줄어들땐 늦게 줄어 든다.
-
+    
+    <table><tr><td>
     <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_04_05_08.png" width = 187 height = 335>
 
     ``` swift
@@ -901,7 +904,9 @@ Text("frame").frame(width: 200) //ModifiedContent<Text, FrameLayout> 타입
         }
     }
     ```
-
+    <table><tr><td>
+    
+    <table><tr><td>
     <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_04_05_09.png" width = 187 height = 335>
 
     ``` swift
@@ -918,7 +923,9 @@ Text("frame").frame(width: 200) //ModifiedContent<Text, FrameLayout> 타입
         }
     }  
     ```    
-
+    <table><tr><td>
+    
+    <table><tr><td>
     <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_04_05_10.png" width = 187 height = 335>
     
     ``` swift
@@ -935,6 +942,8 @@ Text("frame").frame(width: 200) //ModifiedContent<Text, FrameLayout> 타입
         }
     }  
     ```    
+    <table><tr><td>
+    
     <table><tr><td>
     <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_04_05_11.png" width = 187 height = 335>
     

@@ -935,9 +935,10 @@ Text("frame").frame(width: 200) //ModifiedContent<Text, FrameLayout> 타입
         }
     }  
     ```    
-    
+    <table><tr><td>
     <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_04_05_11.png" width = 187 height = 335>
-
+    <table><tr><td>
+        
     ``` swift
     struct Home: View {
         var body: some View {

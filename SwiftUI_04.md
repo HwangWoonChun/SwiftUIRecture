@@ -719,19 +719,20 @@ struct Home: View {
 ```
 * * *
 ## 5. 프레임
+
 > **Swift UI에서의 Frame 수식어는 UIKit과는 조금 다르다. UIkit은 크기 및 위치에 대한 제약을 걸지만 SwitUI는 컨텐츠를 담는 액자를 만들어 새로운 뷰를 반환한다. **
 
-``` swift
-Text("frame")                   //Text 타입
-Text("frame").frame(width: 200) //ModifiedContent<Text, FrameLayout> 타입
-```
+    ``` swift
+    Text("frame")                   //Text 타입
+    Text("frame").frame(width: 200) //ModifiedContent<Text, FrameLayout> 타입
+    ```
 
 1. 프레임의 역할
 
 * 자식 뷰가 사용 가능한 크기를 제안, 실제로 제안된 내에서 자식 뷰가 어떻게 보일지는 자식뷰가 직접 결정한다.
 * 아래 두 뷰의 크기는 같지만, Text 경우 그 안에서 문자열이 표현하는 크기만 차지 한다.
 
-    <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_04_05_01.png" width = 375 height = 667>
+    <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_04_05_01.png" width = 187 height = 335>
 
     ``` swift
     struct Home: View {
@@ -741,7 +742,7 @@ Text("frame").frame(width: 200) //ModifiedContent<Text, FrameLayout> 타입
     }  
     ```
 
-    <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_04_05_02.png" width = 375 height = 667>
+    <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_04_05_02.png" width = 187 height = 335>
 
     ``` swift
     struct Home: View {
@@ -759,16 +760,18 @@ Text("frame").frame(width: 200) //ModifiedContent<Text, FrameLayout> 타입
 2. 고정 크기 VS 크기 제약 조건
 
 * 고정 크기 : 프레임의 크기와 관련된 매개변수 값을 다 넣어준다.
-``` swift
-@inlinable public func frame(width: CGFloat? = nil, height: CGFloat? = nil, alignment: Alignment = .center) -> some View
-```
+    
+    ``` swift
+    @inlinable public func frame(width: CGFloat? = nil, height: CGFloat? = nil, alignment: Alignment = .center) -> some View
+    ```
+    
 * 크기 제약 조건 : 최소, 최대, 이상적인 값에 대해 제약조건을 입력 한다. 당연한 말이지만 크기는 최소 <= 이상 <= 최대
 
     ``` swift
     @inlinable public func frame(minWidth: CGFloat? = nil, idealWidth: CGFloat? = nil, maxWidth: CGFloat? = nil, minHeight: CGFloat? = nil, idealHeight: CGFloat? = nil, maxHeight: CGFloat? = nil, alignment: Alignment = .center) -> some View
     ```
 
-    <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_04_05_03.png" width = 375 height = 667>
+    <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_04_05_03.png" width = 187 height = 335>
     
     ``` swift
     struct Home: View {
@@ -789,14 +792,14 @@ Text("frame").frame(width: 200) //ModifiedContent<Text, FrameLayout> 타입
     
 3. ideal 사이즈와 fixedSize()
 
-``` swift
-@inlinable public func frame(minWidth: CGFloat? = nil, idealWidth: CGFloat? = nil, maxWidth: CGFloat? = nil, minHeight: CGFloat? = nil, idealHeight: CGFloat? = nil, maxHeight: CGFloat? = nil, alignment: Alignment = .center) -> some View
-```
-> UIKit 에서 intrinsicContentSize(본질적인 크기) 와 idealSize 와 개념이 비슷하다.
+    ``` swift
+    @inlinable public func frame(minWidth: CGFloat? = nil, idealWidth: CGFloat? = nil, maxWidth: CGFloat? = nil, minHeight: CGFloat? = nil, idealHeight: CGFloat? = nil, maxHeight: CGFloat? = nil, alignment: Alignment = .center) -> some View
+    ```
+    > UIKit 에서 intrinsicContentSize(본질적인 크기) 와 idealSize 와 개념이 비슷하다.
 
 * idealSize는 부모 뷰의 공간과 관계없이 자신에게 가장 이상적인 idealSize를 가지고 있다. fixedSize()를 이용하면 크기 정보를 활용 할 수 있다.
 
-    <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_04_05_04.png" width = 375 height = 667>
+    <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_04_05_04.png" width = 187 height = 335>
 
     ``` swift
     struct Home: View {
@@ -816,7 +819,7 @@ Text("frame").frame(width: 200) //ModifiedContent<Text, FrameLayout> 타입
 
 * fixedSize() : 원래 뷰가 가지고자 하는 크기로 설정
 
-    <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_04_05_05.png" width = 375 height = 667>
+    <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_04_05_05.png" width = 187 height = 335>
 
     ``` swift
     struct Home: View {
@@ -836,7 +839,7 @@ Text("frame").frame(width: 200) //ModifiedContent<Text, FrameLayout> 타입
 
 * fixed 수식어를 사용하기 이전에 idealWidth, idealHeight를 지정해 주면 원하는 크기로 설정 가능
 
-    <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_04_05_06.png" width = 375 height = 667>
+    <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_04_05_06.png" width = 187 height = 335>
 
     ``` swift
     struct Home: View {
@@ -856,7 +859,7 @@ Text("frame").frame(width: 200) //ModifiedContent<Text, FrameLayout> 타입
     
 * horizontal, vertical : fixedSize()를 상하, 좌우 로 적용
 
-    <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_04_05_07.png" width = 375 height = 667>
+    <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_04_05_07.png" width = 187 height = 335>
     
     ``` swift
     struct Home: View {
@@ -881,7 +884,7 @@ Text("frame").frame(width: 200) //ModifiedContent<Text, FrameLayout> 타입
 
 * 레이아웃 우선순위가 높은 경우 부모 레이아웃은 그 자식 뷰에 공간 할당에 우선권을 준다. 공간이 늘어날때 먼저 늘어나고 줄어들땐 늦게 줄어 든다.
 
-    <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_04_05_08.png" width = 375 height = 667>
+    <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_04_05_08.png" width = 187 height = 335>
 
     ``` swift
     struct Home: View {
@@ -898,7 +901,7 @@ Text("frame").frame(width: 200) //ModifiedContent<Text, FrameLayout> 타입
     }
     ```
 
-    <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_04_05_09.png" width = 375 height = 667>
+    <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_04_05_09.png" width = 187 height = 335>
 
     ``` swift
     struct Home: View {
@@ -915,7 +918,7 @@ Text("frame").frame(width: 200) //ModifiedContent<Text, FrameLayout> 타입
     }  
     ```    
 
-    <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_04_05_10.png" width = 375 height = 667>
+    <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_04_05_10.png" width = 187 height = 335>
     ``` swift
     struct Home: View {
         var body: some View {
@@ -931,7 +934,7 @@ Text("frame").frame(width: 200) //ModifiedContent<Text, FrameLayout> 타입
     }  
     ```    
     
-    <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_04_05_11.png" width = 375 height = 667>
+    <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_04_05_11.png" width = 187 height = 335>
 
     ``` swift
     struct Home: View {

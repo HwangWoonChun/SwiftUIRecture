@@ -731,7 +731,8 @@ Text("frame").frame(width: 200) //ModifiedContent<Text, FrameLayout> 타입
 
 * 자식 뷰가 사용 가능한 크기를 제안, 실제로 제안된 내에서 자식 뷰가 어떻게 보일지는 자식뷰가 직접 결정한다.
 * 아래 두 뷰의 크기는 같지만, Text 경우 그 안에서 문자열이 표현하는 크기만 차지 한다.**
-
+    
+    <table><tr><td>
     <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_04_05_01.png" width = 187 height = 335>     
     
     ``` swift
@@ -741,8 +742,11 @@ Text("frame").frame(width: 200) //ModifiedContent<Text, FrameLayout> 타입
         }
     }  
     ```
+    </table></tr></td>
 
+    <table><tr><td>
     <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_04_05_02.png" width = 187 height = 335>
+
 
     ``` swift
     struct Home: View {
@@ -751,6 +755,7 @@ Text("frame").frame(width: 200) //ModifiedContent<Text, FrameLayout> 타입
         }
     }  
     ```
+    </table></tr></td>
 
 * 뷰 레이아웃 과정
     1. 부모 뷰가 크기를 제안
@@ -770,7 +775,7 @@ Text("frame").frame(width: 200) //ModifiedContent<Text, FrameLayout> 타입
     ``` swift
     @inlinable public func frame(minWidth: CGFloat? = nil, idealWidth: CGFloat? = nil, maxWidth: CGFloat? = nil, minHeight: CGFloat? = nil, idealHeight: CGFloat? = nil, maxHeight: CGFloat? = nil, alignment: Alignment = .center) -> some View
     ```
-
+    <table><tr><td>
     <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_04_05_03.png" width = 187 height = 335>
     
     ``` swift
@@ -789,6 +794,7 @@ Text("frame").frame(width: 200) //ModifiedContent<Text, FrameLayout> 타입
         }
     }
     ```
+    </table></tr></td>
     
 **3) ideal 사이즈와 fixedSize()**
 
@@ -800,6 +806,7 @@ Text("frame").frame(width: 200) //ModifiedContent<Text, FrameLayout> 타입
 
 * idealSize는 부모 뷰의 공간과 관계없이 자신에게 가장 이상적인 idealSize를 가지고 있다. fixedSize()를 이용하면 크기 정보를 활용 할 수 있다.
 
+    <table><tr><td>
     <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_04_05_04.png" width = 187 height = 335>
 
     ``` swift
@@ -817,9 +824,11 @@ Text("frame").frame(width: 200) //ModifiedContent<Text, FrameLayout> 타입
         }
     }  
     ```
+    </table></tr></td>
 
 * fixedSize() : 원래 뷰가 가지고자 하는 크기로 설정
-
+    
+    <table><tr><td>
     <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_04_05_05.png" width = 187 height = 335>
 
     ``` swift
@@ -837,9 +846,11 @@ Text("frame").frame(width: 200) //ModifiedContent<Text, FrameLayout> 타입
         }
     }
     ```
+    </table></tr></td>
 
 * fixed 수식어를 사용하기 이전에 idealWidth, idealHeight를 지정해 주면 원하는 크기로 설정 가능
 
+    <table><tr><td>
     <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_04_05_06.png" width = 187 height = 335>
 
     ``` swift
@@ -857,6 +868,7 @@ Text("frame").frame(width: 200) //ModifiedContent<Text, FrameLayout> 타입
         }
     }
     ```
+    </table></tr></td>
     
 * horizontal, vertical : fixedSize()를 상하, 좌우 로 적용
     

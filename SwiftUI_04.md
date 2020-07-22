@@ -720,9 +720,9 @@ struct Home: View {
 * * *
 ## 5. 프레임
 
->**Swift UI에서의 Frame 수식어는 UIKit과는 조금 다르다. UIkit은 크기 및 위치에 대한 제약을 걸지만 SwitUI는 컨텐츠를 담는 액자를 만들어 새로운 뷰를 반환한다. **
+>**Swift UI에서의 Frame 수식어는 UIKit과는 조금 다르다. UIkit은 크기 및 위치에 대한 제약을 걸지만 SwitUI는 컨텐츠를 담는 액자를 만들어 새로운 뷰를 반환한다.**
 
-``` swift
+```
 Text("frame")                   //Text 타입
 Text("frame").frame(width: 200) //ModifiedContent<Text, FrameLayout> 타입
 ```
@@ -732,9 +732,7 @@ Text("frame").frame(width: 200) //ModifiedContent<Text, FrameLayout> 타입
 * 자식 뷰가 사용 가능한 크기를 제안, 실제로 제안된 내에서 자식 뷰가 어떻게 보일지는 자식뷰가 직접 결정한다.
 * 아래 두 뷰의 크기는 같지만, Text 경우 그 안에서 문자열이 표현하는 크기만 차지 한다.**
 
-    <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_04_05_01.png" width = 187 height = 335>
-
-    ``` swift
+    <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_04_05_01.png" width = 187 height = 335>     ``` swift
     struct Home: View {
         var body: some View {
             Text("frame").background(Color.yellow).frame(width: 200, height: 100)

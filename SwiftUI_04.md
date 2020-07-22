@@ -560,9 +560,9 @@ struct Home: View {
 * * *
 ## 4. 지오메트리 리더
 
-> **자식 뷰에 부모뷰와 기기에 대한 크기 및 좌표계(Geometry Proxy)를 전달하는 기능을 수행 하는 컨테이너 뷰**
+>**자식 뷰에 부모뷰와 기기에 대한 크기 및 좌표계(Geometry Proxy)를 전달하는 기능을 수행 하는 컨테이너 뷰**
 
-``` swift
+```
 @inlinable public init(@ViewBuilder content: @escaping (GeometryProxy) -> Content)
 ```
 * init 함수를 보면 content 매개 변수 하나 있다. 보통 컨테이너 타입의 뷰들은 클로져로 받는 매개변수는 없지만 지오메트리 리더는 매개변수를 받는다. 이 GeomtryProxy를 통해 부모뷰와 기기에 대한 정보를 전달한다.
@@ -720,14 +720,14 @@ struct Home: View {
 * * *
 ## 5. 프레임
 
-> **Swift UI에서의 Frame 수식어는 UIKit과는 조금 다르다. UIkit은 크기 및 위치에 대한 제약을 걸지만 SwitUI는 컨텐츠를 담는 액자를 만들어 새로운 뷰를 반환한다. **
+>**Swift UI에서의 Frame 수식어는 UIKit과는 조금 다르다. UIkit은 크기 및 위치에 대한 제약을 걸지만 SwitUI는 컨텐츠를 담는 액자를 만들어 새로운 뷰를 반환한다. **
 
-    ``` swift
-    Text("frame")                   //Text 타입
-    Text("frame").frame(width: 200) //ModifiedContent<Text, FrameLayout> 타입
-    ```
+``` swift
+Text("frame")                   //Text 타입
+Text("frame").frame(width: 200) //ModifiedContent<Text, FrameLayout> 타입
+```
 
-1. 프레임의 역할
+#1. 프레임의 역할
 
 * 자식 뷰가 사용 가능한 크기를 제안, 실제로 제안된 내에서 자식 뷰가 어떻게 보일지는 자식뷰가 직접 결정한다.
 * 아래 두 뷰의 크기는 같지만, Text 경우 그 안에서 문자열이 표현하는 크기만 차지 한다.

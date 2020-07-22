@@ -727,10 +727,10 @@ Text("frame")                   //Text 타입
 Text("frame").frame(width: 200) //ModifiedContent<Text, FrameLayout> 타입
 ```
 
-#1. 프레임의 역할
+**1) 프레임의 역할**
 
 * 자식 뷰가 사용 가능한 크기를 제안, 실제로 제안된 내에서 자식 뷰가 어떻게 보일지는 자식뷰가 직접 결정한다.
-* 아래 두 뷰의 크기는 같지만, Text 경우 그 안에서 문자열이 표현하는 크기만 차지 한다.
+* 아래 두 뷰의 크기는 같지만, Text 경우 그 안에서 문자열이 표현하는 크기만 차지 한다.**
 
     <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_04_05_01.png" width = 187 height = 335>
 
@@ -757,7 +757,7 @@ Text("frame").frame(width: 200) //ModifiedContent<Text, FrameLayout> 타입
     2. 자식 뷰는 자신의 크기를 결정
     3. 부모 뷰는 자신의 좌표공간에서 자식 뷰를 적절하게 배치
     
-2. 고정 크기 VS 크기 제약 조건
+**2) 고정 크기 VS 크기 제약 조건**
 
 * 고정 크기 : 프레임의 크기와 관련된 매개변수 값을 다 넣어준다.
     
@@ -790,7 +790,7 @@ Text("frame").frame(width: 200) //ModifiedContent<Text, FrameLayout> 타입
     }
     ```
     
-3. ideal 사이즈와 fixedSize()
+**3) ideal 사이즈와 fixedSize()**
 
     ``` swift
     @inlinable public func frame(minWidth: CGFloat? = nil, idealWidth: CGFloat? = nil, maxWidth: CGFloat? = nil, minHeight: CGFloat? = nil, idealHeight: CGFloat? = nil, maxHeight: CGFloat? = nil, alignment: Alignment = .center) -> some View
@@ -880,7 +880,7 @@ Text("frame").frame(width: 200) //ModifiedContent<Text, FrameLayout> 타입
     }
     ```
 
-4. Layout Priority
+**4) Layout Priority**
 
 * 레이아웃 우선순위가 높은 경우 부모 레이아웃은 그 자식 뷰에 공간 할당에 우선권을 준다. 공간이 늘어날때 먼저 늘어나고 줄어들땐 늦게 줄어 든다.
 

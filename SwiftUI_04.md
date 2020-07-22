@@ -792,10 +792,11 @@ Text("frame").frame(width: 200) //ModifiedContent<Text, FrameLayout> 타입
     
 **3) ideal 사이즈와 fixedSize()**
 
+> UIKit 에서 intrinsicContentSize(본질적인 크기) 와 idealSize 와 개념이 비슷하다.
+
     ``` swift
     @inlinable public func frame(minWidth: CGFloat? = nil, idealWidth: CGFloat? = nil, maxWidth: CGFloat? = nil, minHeight: CGFloat? = nil, idealHeight: CGFloat? = nil, maxHeight: CGFloat? = nil, alignment: Alignment = .center) -> some View
     ```
-    > UIKit 에서 intrinsicContentSize(본질적인 크기) 와 idealSize 와 개념이 비슷하다.
 
 * idealSize는 부모 뷰의 공간과 관계없이 자신에게 가장 이상적인 idealSize를 가지고 있다. fixedSize()를 이용하면 크기 정보를 활용 할 수 있다.
 
@@ -919,6 +920,7 @@ Text("frame").frame(width: 200) //ModifiedContent<Text, FrameLayout> 타입
     ```    
 
     <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_04_05_10.png" width = 187 height = 335>
+    
     ``` swift
     struct Home: View {
         var body: some View {

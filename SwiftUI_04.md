@@ -974,3 +974,108 @@ Text("frame").frame(width: 200) //ModifiedContent<Text, FrameLayout> 타입
     }
     ```    
     </table></tr></td>
+
+## 4-2. 실전 앱 구현 하기
+
+## 1. 리스트를 이용한 상품 목록 표시하기
+
+[이전 강의에서 연장]:https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/SwiftUI_03.md#3-product-%EB%AA%A8%EB%8D%B8-%EC%A0%81%EC%9A%A9%ED%95%98%EA%B8%B0
+
+**1) 데이터 변환하기**
+
+* json 읽기
+
+``` swift
+extension Bundle {
+    func decode<T: Decodable> (fileName: String, as type: T.Type) -> T {
+        guard let url = self.url(forResource: fileName, withExtension: nil) else {
+            fatalError("번들에 파일이 없습니다.")
+        }
+        guard let data = try? Data(contentsOf: url) else {
+            fatalError("url 로 부터 파일을 읽을 수 없습니다.")
+        }
+        guard let decodedData = try? JSONDecoder().decode(T.self, from: data) else {
+            fatalError("데이터 복호화 실패")
+        }
+        return decodedData
+    }
+}
+```
+* 프로덕트 구조체 Decodable 따를 수 있도록 수정
+``` swift
+struct Product: Decodable {
+  let name: String
+  let imageName: String
+  let price: Int
+  let description: String
+  var isFavorite: Bool = false
+}
+```
+
+**2) Store 모델**
+
+* Store Class 파일 생성
+``` swift
+final class Store {
+    var products: [Product]
+    
+    init(fileName: String = "ProductData.json") {
+        self.products = Bundle.main.decode(fileName: fileName, as: [Product].self)
+    }
+}
+```
+
+* 리스트 활용하여 표기
+
+``` swift
+struct Home: View {
+    let store: Store    
+    var body: some View {
+        List(store.products, id: \.name) { product in
+            ProductRow(product: product)
+        }
+    }
+}
+```
+
+* Store 초기 코드 추가
+
+``` swift
+struct Home_Previews: PreviewProvider {
+  static var previews: some View {
+    Home(store: Store())	
+  }
+}
+```
+
+* List는 identifiable 프로토콜을 따르기 때문에 그것에 대해 대체할 ID 값을 지정 해줘야 한다.
+
+``` swift
+struct Product: Decodable, Identifiable {
+    var id:UUID = UUID()	//UUID 가 아닌 다른 값도 무방
+    let name: String
+    let imageName: String
+    let price: Int
+    let description: String
+    var isFavorite: Bool = false
+}
+```
+
+**2) 네비게이션 링크를 통한 화면 전환**
+
+``` swift
+struct Home: View {
+    let store: Store
+ 
+    var body: some View {
+        NavigationView {
+            List(store.products, id: \.name) { product in
+                NavigationLink(destination: Text("상세정보")) {
+                    ProductRow(product: product)
+                }
+            }
+            .navigationBarTitle("과일마트")
+        }
+    }
+}
+```

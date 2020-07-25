@@ -979,7 +979,7 @@ Text("frame").frame(width: 200) //ModifiedContent<Text, FrameLayout> 타입
 
 ## 1. 리스트를 이용한 상품 목록 표시하기
 
-[이전 강의에서 연장]:https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/SwiftUI_03.md#3-product-%EB%AA%A8%EB%8D%B8-%EC%A0%81%EC%9A%A9%ED%95%98%EA%B8%B0
+> [이전 강의에서 연장](https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/SwiftUI_03.md#3-product-%EB%AA%A8%EB%8D%B8-%EC%A0%81%EC%9A%A9%ED%95%98%EA%B8%B0)
 
 **1) 데이터 변환하기**
 

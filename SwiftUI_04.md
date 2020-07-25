@@ -1061,7 +1061,7 @@ struct Product: Decodable, Identifiable {
 }
 ```
 
-**2) 네비게이션 링크를 통한 화면 전환**
+## 2. 네비게이션 링크를 통한 화면 전환**
 
 ``` swift
 struct Home: View {

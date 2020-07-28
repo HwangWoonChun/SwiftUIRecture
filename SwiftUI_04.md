@@ -1061,7 +1061,7 @@ struct Product: Decodable, Identifiable {
 }
 ```
 
-## 2. 네비게이션 링크를 통한 화면 전환**
+## 2. 네비게이션 링크를 통한 화면 전환
 
 ``` swift
 struct Home: View {
@@ -1076,6 +1076,310 @@ struct Home: View {
             }
             .navigationBarTitle("과일마트")
         }
+    }
+}
+```
+
+## 3. 상품상세 구현하기
+
+<table><tr><td>
+    <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_04_05_12.png" width = 187 height = 335>
+    <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_04_05_13.png" width = 187 height = 335>
+</table></tr></td>    
+ 
+1) edgesIgnoringSafeArea : 지정한 방향의 안전 영역을 무시
+
+**2) GeomtryReader를 벗겨 내면 이미지뷰와 주문뷰가 상품이미지 크기가 제각각이기 때문에 1:1로 균등하게 나오질 않는다. GeometryReader로 감싸면 productImage와 orderView 최상위 뷰가 모두 지오메트리 리더가 되고 이 둘은 높이를 별도로 지정 해주지 않아도 1:1 비율로 할당 받는다.**
+
+``` swift
+struct ProductDetailView: View {
+  let product: Product
+  
+  // MARK: Body
+  
+  var body: some View {
+    VStack(spacing: 0) {
+      productImage
+      orderView
+    }
+    .edgesIgnoringSafeArea(.top)    //1)
+  }
+}
+
+
+private extension ProductDetailView {
+  // MARK: View
+  
+  var productImage: some View {
+    GeometryReader { _ in           //2)
+      Image(self.product.imageName)
+        .resizable()
+        .scaledToFill()
+    }
+  }
+  
+  var orderView: some View {
+    GeometryReader {
+      VStack(alignment: .leading) {
+        self.productDescription
+        Spacer()
+        self.priceInfo
+        self.placeOrderButton
+      }
+      .frame(height: $0.size.height + 10)
+      .padding(32)
+      .background(Color.white)
+      .cornerRadius(16)
+      .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: -5)
+    }
+  }
+
+  var productDescription: some View {
+    VStack(alignment: .leading, spacing: 16) {
+      HStack {
+        Text(product.name)
+          .font(.largeTitle).fontWeight(.medium)
+          .foregroundColor(.black)
+        
+        Spacer()
+        
+        Image(systemName: "heart")
+          .imageScale(.large)
+          .foregroundColor(Color.peach)
+          .frame(width: 32, height: 32)
+      }
+      
+      Text(splitText(product.description))
+        .foregroundColor(.secondaryText)
+        .fixedSize()
+    }
+  }
+  
+  var priceInfo: some View {
+    HStack {
+      (Text("₩")
+        + Text("\(product.price)").font(.title)
+        ).fontWeight(.medium)
+      Spacer()
+    }
+    .foregroundColor(.black)
+  }
+  
+  var placeOrderButton: some View {
+    Button(action: { }) {
+      Capsule()
+        .fill(Color.peach)
+        .frame(maxWidth: .infinity, minHeight: 30, maxHeight: 55)
+        .overlay(Text("주문하기")
+          .font(.system(size: 20)).fontWeight(.medium)
+          .foregroundColor(Color.white))
+        .padding(.vertical, 8)
+    }
+  }
+  
+  
+  // MARK: Computed Values
+  
+  func splitText(_ text: String) -> String {
+    guard !text.isEmpty else { return text }
+    let centerIdx = text.index(text.startIndex, offsetBy: text.count / 2)
+    let centerSpaceIdx = text[..<centerIdx].lastIndex(of: " ")
+      ?? text[centerIdx...].firstIndex(of: " ")
+      ?? text.index(before: text.endIndex)
+    let afterSpaceIdx = text.index(after: centerSpaceIdx)
+    let lhsString = text[..<afterSpaceIdx].trimmingCharacters(in: .whitespaces)
+    let rhsString = text[afterSpaceIdx...].trimmingCharacters(in: .whitespaces)
+    return String(lhsString + "\n" + rhsString)
+  }
+}
+
+
+// MARK: - Previews
+
+struct ProductDetailView_Previews: PreviewProvider {
+  static var previews: some View {
+    let source1 = ProductDetailView(product: productSamples[0])
+    let source2 = ProductDetailView(product: productSamples[1])
+    return Group {
+      Preview(source: source1)
+      Preview(source: source2, devices: [.iPhone11Pro], displayDarkMode: false)
+    }
+  }
+}
+```
+
+## 4. Function Builder
+> Function Builder 는 Swift 내장 도메인 특화언어(DSL) 를 정의 하도록 추가 된 문법이다.
+> DLS : 특정 종류의 문제를 더 쉽고 나은 방법으로 해결 할 수 있도록 해주는 특수한 형태의 코드 패턴
+> 예를 들어 return 생략 같은 문법, VStack 의 @ViewBuilder
+
+1) ViewBuilder : 함수로 정의된 매개변수에 뷰를 전달받아 하나 이상의 자식 뷰를 만들어 내는 기능 수행
+
+```swift
+@inlinable public init(alignment: HorizontalAlignment = .center, spacing: CGFloat? = nil, @ViewBuilder content: () -> Content)
+```
+
+* 커스텀 뷰 만들어 보기 : VStack을 특성을 가지며, 뷰정렬을 기본값으로 가지는 뷰를 만들기
+
+    ```swift
+    struct Home: View {
+
+      // MARK: Body
+
+      var body: some View {
+        MyStackView {
+            Text("hi")
+            Text("SwiftUI")
+        }
+      }
+    }
+
+    struct MyStackView<Content: View>: View {
+        let content: Content
+        init(@ViewBuilder content: () -> Content) {
+            self.content = content()
+        }
+        var body: some View {
+            VStack (alignment: .leading, spacing: 10) {
+                content
+            }
+        }
+    }
+    ```
+
+* 뷰 최대 개수는 10개 : 뷰빌더는 buildBlock 이라는 타입 메소드에 값을 전달 하고 10개까지 담을 수 있는 튜플 타입을 반환한다. 추가 하고 싶은 경우에 VStack 을 추가 해야한다. 
+
+    ```swift
+    public static func buildBlock<C0, C1, C2, C3, C4, C5, C6, C7, C8, C9>(_ c0: C0, _ c1: C1, _ c2: C2, _ c3: C3, _ c4: C4, _ c5: C5, _ c6: C6, _ c7: C7, _ c8: C8, _ c9: C9) -> TupleView<(C0, C1, C2, C3, C4, C5, C6, C7, C8, C9)> where C0 : View, C1 : View, C2 : View, C3 : View, C4 : View, C5 : View, C6 : View, C7 : View, C8 : View, C9 : View
+    ```
+    
+* 뷰 빌더 자동 합성 코드 : 뷰 빌더가 어떻게 동작 하는지 확인, 아래의 함수들은 Function Builder를 만들때 필요(뷰 빌더에 한정되지 않는다.)
+
+    * buildBlock : 매개 변수를 받도록 한다.
+    * buildEither : 선택적으로 사용 할 수 있도록 한다.
+    * buildIf : 조건문을 통해 사용 할 수 있도록 한다.
+
+    ```swift
+    VStack {
+        Text("Function Builder")
+        Bool.random() ? Spacer() : Divider()
+        if Bool.random() {
+            Text("Optional")
+        }
+    }
+    //스택뷰를 생성하면 하기와 같이 내부적으로 동작한다.
+    VStack {
+        ViewBuilder.buildBlock {
+            Text("Function Builder")
+        }
+        Bool.random() ? ViewBuilder.buildEither(first: Spacer()) :
+                        ViewBuilder.buildEither(second: Divider())
+        ViewBuilder.buildIf(Bool.random() ? Text("Optional") : nil)
+    }
+    ```
+    
+2) Custom Function Builder : 연산프로퍼티, 함수, 함수의 매개변수 를 통해 만들기, 숫자를 입력하면 짝수를 반환하는 함수빌더
+
+```swift
+struct Home: View {
+
+    @_functionBuilder
+    struct EvenNumbers {
+        static func buildBlock(_ numbers: [Int]) -> [Int] {
+            numbers.filter{ $0.isMultiple(of: 2) }
+        }
+    }
+}
+```
+
+* 연산프로퍼티 : 연산프로퍼티에 함수 빌더 적용
+
+```swift
+struct Home: View {
+
+    @_functionBuilder
+    struct EvenNumbers {
+        static func buildBlock(_ numbers: [Int]) -> [Int] {
+            numbers.filter{ $0.isMultiple(of: 2) }
+        }
+    }
+    
+    // MARK: Body
+    
+    var body: some View {
+        @EvenNumbers var computedProperty: [Int] {
+            [1,2]
+        }
+        print(computedProperty)     //[2]
+        return Text("")
+    }
+}
+```
+
+* 함수 : Function Builder 를 함수 자체에 추가 해주는 방법
+
+```swift
+struct Home: View {
+
+    @_functionBuilder
+    struct EvenNumbers {
+        static func buildBlock(_ numbers: [Int]) -> [Int] {
+            numbers.filter{ $0.isMultiple(of: 2) }
+        }
+    }
+    
+    // MARK: Body
+    
+    var body: some View {
+
+        @EvenNumbers
+        func annotedFunction(_ numbers: [Int]) -> [Int] {
+            numbers.filter { $0 > 2 }
+        }
+
+        print(annotedFunction([1,2,3,4]))
+        return Text("")
+    }
+}
+```
+
+* 함수의 매개변수 : 매개 변수에 함수 빌더 추가, 함수로 전달하는 값이 buildBlock의 입력 값이 되고 buildBlock 함수가 호출 되는 타이밍은 넘겨 받은 함수가 실행 되었을 때가 된다.
+
+```swift
+@_functionBuilder
+struct EvenNumbers {
+    static func buildBlock(_ numbers: [Int]) -> [Int] {
+        numbers.filter{ $0.isMultiple(of: 2) }
+    }
+    static func buildBlock(_ numbers: Int...) -> [Int] {
+        numbers.filter{ $0.isMultiple(of: 2) }
+    }
+}
+
+struct MyNumbers {
+    let numbers: [Int]
+    @inlinable init(@EvenNumbers content: () -> [Int]) {
+        self.numbers = content()
+    }
+}
+
+struct Home: View {
+
+    // MARK: Body
+    
+    var body: some View {
+        let number = MyNumbers {
+            [1,2,3]
+        }
+        let number2 = MyNumbers {
+            1
+            2
+            3
+            4
+        }
+        print(number.numbers)   //[1,2,3] >> 애플 버그로 보임 찾아봐야
+        print(number2.numbers)  //[2,4]
+        return Text("")
     }
 }
 ```

@@ -39,80 +39,80 @@
   * 함수 범위 안에서 코드를 변경하는 경우
   * 연산프로퍼티(입력값이 없는 함수와 동일 하기 때문이다.)
   
-  ``` swift
-  //top Level(파일의 탑레벨)
-  struct Home: View {
-      //struct implementation(구조체 구현)
-      var body: some View {
-          //computed property(속성)
-          Text("Hello, World!")
-      }
-      func someMethod() {
-          //method
-      }
-      //struct implementation
-  }
-  //top Level(파일의 탑레벨)
-  func someFunction() {
-      //method
-  }
-  ```
+    ``` swift
+    //top Level(파일의 탑레벨)
+    struct Home: View {
+        //struct implementation(구조체 구현)
+        var body: some View {
+            //computed property(속성)
+            Text("Hello, World!")
+        }
+        func someMethod() {
+            //method
+        }
+        //struct implementation
+    }
+    //top Level(파일의 탑레벨)
+    func someFunction() {
+        //method
+    }
+    ```
   
 **4) 프리뷰 수식어**
 
 * 기기 지정
-``` swift
-struct Home_Previews: PreviewProvider {
-    static var previews: some View {
-        Home().previewDevice("iPhone 11 Pro")
-    }
-}
-``` 
+  ``` swift
+  struct Home_Previews: PreviewProvider {
+      static var previews: some View {
+          Home().previewDevice("iPhone 11 Pro")
+      }
+  }
+  ``` 
   
 * 여러 기기에서 보기(List 뷰 이용)
-``` swift
-struct Home_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            Home().previewDevice("iPhone 11 Pro")
-            Home().previewDevice("iPhone 11 Pro Max")
-        }
-    }
-}
-``` 
+  ``` swift
+  struct Home_Previews: PreviewProvider {
+      static var previews: some View {
+          Group {
+              Home().previewDevice("iPhone 11 Pro")
+              Home().previewDevice("iPhone 11 Pro Max")
+          }
+      }
+  }
+  ``` 
   
-``` swift
-struct Home_Previews: PreviewProvider {
-    static var previews: some View {
-        ForEach(["iPhone 11 Pro", "iPhone 11 Pro Max", "iPhone SE"], id: \.self) {
-            Home().previewDevice(PreviewDevice(rawValue: $0))
-        }
-    }
-}
-``` 
+  ``` swift
+  struct Home_Previews: PreviewProvider {
+      static var previews: some View {
+          ForEach(["iPhone 11 Pro", "iPhone 11 Pro Max", "iPhone SE"], id: \.self) {
+              Home().previewDevice(PreviewDevice(rawValue: $0))
+          }
+      }
+  }
+  ``` 
   
 * 이름 지정 하기
-``` swift
-struct Home_Previews: PreviewProvider {
-    static var previews: some View {
-        ForEach(["iPhone 11 Pro", "iPhone 11 Pro Max", "iPhone SE"], id: \.self) {
-            Home().previewDevice(PreviewDevice(rawValue: $0))
-        }
-    }
-}
-``` 
+  ``` swift
+  struct Home_Previews: PreviewProvider {
+      static var previews: some View {
+          ForEach(["iPhone 11 Pro", "iPhone 11 Pro Max", "iPhone SE"], id: \.self) {
+              Home().previewDevice(PreviewDevice(rawValue: $0))
+          }
+      }
+  }
+  ``` 
   
 * 레이 아웃 변경하기 : 화면 크기 조절
   * device : 컨테이너가 기기의 본래 크기를 가진다.
   * sizethatFits : 컨테이너가 프리뷰 크기를 맞춘다.
   * fixed(width: height:) : 개발자가 지정한 크기로 컨테이너를 고정한다. 가로 모드일때 사용된다.
     
-  ``` swift
-  struct Home_Previews: PreviewProvider {
-      static var previews: some View {
-          ForEach(["iPhone 11 Pro", "iPhone 11 Pro Max", "iPhone SE"], id: \.self) {
-              Home().previewDevice(PreviewDevice(rawValue: $0)).previewDisplayName("\($0) haha").previewLayout(.sizeThatFits)
-          }
-      }
-  }
-  ``` 
+    ``` swift
+    struct Home_Previews: PreviewProvider {
+        static var previews: some View {
+            ForEach(["iPhone 11 Pro", "iPhone 11 Pro Max", "iPhone SE"], id: \.self) {
+                Home().previewDevice(PreviewDevice(rawValue: $0)).previewDisplayName("\($0) haha").previewLayout(.sizeThatFits)
+            }
+        }
+    }
+    ``` 

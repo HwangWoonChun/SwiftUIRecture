@@ -19,10 +19,13 @@
   * PreviewProvider 타입을 작업중인 파일과 더불어 렌더링 시키는데 그외의 파일들은 분리하고 작업중인 파일만 컴파일 한다.
   * DerivedData 폴더를 보면 프리뷰용이 따로 존재 한다. 소스 에디터를 분할 시키면 분할 시킨 만큼 생성된다.
   
-* 최적화
-  * 디버그 시 no optimization[-Onone] 으로 릴리즈 시 Optimize for Speed[-O] 로 최적화 모드가 설정되는데 
-    프리뷰는 no optimization[-Onone] 이다. 이 때문에 릴리즈 하는 경우 프리뷰 와 관련된 코드가 모두 무시된다. 
-    만약 디버그 모드의 최적화 레벨을 Optimize for Speed[-O] 로 바꾸면 에러가 난다.
+**2) 최적화**
+
+* 디버그 시 no optimization[-Onone] 으로 릴리즈 시 Optimize for Speed[-O] 로 최적화 모드가 설정되는데 
+  프리뷰는 no optimization[-Onone] 이다. 이 때문에 릴리즈 하는 경우 프리뷰 와 관련된 코드가 모두 무시된다. 
+  만약 디버그 모드의 최적화 레벨을 Optimize for Speed[-O] 로 바꾸면 에러가 난다.
+
+**3) 자동 프리뷰 갱신**
 
 * 자동 프리뷰 갱신이 안되는 케이스
   * 프로퍼티 삭제 추가
@@ -54,61 +57,62 @@
       //method
   }
   ```
-* 프리뷰 수식어 보기
+  
+**4) 프리뷰 수식어**
 
-  * 기기 지정
-  ``` swift
-  struct Home_Previews: PreviewProvider {
+* 기기 지정
+``` swift
+struct Home_Previews: PreviewProvider {
     static var previews: some View {
         Home().previewDevice("iPhone 11 Pro")
     }
-  }
-  ``` 
+}
+``` 
   
-  * 여러 기기에서 보기(List 뷰 이용)
-  ``` swift
-  struct Home_Previews: PreviewProvider {
+* 여러 기기에서 보기(List 뷰 이용)
+``` swift
+struct Home_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             Home().previewDevice("iPhone 11 Pro")
             Home().previewDevice("iPhone 11 Pro Max")
         }
     }
-  }
-  ``` 
+}
+``` 
   
-  ``` swift
-  struct Home_Previews: PreviewProvider {
+``` swift
+struct Home_Previews: PreviewProvider {
     static var previews: some View {
         ForEach(["iPhone 11 Pro", "iPhone 11 Pro Max", "iPhone SE"], id: \.self) {
             Home().previewDevice(PreviewDevice(rawValue: $0))
         }
     }
-  }
-  ``` 
+}
+``` 
   
-  * 이름 지정 하기
-  ``` swift
-  struct Home_Previews: PreviewProvider {
+* 이름 지정 하기
+``` swift
+struct Home_Previews: PreviewProvider {
     static var previews: some View {
         ForEach(["iPhone 11 Pro", "iPhone 11 Pro Max", "iPhone SE"], id: \.self) {
-            Home().previewDevice(PreviewDevice(rawValue: $0)).previewDisplayName("\($0) haha")
+            Home().previewDevice(PreviewDevice(rawValue: $0))
         }
     }
+}
+``` 
+  
+* 레이 아웃 변경하기 : 화면 크기 조절
+  * device : 컨테이너가 기기의 본래 크기를 가진다.
+  * sizethatFits : 컨테이너가 프리뷰 크기를 맞춘다.
+  * fixed(width: height:) : 개발자가 지정한 크기로 컨테이너를 고정한다. 가로 모드일때 사용된다.
+    
+  ``` swift
+  struct Home_Previews: PreviewProvider {
+      static var previews: some View {
+          ForEach(["iPhone 11 Pro", "iPhone 11 Pro Max", "iPhone SE"], id: \.self) {
+              Home().previewDevice(PreviewDevice(rawValue: $0)).previewDisplayName("\($0) haha").previewLayout(.sizeThatFits)
+          }
+      }
   }
   ``` 
-  
-  * 레이 아웃 변경하기 : 화면 크기 조절
-    * device : 컨테이너가 기기의 본래 크기를 가진다.
-    * sizethatFits : 컨테이너가 프리뷰 크기를 맞춘다.
-    * fixed(width: height:) : 개발자가 지정한 크기로 컨테이너를 고정한다. 가로 모드일때 사용된다.
-    
-    ``` swift
-    struct Home_Previews: PreviewProvider {
-        static var previews: some View {
-            ForEach(["iPhone 11 Pro", "iPhone 11 Pro Max", "iPhone SE"], id: \.self) {
-                Home().previewDevice(PreviewDevice(rawValue: $0)).previewDisplayName("\($0) haha").previewLayout(.sizeThatFits)
-            }
-        }
-    }
-    ``` 

@@ -136,7 +136,7 @@ public struct EnvironmentValues : CustomStringConvertible { }
 * enviormnet 수식어 : 텍스트랑 수식어가 비슷해보이지만 자식뷰에게 영향을 끼치는게 Enviorment이다.
 
   <table><tr><td>
-   d
+  
       <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_05_01_157×362.png" width = 157 height = 362>
   
     ``` swift

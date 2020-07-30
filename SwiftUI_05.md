@@ -116,3 +116,217 @@
         }
     }
     ``` 
+
+## 2. EnviormentValues
+
+> 뷰를 구성하는데 필요한 각종 환결 설정과 정보를 관리하는 타입
+> UIKit에서는 UITraitCollection 등과 같은 클래스에 관리하는 속성(colorScheme, local, timezone 등)을 이제 EnviormentValue 구조체에 하나로 담아 관리한다.
+> 하위 뷰는 상위 뷰의 환경요소를 그대로 가져오며, 하위뷰의 환경을 변경 시 우선 변경 된다.
+
+``` swift
+public struct EnvironmentValues : CustomStringConvertible { }
+```
+
+**1) EnviormentValues 수식어**
+
+``` swift
+@inlinable public func environment<V>(_ keyPath: WritableKeyPath<EnvironmentValues, V>, _ value: V) -> some View
+```
+
+* enviormnet 수식어 : 텍스트랑 수식어가 비슷해보이지만 자식뷰에게 영향을 끼치는게 Enviorment이다.
+
+  <table><tr><td>
+      <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_05_01_157×362.png" width = 157 height = 362>
+    ``` swift
+    struct Preview_Previews: PreviewProvider {
+        static var previews: some View {
+            Group {
+                Text("Hello, World!").frame(width: 100)
+                    .environment(\.font, .title)
+                Text("Hello, World!").frame(width: 100)
+                    .environment(\.font, .title)
+                    .environment(\.lineLimit, 1)
+                Text("Hello, World!").frame(width: 100)
+                    .environment(\.font, .title)
+                    .environment(\.lineLimit, 1)
+                    .environment(\.minimumScaleFactor, 0.5)
+            }.previewLayout(.sizeThatFits)
+        }
+    }
+    ```
+  <table><tr><td>
+    
+* @enviorment
+
+  * 특정 뷰에서 이 요소를 읽어와 뷰를 구성해야 할때 사용 한다.
+  * 이런 녀석을 프로퍼티 래퍼라고 하는데 추후 적용
+  
+    ``` swift
+    struct Home: View {
+        @Environment(\.layoutDirection) var layoutDirection
+
+        var body: some View {
+
+            if layoutDirection == .leftToRight {
+                return Text("leftToRight")
+            } else {
+                //아랍어 경우 right to left 이다.
+                return Text("rightToLeft")
+            }
+
+        }
+
+    }
+    ```
+    
+* Custom Enviorment
+
+  * 시스템에서만 제공하는게 아니라 앱에 필요한 환경 변수를 직접 만들 수 있다.
+  * EnviormentKey 프로토콜을 채택한 타입을 만들고 defaultValue 타입 프로퍼티를 정의 해야한다. 해당키는 기본 값의 타입을 정한다. 아래는 String으로 임의 지정
+  
+      ``` swift
+      struct Home: View {
+          @Environment(\.layoutDirection) var layoutDirection
+
+          var body: some View {
+              MySubView().environment(\.myEnviorment, "hello world")
+          }
+      }
+
+      struct MySubView : View {
+          //정의한 MyEnviormentKey를 EnviormentValues 타입에 있는 첨자를 이용해 다를 수 있다.
+          @Environment(\.myEnviorment) var myValue
+          var body: some View {
+              Text("\(myValue)")
+          }
+      }
+
+      struct MyEnviormentKey: EnvironmentKey {
+          static let defaultValue: String = ""
+      }
+
+      extension EnvironmentValues {
+          var myEnviorment: String {
+              get {
+                  self[MyEnviormentKey.self]
+              }
+              set {
+                  self[MyEnviormentKey.self] = newValue
+              }
+          }
+      }
+      ```
+      
+## 4-2. 실전앱 다루기
+
+## 1. 프리뷰 활용하기
+> 자주 비교하는 기기들을 지정하고 쉽게 재사용 할수 있도록 프리뷰에서만 하는 용도의 프리뷰 만들기
+
+**1) 커스텀 프리뷰 코드 작성**
+
+  ```swift
+  struct Preview<V: View>: View {
+
+      private func previewSource(device: Device) -> some View {
+          source
+              .previewDevice(PreviewDevice(rawValue: device.rawValue))
+              .previewDisplayName(device.rawValue)
+      }
+
+      enum Device: String, CaseIterable {
+          case iPhone8 = "iPhone 8"
+          case iPhone11 = "iPhone 11"
+          case iPhone11Pro = "iPhone 11 Pro"
+          case iPhone11ProMax = "iPhone 11 Pro Max"
+      }
+
+      let source: V
+
+      var device: [Device] = [.iPhone11Pro, .iPhone11ProMax, .iPhone8]
+      var displayDarkMode = true
+
+      var body: some View {
+          Group {
+              ForEach(device, id:\.self) {
+                  self.previewSource(device: $0)
+              }
+              if !device.isEmpty && displayDarkMode {
+                  self.previewSource(device: device[0])
+                      .preferredColorScheme(.dark)
+              }
+          }
+      }
+  }
+
+  struct Preview_preivews: PreviewProvider {
+      static var previews: some View {
+          Preview(source: Text("Hello world"))
+      }
+  }
+  ```
+
+**2) 홈(Home)**
+
+  ```swift
+  struct Home_Previews: PreviewProvider {
+      static var previews: some View {
+          Preview(source: Home(store: Store()))
+      }
+  }
+  ```
+
+**3) productRow**
+
+  ```swift
+  struct ProductRow_Previews: PreviewProvider {
+      static var previews: some View {
+          Group {
+              ForEach(productSamples) {
+                  ProductRow(product: $0)
+              }
+              ProductRow(product: productSamples[0])
+                  .preferredColorScheme(.dark)
+          }
+          .padding()
+          .previewLayout(.sizeThatFits)
+      }
+  }
+  ```
+
+**4) productDetail : 기본적으로 3개인 디바이스를 두개 추가 해봄 **
+
+  ```swift
+  struct ProductDetailView_Previews: PreviewProvider {
+      static var previews: some View {
+          let source1 = ProductDetailView(product: productSamples[0])
+          let source2 = ProductDetailView(product: productSamples[1])
+          return Group {
+              Preview(source: source1)
+              Preview(source: source2, device: [.iPhone11Pro], displayDarkMode: false)
+          }
+      }
+  }
+  ```
+  
+## 4-3. Identifiable Protocol
+
+## 1. 값 타입과 참조타입의 개체 동등성
+
+```swift
+struct Animal: Equatable {
+    let name : String
+}
+
+let animal1 = Animal(name: "호랑이")
+let animal2 = Animal(name: "호랑이")
+    
+if animal1 == animal2 {
+  print("같데")	//여기 걸린다.
+}
+```
+
+* 값 타입은 상태 값을 통해 동등성을 비교한다.
+
+* 참조 타입은 고유 주소값을 통해 비교한다. 하지만 여러 프로세스에 분산되어 처리되거나 저장했던 값을 불러왔을때 메모리 주소만으로 그 대상의 정체성을 완전히 식별 할 수 없는 경우들도 발생 한다.
+
+## 2. 

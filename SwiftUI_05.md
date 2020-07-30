@@ -346,12 +346,36 @@ if animal1 == animal2 {
   }
   ```
 
-* Identifiable
+* Identifiable 프로토콜은 참조타입(AnyObject 타입)에 한해 id 프로퍼티에 object Identifier 라는 구조체를 사용하는데 기본값으로는 id 에 메모리 주소를 반환한다.
 
-```swift
-extension Identifiable where Self : AnyObject {
+  ```swift
+  extension Identifiable where Self : AnyObject {
 
-    /// The stable identity of the entity associated with `self`.
-    public var id: ObjectIdentifier { get }
-}
-```
+      /// The stable identity of the entity associated with `self`.
+      public var id: ObjectIdentifier { get }
+  }
+  ```
+
+  ```swift
+  //참조타입에서의 Identifiable
+
+  let animal1 = Animal()
+  let animal2 = Animal()
+
+  if animal1.id == animal2.id {
+      print("같데")
+  }
+
+  class Animal: Equatable, Identifiable {
+      //Equatable 프로토콜 필수 구현
+      static func == (lhs: Animal, rhs: Animal) -> Bool {
+          return lhs.id == rhs.id
+      }
+      
+      public var id: ObjectIdentifier {
+          //
+          return ObjectIdentifier(self)
+      }
+      let name : String = ""
+  }
+  ```

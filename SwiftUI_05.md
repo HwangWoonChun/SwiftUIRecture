@@ -136,7 +136,9 @@ public struct EnvironmentValues : CustomStringConvertible { }
 * enviormnet 수식어 : 텍스트랑 수식어가 비슷해보이지만 자식뷰에게 영향을 끼치는게 Enviorment이다.
 
   <table><tr><td>
+   d
       <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_05_01_157×362.png" width = 157 height = 362>
+  
     ``` swift
     struct Preview_Previews: PreviewProvider {
         static var previews: some View {
@@ -329,4 +331,27 @@ if animal1 == animal2 {
 
 * 참조 타입은 고유 주소값을 통해 비교한다. 하지만 여러 프로세스에 분산되어 처리되거나 저장했던 값을 불러왔을때 메모리 주소만으로 그 대상의 정체성을 완전히 식별 할 수 없는 경우들도 발생 한다.
 
-## 2. 
+## 2. Identifiable Protocol
+
+* 이 프로토콜을 체택한 타입은 고유 개체를 구분하기위해 비교 알고리즘(Diff 알고리즘)에 id를 사용한다.
+
+  ```swift
+  public protocol Identifiable {
+
+      /// A type representing the stable identity of the entity associated with `self`.
+      associatedtype ID : Hashable
+
+      /// The stable identity of the entity associated with `self`.
+      var id: Self.ID { get }
+  }
+  ```
+
+* Identifiable
+
+```swift
+extension Identifiable where Self : AnyObject {
+
+    /// The stable identity of the entity associated with `self`.
+    public var id: ObjectIdentifier { get }
+}
+```

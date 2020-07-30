@@ -13,6 +13,6 @@ RxSwiftRect Recture
 [4강 네비게이션 뷰와 리스트 + Function Builder](https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/SwiftUI_04.md)
 ===========
 * * *
-[5강 프리뷰 + EnviormentValue](https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/SwiftUI_05.md)
+[5강 프리뷰 + Identifiable Protocol](https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/SwiftUI_05.md)
 ===========
 * * *

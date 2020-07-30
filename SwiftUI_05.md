@@ -373,9 +373,41 @@ if animal1 == animal2 {
       }
       
       public var id: ObjectIdentifier {
-          //
+          //기본적으로 메모리 반환
           return ObjectIdentifier(self)
       }
       let name : String = ""
   }
   ```
+
+* 참조타입에서의 Identifier
+
+  * 저장 프로퍼티로 값으로 저장
+  
+    ```swift
+    struct Animal: Identifiable {
+        let id: UUID = UUID()
+    }
+    ```
+  
+  * 연산프로퍼티로 다른프로퍼티의 값 지정
+
+    ```swift
+    struct Animal: Identifiable {
+        var id: UUID {
+            uuid
+        }
+        var uuid = UUID()
+    }
+    ```
+
+  * 이미 Identifier가 있다면 프로토콜만 채택
+  
+    ```swift
+    struct Animal {
+        var id: UUID
+    }
+
+    extension Animal: Identifiable {
+    }
+    ```

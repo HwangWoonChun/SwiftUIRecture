@@ -137,7 +137,7 @@ public struct EnvironmentValues : CustomStringConvertible { }
 
   <table><tr><td>
   
-      <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_05_01_157×362.png" width = 157 height = 362>
+    <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_05_01_157×362.png" width = 157 height = 362>
   
     ``` swift
     struct Preview_Previews: PreviewProvider {

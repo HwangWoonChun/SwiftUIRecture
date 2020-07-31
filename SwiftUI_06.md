@@ -41,22 +41,31 @@
 
     * @Binding : 전달받은 데이터를 읽거나 직접 변경 할 수 있는 타입이고 파생자료에 해당된다.
 
+    * @Binding 프로퍼티 래퍼는 전달 받은 데이터를 읽거나 직접 변경 할 수 있도록 만들어진 타입이고 상세 화면 그 자체가 별도의 원천 자료를 갖는 대신 메인 화면을 참조하게 된다. 그래서 두 화면은 같으며, 동기화가 된다.
+
       ```swift
-      struct Super: View {
+      //화면 복귀 시 false 로 동기화가 되어 바뀐다.
+      struct Home: View {
           @State var isFavorite: Bool = true
           var body: some View {
-              Sub(isFavorite: self.isFavorite)
+              NavigationView {
+                  NavigationLink(destination: Sub(isFavorite: $isFavorite)) {
+                      Text(isFavorite.description)
+                  }
+                  .navigationBarTitle("Hello World")
+              }
           }
       }
 
       struct Sub: View {
-          @State var isFavorite: Bool = false
+          @Binding var isFavorite: Bool
           var body: some View {
-              Text("\(isFavorite.description)")
-          }
-          init(isFavorite : Bool) {
-              self.isFavorite = isFavorite
+              isFavorite = false
+              return Text("\(isFavorite.description)")
           }
       }
       ```
+  
+* 도구
+  
   

@@ -70,7 +70,7 @@
 
 > 데이터를 다루는데 사용되는 Tool이라는 도구가 사용되는데 Property, @State, @Binding 등이 있다.
 
-1. @State와 @Binding
+* @State와 @Binding
 
   * @State : 뷰 자체에서 가져야 할 상태 프로퍼티를 말하며, 데이터에 대한 영속적인 상태를 저장하고 관찰하는 역할을 하게 해준다. 뷰 자신에 대한 상태를 저장하는 것이기 때문에 private 접근으로 설정하는 게 좋다.
 
@@ -94,12 +94,12 @@
       }
     ```
   
-2. ObservableObject 프로토콜과 @ObservedObject
+* ObservableObject 프로토콜과 @ObservedObject
 
   * @ObservedObject 는 ObservableObject 프로토콜을 준수하는 모델(참조타입에 한해)에 해당 뷰가 의존성을 알리기 위해 사용하는 속성이다. 실제로 뷰에 영향을 끼치지 않는다.
   * @State는 자신이 상태값을 가지지만 이 속성은 변화 탐지를 위해 사용된다.
   
-3. @Publised
+* @Publised
 
   * @ObservedObject 를 통해 감지한 속성을 뷰에 반영하는 속성이다.
   

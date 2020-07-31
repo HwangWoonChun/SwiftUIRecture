@@ -16,3 +16,6 @@ RxSwiftRect Recture
 [5강 프리뷰 + Identifiable Protocol](https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/SwiftUI_05.md)
 ===========
 * * *
+[6강 유저 입력다루기](https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/SwiftUI_06.md)
+===========
+* * *

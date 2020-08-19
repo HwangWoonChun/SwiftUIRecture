@@ -26,3 +26,16 @@ struct Home_Previews: PreviewProvider {
 * 속도가 빠른이유
     1. preview 타입의 뷰와 관려된 코드만을 컴파일 한다.
     2. Dervied Data에 프리뷰만을 위한 별도의 디렉토리 생성된다.
+    
+* Swift 최적화 레벨
+    * 기존네는 #if DEBUG 구문을 통해 지정
+    * Swfit UI의 프리뷰 에선 No Optimization [-Onone] 일때만 빌드 되고 릴리즈모드 는 Optimize for Speed[-O] 을 채택한다. (반대로 하면 에러 난다.)
+    
+* 자동 프리뷰 갱신이 안되는 경우
+    * 퍼알의 탑레벨
+    * 구조체, 클래스의 구현
+    * 키워드, 속성, 프리프로세서 구문 수정
+    
+* 자동프리뷰 갱신이 되는 경우
+    * 함수 범위 안에서 변경(=연산프로퍼티)
+    * 

@@ -183,8 +183,49 @@ public struct EnvironmentValues : CustomStringConvertible { }
         }
         ```
 
-## 4-1. 기본기 다지기
+## 4-2. 실전 앱 구현하기
 
-## 1. 프리뷰
+## 1. 프리뷰 활용하기
 
-**1) 프로퍼티 동작과정**
+**1) Preview 구현**
+
+* 프리뷰 헬퍼 파일 만들어 구현
+    * 
+
+```swift
+
+import SwiftUI
+
+struct Preview<V: View> : View {
+    enum Device: String, CaseIterable {
+        case iPhone8 = "iPhone 8"
+        case iPhone11 = "iPhone 11"
+    }
+    let source: V
+    let devices: [Device] = [.iPhone8, .iPhone11]
+    var displayDarkMode = true
+    
+    func previewSource(device: Device) -> some View {
+        source
+            .previewDevice(PreviewDevice(rawValue: device.rawValue))
+            .previewDisplayName(device.rawValue)
+    }
+    
+    var body: some View {
+        Group {
+            ForEach(devices, id: \.self) {
+                self.previewSource(device: $0)
+            }
+            if !devices.isEmpty && displayDarkMode {
+                self.previewSource(device: devices[0]).preferredColorScheme(.dark)
+            }
+        }
+    }
+}
+
+struct Preview_Previews: PreviewProvider {
+    static var previews: some View {
+        Preview(source: Text("Hello"))
+    }
+}
+```

@@ -137,5 +137,21 @@ public struct EnvironmentValues : CustomStringConvertible { }
 * @Enviorment
 
     * @Enviorment는 프로퍼티 래퍼로, 읽기 전용으로 특정 뷰에서 EnviormentValues의 특정 요소를 읽어와 뷰 구성에 반영 할때 사용된다.
-    > 프로퍼티 래퍼는 추후다룸
-    
+        > 프로퍼티 래퍼는 추후다룸
+
+        ```swift
+        struct Home: View {
+
+            @Environment(\.layoutDirection) var layoutDirection
+
+            var body: some View {
+                if layoutDirection == .leftToRight {
+                    return Text("leftToRight")
+                } else {
+                    return Text("rightToLeft")
+                }
+            }
+        }
+        ```
+        
+    * Custom Enviorment

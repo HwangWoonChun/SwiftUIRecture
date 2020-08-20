@@ -155,3 +155,36 @@ public struct EnvironmentValues : CustomStringConvertible { }
         ```
         
     * Custom Enviorment
+
+        ```swift
+        struct MyEnviormentKey: EnvironmentKey {
+            static let defaultValue: Int = 0
+        }
+
+        extension EnvironmentValues {
+            var myEnviorment: Int {
+                get { self[MyEnviormentKey.self] }
+                set { self[MyEnviormentKey.self] = newValue }
+            }
+        }
+
+        struct MySubView: View {
+             @Environment(\.myEnviorment) var myEnviorment
+
+            var body: some View {
+                Text("\(myEnviorment)")
+            }
+        }
+
+        struct Home: View {
+            var body: some View {
+                MySubView().environment(\.myEnviorment, 10)
+            }
+        }
+        ```
+
+## 4-1. 기본기 다지기
+
+## 1. 프리뷰
+
+**1) 프로퍼티 동작과정**

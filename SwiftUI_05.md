@@ -190,42 +190,157 @@ public struct EnvironmentValues : CustomStringConvertible { }
 **1) Preview 구현**
 
 * 프리뷰 헬퍼 파일 만들어 구현
-    * 
 
-```swift
+    ```swift
 
-import SwiftUI
+    import SwiftUI
 
-struct Preview<V: View> : View {
-    enum Device: String, CaseIterable {
-        case iPhone8 = "iPhone 8"
-        case iPhone11 = "iPhone 11"
-    }
-    let source: V
-    let devices: [Device] = [.iPhone8, .iPhone11]
-    var displayDarkMode = true
-    
-    func previewSource(device: Device) -> some View {
-        source
-            .previewDevice(PreviewDevice(rawValue: device.rawValue))
-            .previewDisplayName(device.rawValue)
-    }
-    
-    var body: some View {
-        Group {
-            ForEach(devices, id: \.self) {
-                self.previewSource(device: $0)
-            }
-            if !devices.isEmpty && displayDarkMode {
-                self.previewSource(device: devices[0]).preferredColorScheme(.dark)
+    struct Preview<V: View> : View {
+        //표현될 기기 목록
+        enum Device: String, CaseIterable {
+            case iPhone8 = "iPhone 8"
+            case iPhone11 = "iPhone 11"
+        }
+        //표현될 뷰
+        let source: V
+        //렌더링될 기기 목록 기본값
+        let devices: [Device] = [.iPhone8, .iPhone11]
+        //다크모드 출력여부
+        var displayDarkMode = true
+
+        func previewSource(device: Device) -> some View {
+            source
+                .previewDevice(PreviewDevice(rawValue: device.rawValue))
+                .previewDisplayName(device.rawValue)
+        }
+
+        var body: some View {
+            Group {
+                ForEach(devices, id: \.self) {
+                    self.previewSource(device: $0)
+                }
+                if !devices.isEmpty && displayDarkMode {
+                    self.previewSource(device: devices[0]).preferredColorScheme(.dark)  //preferredColorScheme: 컬러모드 
+                }
             }
         }
     }
-}
 
-struct Preview_Previews: PreviewProvider {
-    static var previews: some View {
-        Preview(source: Text("Hello"))
+    struct Preview_Previews: PreviewProvider {
+        static var previews: some View {
+            Preview(source: Text("Hello"))
+        }
     }
-}
-```
+    ```
+    
+* 프리뷰 수정하기
+
+    * Home
+    
+        ```swift    
+        struct Home_Previews: PreviewProvider {
+            static var previews: some View {
+                //Home(store: Store())
+                Preview(source: Home(store: Store()))
+            }
+        }    
+        ```
+        
+    * Product Row : 기기별 의미는 없고 상품 리스트 확인
+  
+        ```swift
+        struct ProductRow_Previews: PreviewProvider {
+            static var previews: some View {
+                ForEach(productSamples) {
+                    ProductRow(product: $0).previewLayout(.sizeThatFits).preferredColorScheme(.dark)
+                }.padding()
+            }
+        }    
+        ```
+        
+    * ProductDetailView : 기기별 의미는 없고 상품 리스트 확인
+    
+        ```swift    
+        struct ProductDetailView_Previews: PreviewProvider {
+            static var previews: some View {
+                let source1 = ProductDetailView(product: productSamples[0])
+                let source2 = ProductDetailView(product: productSamples[1])
+
+                return Group {
+                    Preview(source: source1)    //Preview에 지정된 2개 디바이스 출력
+                    Preview(source: source2, devices: [.iPhone8], displayDarkMode: false) //iPhone 8 만 
+                }
+            }
+        }
+        ```
+
+## 4-3. Identifiable Protocol
+
+* 값 타입 에서의 비교
+
+    * 두개의 다른 값타입은 값이 같으면 같은것으로 취급된다.
+
+        ```swift  
+        struct Animal: Equatable {
+            var age = 10
+            init(age: Int){
+                self.age = age
+            }
+        }
+
+        let dog = Animal(age: 10)
+        let cat = Animal(age: 10)
+
+        if dog == cat {
+            print("같다")
+        }
+        ```
+        
+* 참조 타입 에서의 비교
+    
+    * 힙 메모리에 저장된 고유 주소값을 통해 정체성을 확보한다.
+    
+
+* Identifitable Protocol
+
+    * Diff 알고리즘(비교) 에 따라 아이디를 사용하여 비교한다. 값이 같더라도 id 다르면 달라진다.
+    
+    * Identifiable 프로토콜은 AnyObject며 참조타입에 한해 id프로퍼티에 ObjectIdentifier 라는 구조체를 사용한다.
+    
+        ```swift  
+        extension Identifiable where Self : AnyObject {
+            public var id: ObjectIdentifier { get }
+        }
+        ```
+        
+    * SwiftUI
+    
+        * List, ForEach 같은 뷰 는 Identfitable 프로토콜을 요구한다. 데이터가 Identifitable Protocol 을 채택한다면 ID 값은 생략 할 수 있다.
+
+            ```swift
+            struct Home: View {
+                let store: Store
+
+                // MARK: Body
+
+                var body: some View {
+
+                    let dog = Animal(id: 1, age: 10)
+                    let cat = Animal(id: 2, age: 10)
+
+                    return ForEach([dog,cat]) { animal in
+                        Text(String(describing: animal))
+                    }
+                }
+            }
+
+            struct Animal: Equatable, Identifiable {
+                var id = 0
+                var age = 10
+
+                init(id: Int, age: Int){
+                    self.id = id
+                    self.age = age
+                }
+            }
+            ```

@@ -68,7 +68,8 @@
   
 **3) 도구**
 
-> 데이터를 다루는데 사용되는 Tool이라는 도구가 사용되는데 Property, @State, @Binding 등이 있다.
+> 데이터를 다루는데 사용되는 Tool이라는 도구가 사용되는데 @State, @Binding 등이 있다.
+
 
 * @State와 @Binding
 
@@ -97,13 +98,13 @@
 * ObservableObject 프로토콜과 @ObservedObject
 
   * @ObservedObject 는 ObservableObject 프로토콜을 준수하는 모델(참조타입에 한해)에 해당 뷰가 의존성을 알리기 위해 사용하는 속성이다. 실제로 뷰에 영향을 끼치지 않는다.
-  * @State는 자신이 상태값을 가지지만 이 속성은 변화 탐지를 위해 사용된다.
+  * @State는 뷰의 상태를 저장하고 다루기 위함이라면 뷰 외부의 모델이 가진 원천자료를 다루기 위한 도구 이다. 그 중 참조타입이 아닌 경우에 ObservableObject 가 사용된다.
   
-* @Publised
+  * @Publised
 
-  * @ObservedObject 를 통해 감지한 속성을 뷰에 반영하는 속성이다.
-  
-  * @Published는 프로퍼티 변경 시점에 알려지는 것이도, 사용자가 그 시점을 정하여 알리고 싶을땐 objectWillChange 프로퍼티를 사용한다.
+    * @ObservedObject 를 통해 감지한 속성을 뷰에 반영하는 속성이다.
+    * 관련없는 데이터 들이 뷰에 영향을 끼치는 것을 불필요하기에 어떤 변경사항을 어느시점에 뷰에 전달 할지 알려준다.
+    * @Published는 프로퍼티 변경 시점에 알려지는 것이도, 사용자가 그 시점을 정하여 알리고 싶을땐 objectWillChange 프로퍼티를 사용한다.
   
     ``` swift
     class User: ObservableObject {
@@ -136,7 +137,8 @@
   * 비교 2 : @ObservedObject 는 특정 모델에 대한 참조를 뷰에 직접 전달하여 의존성을 만들어 준다. 자식 뷰에게도 알려주려면 계속 Binding 해줘야 한다.
   * 동작순서 : @EnviormentObject 는 enviormentObject() 를 이용해 특정뷰에 대한 환경요소로 등록한다. 그럼 뷰를 포함한 자식뷰들에게 등록해둔 모델에 대한 의존서을 만들어 준다.
   * 특징 : @EnviormentObject 는 자식 뷰들을 띄엄띄엄 사용 할 수 있다.(어떤 자식은 쓰고 어떤 자식은 안쓰고)
-
+  
+  
     ``` swift
     class User: ObservableObject{
         let name: String = ""

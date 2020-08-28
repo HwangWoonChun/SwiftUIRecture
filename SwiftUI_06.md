@@ -95,10 +95,11 @@
       }
     ```
   
-* ObservableObject 프로토콜과 @ObservedObject
+* ObservableObject 프로토콜과 @ObservedObject, @Published
+  
+  * ObservableObject 을 준수하고 @Published를 사용하게 되면 @Published를 사용한 프로퍼티가 변경 시 뷰가 알 수 있게 해준다.
 
-  * @ObservedObject 는 ObservableObject 프로토콜을 준수하는 모델(참조타입에 한해)에 해당 뷰가 의존성을 알리기 위해 사용하는 속성이다. 실제로 뷰에 영향을 끼치지 않는다.
-  * @State는 뷰의 상태를 저장하고 다루기 위함이라면 뷰 외부의 모델이 가진 원천자료를 다루기 위한 도구 이다. 그 중 참조타입이 아닌 경우에 ObservableObject 가 사용된다.
+  * @ObservedObject 을 사용하게 되면 ObservableObject 프로토콜을 준수하는 모델에 해당 뷰가 의존성을 가진다고 알려주는 것이다.
   
   * @Publised
 
@@ -163,6 +164,16 @@
         }
     }
     ```
+    
+* 그럼 언제 사용하는가?
+
+  * @State : 하나의 뷰에 속하는 간단한 프로퍼티 private 이다.
+
+  * @ObservableObject : 여러개의 뷰에 속하는 복잡한 프로퍼티 이것을 사용
+
+  * @EnviormentObject : 앱의 전반에 걸쳐 공유되는 데이터에 사용한다.
+
+
 
 **4) Alert, ActionSheet**
 > 기존에는 UIAlertViewController.style.alert or UIAlertViewController.style.actionSheet 로 통합하여 사용했지만 SwiftUI에선 쪼개졌다. Alert의 최대 버튼 크기는 2개 이다.

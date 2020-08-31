@@ -464,4 +464,101 @@
         @EnvironmentObject private var store: Store
     }
     ```
+    
+* 즐겨찾기 정보 변경
   
+  * 즐겨찾기 OnOff
+  
+    ```Swift
+    extension Store {
+        func toggleFavorite(of product: Product) {
+            guard let index = products.firstIndex(where: {
+                $0.id == product.id
+            }) else { return }
+            products[index].isFavorite.toggle()
+        }
+    }
+    ```
+
+  * Product 가 Equatable 을 채택하게 하여 이미 무엇을 비교해야 할지 판단하게 한다면 더 깔끔하게 사용 가능
+  
+    ```Swift
+    extension Store {
+        func toggleFavorite(of product: Product) {
+            guard let index = products.firstIndex(of: product) else { return }
+            products[index].isFavorite.toggle()
+        }
+    }
+    ```
+
+* Favorite 버튼 구현
+
+  * 버튼 구현
+  
+    ```Swift
+    import SwiftUI
+
+    struct FavoriteButton: View {
+        @EnvironmentObject private var store: Store
+        let product: Product
+
+        private var imageName: String {
+            product.isFavorite ? "heart.fill" : "heart"
+        }
+
+        var body: some View {
+            Button(action: {
+                self.store.toggleFavorite(of: self.product)
+            }) {
+                Image(systemName: imageName)
+                    .imageScale(.large)
+                    .foregroundColor(.peach)
+                    .frame(width: 32, height: 32)
+            }
+        }
+    }
+    ```
+    
+  * 버튼 적용
+  
+    * ProdcutRow
+  
+      ```Swift
+              var footerView: some View {
+                  HStack(spacing: 0) {
+                      Text("₩").font(.footnote)
+                          + Text("\(product.price)").font(.headline)
+
+                      Spacer()
+
+                      FavoriteButton(product: product)
+
+                      Image(systemName: "cart")
+                          .foregroundColor(.peach)
+                          .frame(width: 32, height: 32)
+                  }
+              }
+
+      ```
+
+    * ProductDetail
+
+      ```Swift
+        var productDescription: some View {
+          VStack(alignment: .leading, spacing: 16) {
+            HStack {
+              Text(product.name)
+                .font(.largeTitle).fontWeight(.medium)
+                .foregroundColor(.black)
+
+              Spacer()
+
+              FavoriteButton(product: product)
+            }
+
+            Text(splitText(product.description))
+              .foregroundColor(.secondaryText)
+              .fixedSize()
+          }
+        }
+      ```

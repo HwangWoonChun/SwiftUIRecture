@@ -652,10 +652,8 @@
                   }),
                   secondaryButton: .cancel(Text("취소")))
         }
-    }
-    
-    func placeOrder() {
-        store.placeOrder(product: product, quantity: quantity)
-    }
-
+      func placeOrder() {
+          store.placeOrder(product: product, quantity: quantity)
+      }
+   }
     ```

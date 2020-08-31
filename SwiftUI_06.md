@@ -607,7 +607,7 @@
     ```
   
 
-  * Alert 뷰와 의존성을 가지는 showingAlert
+  * Alert 뷰와 의존성을 가지는 showingAlert, 주문하기 버튼 기능 
   
     ```Swift
     struct ProductDetailView: View {

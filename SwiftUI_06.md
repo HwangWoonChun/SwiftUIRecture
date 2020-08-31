@@ -562,3 +562,100 @@
           }
         }
       ```
+  * ProdcutRow의 즐겨찾기 버튼을 눌렀을 때 화면 이동을 해버린다.
+  
+    * 버튼 스타일을 Default 로 하면 동작의 우선권을 SuperView가 가지게 된다. 버튼 스타일을 Plain 혹은 Borderless 로 바꾸면 된다.
+    
+    * 버튼이 아니라 onTapGesture를 이용해도 위 방법과 동일하게 동작한다.
+    
+* 주문기능 구현
+
+  * 주문 모델
+  
+    ```Swift
+    struct Order: Identifiable {
+        //1부터 시작해 주문이 들어올때마다 1씩 증가
+        static var orderSequence = sequence(first: 1) { $0 + 1 }
+        let id : Int
+        let product: Product
+        let quantity: Int
+
+        var price: Int {
+            product.price * quantity
+        }
+    }
+    ```
+    
+  * Store에 주문 모델 추가
+
+    ```Swift
+    final class Store: ObservableObject {
+        @Published var products: [Product]
+        @Published var orders: [Order] = []
+        // MARK: Initialization
+
+        init(filename: String = "ProductData.json") {
+            self.products = Bundle.main.decode(filename: filename, as: [Product].self)
+        }
+
+        func placeOrder(product: Product, quantity: Int) {
+            let nextID = Order.orderSequence.next()!
+            let order = Order(id: nextID, product: product, quantity: quantity)
+            orders.append(order)
+        }
+    }
+    ```
+  
+
+  * Alert 뷰와 의존성을 가지는 showingAlert
+  
+    ```Swift
+    struct ProductDetailView: View {
+        let product: Product
+        @State private var showingAlert: Bool = false		//Alert state
+        @State private var quantity: Int = 1
+
+        // MARK: Body
+
+        var body: some View {
+            VStack(spacing: 0) {
+                productImage
+                orderView
+            }
+            .edgesIgnoringSafeArea(.top)
+        //alert 수식어
+            .alert(isPresented: $showingAlert) {
+                confirmAlert
+            }
+        }
+        
+      var placeOrderButton: some View {
+          Button(action: {
+            self.showingAlert = true
+        }) {
+            Capsule()
+                .fill(Color.peach)
+                .frame(maxWidth: .infinity, minHeight: 30, maxHeight: 55)
+                .overlay(Text("주문하기")
+                    .font(.system(size: 20)).fontWeight(.medium)
+                    .foregroundColor(Color.white))
+                .padding(.vertical, 8)
+        }
+    }
+
+      //알림창에 표현할 내용 정의
+        var confirmAlert: Alert {
+            Alert(title: Text("주문확인"),
+                  message: Text("\(product.name)을 \(quantity) 개 구매 하시겠습니까?"),
+                  primaryButton: .default(Text("확인"), action: {
+                      self.placeOrder()
+                  }),
+                  secondaryButton: .cancel(Text("취소")))
+        }
+    }
+    
+    func placeOrder() {
+        store.placeOrder(product: product, quantity: quantity)
+    }
+
+    ```

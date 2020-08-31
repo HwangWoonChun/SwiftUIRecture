@@ -3,7 +3,7 @@
 
 6강 유저 입력다루기
 ===========
-## 4-1. 기본기 다지기
+## 6-1. 기본기 다지기
 
 ## 1. 데이터의 흐름 이해하기
 > Swift UI 에서 데이터를 변경하고 전달하는 방식
@@ -103,7 +103,7 @@
   
   * @Publised
 
-    * @ObservedObject 를 통해 감지한 속성을 뷰에 반영하는 속성이다.
+    * ObservableObject 를 통해 감지한 속성을 뷰에 반영하는 속성이다.
     * 관련없는 데이터 들이 뷰에 영향을 끼치는 것을 불필요하기에 어떤 변경사항을 어느시점에 뷰에 전달 할지 알려준다.
     * @Published는 프로퍼티 변경 시점에 알려지는 것이도, 사용자가 그 시점을 정하여 알리고 싶을땐 objectWillChange 프로퍼티를 사용한다.
   
@@ -169,7 +169,7 @@
 
   * @State : 하나의 뷰에 속하는 간단한 프로퍼티 private 이다.
 
-  * @ObservableObject : 여러개의 뷰에 속하는 복잡한 프로퍼티 이것을 사용
+  * @ObservedObject : 여러개의 뷰에 속하는 복잡한 프로퍼티 이것을 사용
 
   * @EnviormentObject : 앱의 전반에 걸쳐 공유되는 데이터에 사용한다.
 
@@ -294,3 +294,174 @@
         }
     }
     ```
+    
+## 6-2. 실전앱 구현하기
+
+## 1. 수량 선택하기 기능
+
+**1) 스태퍼**
+
+* Stepper 기본
+
+  ``` swift
+      Stepper(onIncrement: {
+          //증가
+      }, onDecrement:  {
+          //감소
+      }) {
+          //레이블
+      }
+  ```
+  
+* Custom Stepper
+
+  * 생각 해볼 문제 1) ~= 연산자 : 우변이 좌변에 포함이 되는지 안되는지 체크하는 
+
+  * 생각 해볼 문제 2) 타입프로퍼티 : 타입프로퍼티는 해당 클래스 혹은 구조체 그 자체를 표현하기 위한 프로퍼티 이다. 그래서 타입안에 속한 인스턴스 프로퍼티에 접근 이 불가능하다.
+
+  ``` swift
+
+  import SwiftUI
+
+  struct QuantitySelector: View {
+      @Binding var quantity: Int
+      var range: ClosedRange<Int> = 1...20
+      var body: some View {
+          HStack {
+              Button(action: {
+                  self.changeQuantity(-1)
+              }) {
+                  Image(systemName: "minus.circle.fill")
+                      .imageScale(.large)
+                      .padding()
+                      .foregroundColor(Color.gray.opacity(0.5))
+              }
+
+              Text("\(quantity)")
+                  .bold()
+                  .font(Font.system(.title, design: .monospaced))
+                  .frame(minWidth: 40, maxHeight: 60)
+
+              Button(action: {
+                  self.changeQuantity(1)
+              }) {
+                  Image(systemName: "plus.circle.fill")
+                      .imageScale(.large)
+                      .padding()
+                      .foregroundColor(Color.gray.opacity(0.5))
+              }
+          }
+      }
+      private func changeQuantity(_ num: Int){
+          if range ~= quantity + num {
+              quantity += num
+          }
+      }
+  }
+
+  struct QuantitySelector_Previews: PreviewProvider {
+      @State private var quantity: Int = 10
+      static var previews: some View {
+          //QuantitySelector(quantity: $quantity)
+          //위 코드는 동작하지 않는다.
+          //타입프로퍼티는 해당 클래스 및 구조체의 프로퍼티 접근이 불가능하다.
+          //그래서 인스턴스 프로퍼티 타입인 quantity는
+          //타입프로퍼티로 선언된(static) preview에서 사용 할 수 없다.
+          //타입프로퍼티는 타입 자체를 나타내는 프로퍼티
+          //임시로 상수를 사용
+          QuantitySelector(quantity: .constant(0))
+      }
+  }
+  ```
+  
+* Stepper 적용
+
+  ``` swift
+  struct ProductDetailView: View {
+      let product: Product
+      @State private var quantity: Int = 1
+      // MARK: Body
+
+      var body: some View {
+          VStack(spacing: 0) {
+              productImage
+              orderView
+          }
+          .edgesIgnoringSafeArea(.top)
+      }
+  }
+  ```
+
+  ``` swift
+      var priceInfo: some View {
+          HStack {
+              (Text("₩")
+                  + Text("\(product.price)").font(.title)
+                  ).fontWeight(.medium)
+              Spacer()
+              QuantitySelector(quantity: $quantity)
+          }
+          .foregroundColor(.black)
+      }
+  ```
+  
+**2) 햅틱적용하기**
+
+* UIImpactFeedbackGenerator
+
+  ```Swift
+  private let softFeed = UIImpactFeedbackGenerator(style: .soft)  //부드러운
+  private let rigidFeed = UIImpactFeedbackGenerator(style: .rigid)//딱딱한
+  ```
+
+  ```Swift
+      private func changeQuantity(_ num: Int){
+          if range ~= quantity + num {
+              quantity += num
+              softFeed.prepare()
+              softFeed.impactOccurred(intensity: 0.8) //진동세기
+          } else {
+              rigidFeed.prepare()
+              rigidFeed.impactOccurred()
+          }
+      }
+  ```
+  
+**3) 즐겨찾기 구현하기**
+> 홈, 상세 두곳에 하트 모양 이미지 적용
+
+* ObservableObject + @EnviormentObject
+
+  * Store에 ObservableObject 프로토콜 채택
+  
+  * products 프로퍼티에 @Published 적용
+  
+    ```Swift
+    final class Store: ObservableObject {
+      @Published var products: [Product]
+
+      // MARK: Initialization
+
+      init(filename: String = "ProductData.json") {
+        self.products = Bundle.main.decode(filename: filename, as: [Product].self)
+      }
+    }
+    ```
+  * 환경 객체 주입
+
+    ```Swift
+    Delegate: UIResponder, UIWindowSceneDelegate {
+      func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+          //let rootView = Home(store: Store()) 기존코드
+          let rootView = Home().environmentObject(Store()) // 환경객체 주입
+        }
+    }
+    ```
+
+    ```Swift
+    struct Home: View {
+        //let store: Store //기존코드
+        @EnvironmentObject private var store: Store
+    }
+    ```
+  

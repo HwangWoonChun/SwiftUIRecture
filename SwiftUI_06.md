@@ -665,4 +665,152 @@
 
 **1) Property Wrapper**
 
-* 
+* 특정제약이나 기능을 정의 해둔 클래스, 열거형, 구조체 타입에 적용하여 그 타입의 이름과 동일한 커스텀 속성을 만들어 주는 선언 속성이다.
+
+* 프로퍼티를 구현할때 반복적으로 사용하는 패턴들이 있는데 그 중 대표적인게 lazy 이다. 언어 차원에서 아래 코드를 지원하게 되면 컴파일러 구현과 언어가 복잡해지고 여러가지 구현을 유연하게 제공하기는 어렵다. 그래서 이러한 코드를 라이브러리로 만들어 사용할 수 있게 함으로서 컴파일러의 변경을 최소화하면서 더 많은 매커니즘을 재사용 할 수 있도록 만들어 주는 것이 이 PropertyWrapper 이다.
+
+  ```Swift
+  struct Lazy {
+    // lazy var foo = 1738
+    private var _foo: Int?
+    var foo: Int {
+      get {
+        if let value = _foo { return value }
+        let initialValue = 1738
+        _foo = initialValue
+        return initialValue
+      }
+      set {
+        _foo = newValue
+      }
+    }
+  }
+  ```
+  
+**2) Property Wrapper Example**
+
+* UserDefault 의 공통 코드를 PropertyWrapper 로 묶어 보자
+
+  ```Swift
+  @propertyWrapper
+  struct UserDefault<T> {
+      let key: String	//key값에 초기값을 설정 할 수 없다. 사용시 Argument passed to call that takes no arguments 에러, 래퍼타입에 생성자가 구현 되어야하기 때문이다.
+      var wrappedValue: T? {
+          get { UserDefaults.standard.object(forKey: key) as? T }
+          set { UserDefaults.standard.set(newValue, forKey: key)}
+      }
+  }
+
+
+  @UserDefault(key: "IS_LOGGINED_IN") var isLoggined: Bool?
+  ```
+
+* PropertyWrapper Property 초기화
+
+  ```Swift
+  @propertyWrapper
+  struct RoundedToTwo {
+      private var value: Double
+      private var multipier: Double
+
+      init() {
+          self.value = 0.0
+          self.multipier = 100.0
+      }
+
+      var wrappedValue: Double {
+          get { value }
+          set { value = (newValue * multipier).rounded() / multipier }
+      }
+  }
+
+
+  struct Numbers {
+      @RoundedToTwo var roundedNum: Double
+  }
+
+  var numbers = Numbers()
+  numbers.roundedNum = 1.2345 //1.23
+  ```
+
+
+* PropertyWrapper 초기화
+
+  ```Swift
+  @propertyWrapper
+  struct RoundedTo<Value: FloatingPoint> {
+
+      private var value: Value = 0
+      private let precision: Int
+      private var multipier: Value {
+          (0..<precision).reduce(1) { (sum, _) in sum * 10 }
+      }
+
+      init(wrapperValue: Value, _ precision: Int) {
+          assert(precision >= 0)
+          self.precision = precision
+          self.wrappedValue = wrappedValue
+      }
+
+      var wrappedValue: Value {
+          get { value }
+          set { value = (newValue * multipier).rounded() / multipier }
+      }
+  }
+
+  struct Numbers {
+      @RoundedTo(wrapperValue: 1.2345, 2) var roundedNum: Double
+  }
+  ```
+
+**3) 자동생성 코드**
+
+* 래퍼가 적용된 코드는 컴파일러에 의해 아래와 같이 동작한다. 두개의 프로퍼티를 가지게 된다. private var _roundedNum, var roundedNum
+
+  ```Swift
+  private var _roundedNum: RoundedTo<Double> = RoundedTo<Double>(wrappedValue: 1.2345, 2) //레퍼타입의 인스턴스가 만들어져 저장프로퍼티에 저장, private이 기에 타입의 범위를 벗어날 수 없다.
+  var roundedNum: Double { //roundedNum은 래퍼에 구현된 wrappedValue에 접근하고 있다 그래서 _가 붙은 해당 변수명을 이용하면 직접 래퍼타입에 접근이 가능하다.
+    get { return _roundedNum.WrappedValue }
+    set { _roundedNum.wrappedValue = newValue }
+  }
+  ```
+
+* 외부에서 해당 프로퍼티를 접근해야 된다면 projectedValue 프로퍼티를 사용 하면 된다.
+
+  ```Swift
+  @propertyWrapper
+  struct RoundedTo<Value: FloatingPoint> {
+
+      private var value: Value = 0
+      private let precision: Int
+      private var multipier: Value {
+          (0..<precision).reduce(1) { (sum, _) in sum * 10 }
+      }
+
+      init(wrapperValue: Value, _ precision: Int) {
+          assert(precision >= 0)
+          self.precision = precision
+          self.wrappedValue = wrappedValue
+      }
+
+      var wrappedValue: Value {
+          get { value }
+          set { value = (newValue * multipier).rounded() / multipier }
+      }
+
+      var projectedValue: Self {
+          get { self }
+          set { self = newValue }
+      }
+  }
+  ```
+
+* 그러면 3개의 프로퍼티가 만들어 진다.
+
+  ```Swift
+  roundNum  //Double 타입의 연산프로퍼티
+  _roundNum // RoundedTo<Double>, 컴파일러에 자동 생성된 프로퍼티 래퍼 타입 private
+  $roundNum // RoundedTo<Double>, ProjectedValue 정의에 따라 타입과 같이 변화
+  ```
+
+* @State 래퍼가 사용된 프로퍼티에서 달러 기호 $ 를 붙이면 바인딩 타입이 반환된 것도 projtectedValue가 정의 되어 있기 때문이다.

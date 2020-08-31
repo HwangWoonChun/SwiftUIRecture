@@ -426,11 +426,11 @@
           }
       }
   ```
-  
-**3) 즐겨찾기 구현하기**
+
+## 2. 즐겨찾기 구현하기
 > 홈, 상세 두곳에 하트 모양 이미지 적용
 
-* ObservableObject + @EnviormentObject
+1) ObservableObject + @EnviormentObject
 
   * Store에 ObservableObject 프로토콜 채택
   
@@ -447,6 +447,7 @@
       }
     }
     ```
+
   * 환경 객체 주입
 
     ```Swift
@@ -465,7 +466,7 @@
     }
     ```
     
-* 즐겨찾기 정보 변경
+2) 즐겨찾기 정보 변경
   
   * 즐겨찾기 OnOff
   
@@ -491,55 +492,55 @@
     }
     ```
 
-* Favorite 버튼 구현
+  * Favorite 버튼 구현
 
-  * 버튼 구현
+    * 버튼 구현
   
-    ```Swift
-    import SwiftUI
+      ```Swift
+      import SwiftUI
 
-    struct FavoriteButton: View {
-        @EnvironmentObject private var store: Store
-        let product: Product
+      struct FavoriteButton: View {
+          @EnvironmentObject private var store: Store
+          let product: Product
 
-        private var imageName: String {
-            product.isFavorite ? "heart.fill" : "heart"
-        }
+          private var imageName: String {
+              product.isFavorite ? "heart.fill" : "heart"
+          }
 
-        var body: some View {
-            Button(action: {
-                self.store.toggleFavorite(of: self.product)
-            }) {
-                Image(systemName: imageName)
-                    .imageScale(.large)
-                    .foregroundColor(.peach)
-                    .frame(width: 32, height: 32)
-            }
-        }
-    }
-    ```
+          var body: some View {
+              Button(action: {
+                  self.store.toggleFavorite(of: self.product)
+              }) {
+                  Image(systemName: imageName)
+                      .imageScale(.large)
+                      .foregroundColor(.peach)
+                      .frame(width: 32, height: 32)
+              }
+          }
+      }
+      ```
     
-  * 버튼 적용
+    * 버튼 적용
   
     * ProdcutRow
   
-      ```Swift
-              var footerView: some View {
-                  HStack(spacing: 0) {
-                      Text("₩").font(.footnote)
-                          + Text("\(product.price)").font(.headline)
+        ```Swift
+                var footerView: some View {
+                    HStack(spacing: 0) {
+                        Text("₩").font(.footnote)
+                            + Text("\(product.price)").font(.headline)
 
-                      Spacer()
+                        Spacer()
 
-                      FavoriteButton(product: product)
+                        FavoriteButton(product: product)
 
-                      Image(systemName: "cart")
-                          .foregroundColor(.peach)
-                          .frame(width: 32, height: 32)
-                  }
-              }
+                        Image(systemName: "cart")
+                            .foregroundColor(.peach)
+                            .frame(width: 32, height: 32)
+                    }
+                }
 
-      ```
+        ```
 
     * ProductDetail
 
@@ -655,5 +656,8 @@
       func placeOrder() {
           store.placeOrder(product: product, quantity: quantity)
       }
-   }
+    }
     ```
+
+## 6-3. Property Wrapper
+

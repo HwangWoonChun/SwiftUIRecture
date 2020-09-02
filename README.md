@@ -19,3 +19,6 @@ RxSwiftRect Recture
 [6강 유저 입력다루기 + propertyWrapper](https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/SwiftUI_06.md)
 ===========
 * * *
+[7강 커스텀뷰](https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/SwiftUI_07.md)
+===========
+* * *

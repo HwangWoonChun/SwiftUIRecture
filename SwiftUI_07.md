@@ -111,7 +111,7 @@
   }
   ```
 
-## 2. CustomStyle
+## 2. CustomStyle - 버튼
 
 * 버튼은 buttonStyle 수식어에 PlainButtonStyle 을 적용한다.
 * list는 listStyle 수식어에 GroupedListStyle 을 적용한다.
@@ -222,3 +222,61 @@
           .buttonStyle(CustomPrimitiveButtonStyle(minimumDuration: 1))
       }
       ```
+      
+## 3. CustomStyle - 토글
+
+* 토글의 ToggleStyle
+
+  ```swift
+  public protocol ToggleStyle {
+      associatedtype Body : View
+      func makeBody(configuration: Self.Configuration) -> Self.Body
+      typealias Configuration = ToggleStyleConfiguration
+  }
+  ```
+
+* ToggleStyle의 Configuration
+
+  ```swift
+  public struct ToggleStyleConfiguration {
+      public struct Label : View {	//토글의 사용용도를 알려주는 뷰에 불과
+         public typealias Body = Never
+      }
+      public var isOn: Bool { get nonmutating set }
+      public var $isOn: Binding<Bool> { get }
+  }
+  ```
+  
+* 버튼과 동일하게 ToggleStyle 프로토콜을 채택하고 Configuration 매개변수를 제공하는 makeBody 함수를 구현하면 된다.
+
+<table><tr><td>
+  
+    <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_07_01.png" width = 180 height = 20>
+    <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_07_02.png" width = 180 height = 20>
+
+  ```swift
+  struct CustomToggleStyle: ToggleStyle {
+      let size: CGFloat = 30
+
+      func makeBody(configuration: Configuration) -> some View {
+          let isOn = configuration.isOn
+          return HStack {
+              configuration.label
+              Spacer()
+              ZStack(alignment: isOn ? .top : .bottom) {	//좌우 대신 상하로 움직이게 onOff 여부에 따라 top, bottom 으로 정렬
+                  Capsule()
+                      .fill(isOn ? Color.green : Color.red)
+                      .frame(width:size, height: size * 2)
+                  Circle()
+                      .frame(width:size-2, height: size - 2)
+                      .onTapGesture {
+                          withAnimation {
+                              configuration.isOn.toggle()
+                          }
+                  }
+              }
+          }
+      }
+  }
+  ```
+<table><tr><td>

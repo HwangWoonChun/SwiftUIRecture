@@ -251,8 +251,8 @@
 
 <table><tr><td>
   
-    <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_07_01.png" width = 180 height = 20>
-    <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_07_02.png" width = 180 height = 20>
+  <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_07_01.png" width = 180 height = 20>
+  <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_07_02.png" width = 180 height = 20>
 
   ```swift
   struct CustomToggleStyle: ToggleStyle {

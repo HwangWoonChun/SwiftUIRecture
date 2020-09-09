@@ -278,5 +278,184 @@
           }
       }
   }
+  
+  @State private var isOn = true
+  var body: some View {
+	  Toggle(isOn: $isOn, label: {
+		  Text("커스텀 토글")
+	  })
+	  .toggleStyle(CustomToggleStyle())
+  }
   ```
 <table><tr><td>
+
+## 3. UIAppearance
+> 내부적으로 많은 부분에서 각 플랫폼별 UI 프레임워크에서 제공하는 뷰와 컨트롤을 사용한다. Swift UI에서 제공하는 API 영역외에 제어가 가능하다.
+
+* UIAppearance
+  * 이 프로토콜은 클래스의 외형객체에 수정 메세지를 던져 그와 관련된 모든 클래스의 인스턴스 속성을 일괄적으로 변경 할 수 있도록 한다.
+  
+```swift
+public protocol UIAppearance : NSObjectProtocol {
+    static func appearance() -> Self
+}
+```
+
+* UINavigationBar 타이틀 커스터 마이징
+
+  * 타이틀 생성
+  
+    ```swift
+    struct Home: View {
+        var body: some View {
+            NavigationView {
+                Text("Hello")
+                .navigationBarTitle("Text", displayMode: .inline)
+            }
+        }
+    }
+    ```
+
+  * 커스터마이징 방법 1) Appdelegate나 SceneDelegate 처럼 단 한번의 설정으로 앱 전체에 지속해서 통일 하고 싶다면 해당 클래스에서 적용
+
+    ```swift
+    final class AppDelegate: UIResponder, UIApplicationDelegate {
+        override init() {
+            UINavigationBar.appearance().largeTitleTextAttributes = [
+                .foregroundColor : UIColor.systemRed,
+                .kern : 5   //자간
+            ]
+        }
+    }
+    ```
+
+  * 커스터마이징 방법 2) onAppear 함수에 적용, 이 수식어는 viewWillAppear와 동일하다, 뷰가 보여질때마다 불린다. 
+
+    ```swift
+    struct Home: View {
+        var body: some View {
+            SomeView().onAppear {
+                UINavigationBar.appearance().largeTitleTextAttributes = [
+                    .foregroundColor : UIColor.systemRed,
+                    .kern : 5   //자간
+                ]
+            }
+        }
+    }
+
+    struct SomeView: View {
+        var body: some View {
+            NavigationView {
+                Text("Hello")
+                .navigationBarTitle("Text", displayMode: .inline)
+            }
+        }
+    }
+    ```
+    
+  * 참조 largeTitleTextAttributes 는 displayMode .large 인 경우에만 적용되며 .inline 경우 UINavigationBar.appearance().titleTextAttributes 를 사용하면 적용이 된다.
+  
+
+* UISwitch Appearance
+
+  * 외형 프록시(appearance()) 를 이용하여 thumbTintColor, onTintColor 의 속성을 변경
+
+    ```swift
+    struct Home: View {
+        var body: some View {
+            SomeView().onAppear {
+                UISwitch.appearance().onTintColor = .red
+
+                UISwitch.appearance().thumbTintColor = .green
+            }
+        }
+    }
+
+    struct SomeView: View {
+        @State private var isOn = false
+        var body: some View {
+            Toggle(isOn: $isOn) {
+                Text("toggle")
+            }
+        }
+    }
+    ```
+
+## 7-2. 커스텀 뷰 만들기
+
+## 1. Symbol 구현
+
+* SF Symbol 을 사용하는 Image(systemName:) 를 대채하는 커스텀 뷰 만들기
+
+  ```swift
+  struct Symbol: View {
+      let systemName: String
+      let imageScale: Image.Scale
+      let color: Color?
+
+      init(_ systemName: String, scale imageScale: Image.Scale = .medium, color: Color? = nil) {
+          self.systemName = systemName
+          self.imageScale = imageScale
+          self.color = color
+      }
+
+      var body: some View {
+          Image(systemName: systemName)
+              .imageScale(imageScale)
+              .foregroundColor(color)
+      }
+  }
+  ```
+
+  ```swift
+  //기존 코드
+  Image(systemName: "heart.fill")
+      .imageScale(.large)
+      .foregroundColor(nil)
+
+  //커스터마이징
+  Symbol("heart.fill", scale: .large)
+  ```
+
+  * 주의점 : 이미 foregroundColor, scale 수식어가 적용된 상태이기 때문에 아래 추가 수식어는 무시된다.
+
+    ```swift
+    Symbol("heart.fill").imageScale(.large)
+    ```
+
+* ResizedImage 구현, 이미지를 크기 그대로 사용하는 경우 보다 사용환경에 맞게 조절해야 하는 경우가 빈번하다.
+
+  ```swift
+  struct ResizedImage: View {
+      let imageName: String
+      let contentMode: ContentMode
+      let renderingMode: Image.TemplateRenderingMode?
+
+      init(_ imageName: String, contentMode: ContentMode = .fill, renderingMode: Image.TemplateRenderingMode? = nil) {
+          self.imageName = imageName
+          self.contentMode = contentMode
+          self.renderingMode = renderingMode
+      }
+
+      var body: some View {
+          Image(imageName)
+              .renderingMode(renderingMode)
+              .resizable()
+              .aspectRatio(contentMode: contentMode)
+      }
+  }
+  ```
+  
+  * 기존 코드
+
+    ```swift
+    Image(self.product.imageName)
+      .resizable()
+      .scaledToFill()
+    ```
+    
+  * 신규 코드
+  
+    ```swift
+    ResizedImage(self.product.imageName)
+    ```

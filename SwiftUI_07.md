@@ -287,7 +287,7 @@
 	  .toggleStyle(CustomToggleStyle())
   }
   ```
-<table><tr><td>
+</table></tr></td>
 
 ## 3. UIAppearance
 > 내부적으로 많은 부분에서 각 플랫폼별 UI 프레임워크에서 제공하는 뷰와 컨트롤을 사용한다. Swift UI에서 제공하는 API 영역외에 제어가 가능하다.

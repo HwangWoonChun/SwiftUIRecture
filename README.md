@@ -1,5 +1,5 @@
-# RxSwiftRect
-RxSwiftRect Recture
+# SwiftUI Recture
+SwiftUI Recture Hwang Woon Chun
 
 [1강 SwiftUI 소개](https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/SwiftUI_01.md)
 ===========

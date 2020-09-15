@@ -459,3 +459,40 @@ public protocol UIAppearance : NSObjectProtocol {
     ```swift
     ResizedImage(self.product.imageName)
     ```
+
+## 2. ButtonStyle 구현 - ButtonStyle
+> 주문하기 버튼에 눌러질때 크기가 작아지는 버튼
+
+* ShirnkButtonStyle
+
+	```swift
+	struct ShrinkButtonStyle: ButtonStyle {
+	    var minScale: CGFloat = 0.9
+	    var minOpacity: Double = 0.6
+
+	    func makeBody(configuration: Configuration) -> some View {
+		configuration.label
+		    .scaleEffect(configuration.isPressed ? minScale : 1)
+		    .opacity(configuration.isPressed ? minOpacity : 1)
+	    }
+	}
+	```
+
+* 수식어 적용
+
+	```swift
+	var placeOrderButton: some View {
+	    Button(action: {
+		self.showingAlert = true
+	    }) {
+		Capsule()
+		    .fill(Color.peach)
+		    .frame(maxWidth: .infinity, minHeight: 30, maxHeight: 55)
+		    .overlay(Text("주문하기")
+		    .font(.system(size: 20)).fontWeight(.medium)
+		    .foregroundColor(Color.white))
+		    .padding(.vertical, 8)
+	    }
+	    .buttonStyle(ShrinkButtonStyle())	//적용코드
+	}
+	```

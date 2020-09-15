@@ -496,3 +496,152 @@ public protocol UIAppearance : NSObjectProtocol {
 	    .buttonStyle(ShrinkButtonStyle())	//적용코드
 	}
 	```
+
+## 3. 팝업구현하기 - ViewModifier
+
+* 팝업 뷰
+
+	```swift
+	enum PopupStyle {
+	    case none
+	    case blur
+	    case dimmed
+	}
+
+	// MARK: - Popup
+
+	fileprivate struct Popup<Message: View>: ViewModifier {
+	    let size: CGSize?
+	    let style: PopupStyle
+	    let message: Message
+
+	    init(
+		size: CGSize? = nil,
+		style: PopupStyle = .none,
+		message: Message
+	    ) {
+		self.size = size
+		self.style = style
+		self.message = message
+	    }
+
+	    func body(content: Content) -> some View {
+		content
+		    .blur(radius: style == .blur ? 2 : 0)
+		    .overlay(Rectangle()
+			.fill(Color.black.opacity(style == .dimmed ? 0.4 : 0)))
+		    .overlay(popupContent)
+	    }
+
+	    private var popupContent: some View {
+		GeometryReader {
+		    VStack { self.message }
+			.frame(width: self.size?.width ?? $0.size.width * 0.6,
+			       height: self.size?.height ?? $0.size.height * 0.25)
+			.background(Color.primary.colorInvert())
+			.cornerRadius(12)
+			.shadow(color: .primaryShadow, radius: 15, x: 5, y: 5)
+			.overlay(self.checkCircleMark, alignment: .top)
+		}
+	    }
+
+	    private var checkCircleMark: some View {
+		Symbol("checkmark.circle.fill", color: .peach)
+		    .font(Font.system(size: 60).weight(.semibold))
+		    .background(Color.white.scaleEffect(0.8))
+		    .offset(x: 0, y: -20)
+	    }
+	}
+
+	//Boolean 으로 눌렸다 안눌렸다 구분 방법
+	fileprivate struct PopupToggle: ViewModifier {
+	    @Binding var isPresented: Bool
+	    func body(content: Content) -> some View {
+		content
+		    .disabled(isPresented) 
+		    .onTapGesture { self.isPresented.toggle() } //누르면 사라지도록
+	    }
+	}
+
+	//Identifier를 이용해 눌렀다 안눌렀다 구분 방법
+	fileprivate struct PopupItem<Item: Identifiable>: ViewModifier {
+	    @Binding var item: Item?
+	    func body(content: Content) -> some View {
+		content
+		    .disabled(item != nil)
+		    .onTapGesture { self.item = nil }
+	    }
+	}
+
+	//주문완료시 메세지
+	struct OrderCompletedMessage: View {
+	  var body: some View {
+	    Text("주문 완료!")
+	      .font(.system(size: 24))
+	      .bold()
+	      .kerning(2)
+	  }
+	}
+	```
+* Extension 으로 묶어 사용하기 편하도록 수정
+
+	```swift
+	extension View {
+
+	    //팝업 조건지정하기 - Binding<Bool> 이용
+	    func popup<Content: View>(
+		isPresented: Binding<Bool>, //state는 이 뷰를 사용할 곳, binding은 이 뷰에서 처리
+		size: CGSize? = nil,
+		style: PopupStyle = .none,
+		@ViewBuilder content: () -> Content
+	    ) -> some View {
+		if isPresented.wrappedValue {
+		    let popup = Popup(size: size, style: style, message: content())
+		    let popupToggle = PopupToggle(isPresented: isPresented)
+		    let modifiedContent = self.modifier(popup).modifier(popupToggle) //두개의 수식어를 중첩해서 사용 할때 그 순서에 따라 차례대로 적용
+		    return AnyView(modifiedContent)
+		} else {
+		    return AnyView(self)
+		}
+	    }
+
+	    //팝업 조건지정하기 - Identifiable 이용
+	    func popup<Content: View, Item: Identifiable>(
+		item: Binding<Item?>,
+		size: CGSize? = nil,
+		style: PopupStyle = .none,
+		@ViewBuilder content: (Item) -> Content
+	    ) -> some View {
+		if let selectedItem = item.wrappedValue {
+		    let content = content(selectedItem)
+		    let popup = Popup(size: size, style: style, message: content)
+		    let popupItem = PopupItem(item: item)
+		    let modifiedContent = self.modifier(popup).modifier(popupItem)
+		    return AnyView(modifiedContent)
+		} else {
+		    return AnyView(self)
+		}
+	    }
+	}
+	```
+
+* 수식어 반영
+
+	```swift
+	struct ProductDetailView: View {
+
+	    @State private var showingPopup: Bool = false
+
+	    // MARK: Body
+
+	    var body: some View {
+		VStack(spacing: 0) {
+		    productImage
+		    orderView
+		}
+		.popup(isPresented: $showingPopup) { OrderCompletedMessage() }
+		.edgesIgnoringSafeArea(.top)
+		.alert(isPresented: $showingAlert) { confirmAlert }
+	    }
+	}
+	```

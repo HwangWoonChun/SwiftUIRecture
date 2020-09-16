@@ -645,3 +645,151 @@ public protocol UIAppearance : NSObjectProtocol {
 	    }
 	}
 	```
+	
+## 4. 빠른 주문 기능 구현하기
+> 상품상세 뿐만 아니라 리스트에서도 주문하여 팝업 띄우기
+
+* ProductRow
+
+	```swift
+	struct ProductRow: View {
+	    @Environment var store: Store       //주문내역 저장하는데 사용
+	    @Binding var quickOrder: Product?   //원천자료는 Home, ProductRow는 에선 동기화만
+	    let product: Product
+
+	    // MARK: Body
+
+	    var body: some View {
+		HStack {
+		    productImage
+		    productDescription
+		}
+		.frame(height: 150)
+		.background(Color.primary.colorInvert())
+		.cornerRadius(6)
+		.shadow(color: .primaryShadow, radius: 1, x: 2, y: 2)
+		.padding(.vertical, 8)
+	    }
+
+	    var footerView: some View {
+		HStack(spacing: 0) {
+		    Text("₩").font(.footnote)
+			+ Text("\(product.price)").font(.headline)
+
+		    Spacer()
+
+		    FavoriteButton(product: product)
+
+		    Symbol("cart", color: .peach)
+			.frame(width: 32, height: 32)
+			.onTapGesture {					//주문 로직 추가
+			    self.orderProduct()
+		    }
+		}
+	    }
+
+	    func orderProduct() { //주문로직
+		quickOrder = product
+		store.placeOrder(product: product, quantity: 1)
+	    }
+	}
+	```
+
+* Home
+
+	```swift
+	struct Home: View {
+	    @EnvironmentObject private var store: Store
+	    @State private var quickOrder: Product?		//빠른주문 정보 추가
+	    // MARK: Body
+
+	    var body: some View {
+		NavigationView {
+		    List(store.products) { product in
+			NavigationLink(destination: ProductDetailView(product: product)) {
+			    ProductRow(product: product, quickOrder: self.$quickOrder)
+			}
+		    }
+		    .navigationBarTitle("과일마트")
+		}
+		.popup(item: $quickOrder, content: popupMessage(product:)) 
+	    }
+
+	    func popupMessage(product: Product) -> some View {			//팝업 메세지 그리는 함수 추가
+		let name = product.name.split(separator: " ").last!
+		return VStack {
+		    Text(name)
+			.font(.title).bold().kerning(3)
+			.foregroundColor(.peach)
+			.padding()
+
+		    OrderCompletedMessage()
+		}
+	    }
+	}
+	```
+
+* 위 코드의 문제 뷰와 팝업창이 추가된 뷰가 나뉘어 반환되는 방식이기 때문에 아래의 문제 발생한다. 
+
+	* 팝업창을 닫거나 띄우는 것만으로 네비게이션이 갱신된다.
+	* 화면위치를 유지 하지 않고 최 상단으로 돌아간다.
+	* 뷰 자체에 disabled 수식어 때문에 아무런 스타일을 적용하지 않았는데도 리스트에서 출력되는 상품목록들이 희미하게 보인다.
+	* 팝업창의 크기 조정을 위해 edgeIgnoringSafeArea 수식어를 쓰고 싶어도 실제 컨텐츠까지 영향이 갈 수 있기 때문에 쓰기 힘들다.
+	* 해결방안 : ZStack을 이용하여 새로운 뷰를 올리는 방식 채택
+	
+
+		```swift
+		extension View {
+		    func popupOverContext<Item: Identifiable, Content: View>(
+			item: Binding<Item?>,
+			size: CGSize? = nil,
+			style: PopupStyle = .none,
+			ignoringEdges edges: Edge.Set = .all,
+			@ViewBuilder content: (Item) -> Content
+		    ) -> some View  {
+			let isNonNil = item.wrappedValue != nil
+			return ZStack {
+			    self
+				.blur(radius: isNonNil && style == .blur ? 2 : 0)
+
+			    if isNonNil {
+				Color.black
+				    .luminanceToAlpha()
+				    .popup(item: item, size: size, style: style, content: content)
+				    .edgesIgnoringSafeArea(edges)
+			    }
+			}
+		    }
+		}
+		```
+
+## 5. 기본 UI 색상 변경하기
+
+* 네비게이션 바 타이틀 글자색 변경
+
+```swift
+class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+    
+    var window: UIWindow?
+
+    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+        
+        let rootView = Home()
+            .accentColor(Color.primary) //네비게이션 아이템 색상 변경 primary 이니 다크 모드때 흰색, 라이트 모드에서 검정색 (백버튼)
+            .environmentObject(Store())
+
+        self.configurationAppearance()
+    }
+    
+    func configurationAppearance() {
+        //large 디스플레이
+        UINavigationBar.appearance().largeTitleTextAttributes = [
+            .foregroundColor: UIColor(named: "peach")!
+        ]
+        //inline 디스플레이
+        UINavigationBar.appearance().titleTextAttributes = [
+            .foregroundColor: UIColor(named: "peach")!
+        ]
+    }
+}
+```

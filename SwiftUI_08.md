@@ -35,10 +35,10 @@
   ```
 
 * 가로축인 경우 스크롤뷰는 부모 뷰가 제공 하는 너비의 최대한을 차지하려는 확장성을 가진다.
-  <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_08_01_1242 × 2688.png" width = 400 height = 600>
+  <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_08_01.png" width = 400 height = 600>
 
 * 세로축인 경우 스크롤뷰는 자식 뷰가 가진 너비만큼 차지한다.
-  <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_08_02_1242 × 2688.png" width = 400 height = 600>
+  <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_08_02.png" width = 400 height = 600>
 
   ```swift
   ScrollView(.horizontal) {
@@ -108,4 +108,4 @@
   }
   ```
 
-  <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_08_04_1242 × 2688.png" width = 400 height = 600> | <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_08_03_1242 × 2688" width = 400 height = 600>
+  <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_08_04.png" width = 400 height = 600> | <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_08_03.png" width = 400 height = 600>

@@ -22,3 +22,6 @@ SwiftUI Recture Hwang Woon Chun
 [7강 커스텀뷰](https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/SwiftUI_07.md)
 ===========
 * * *
+[8강 스크롤뷰, 탭뷰](https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/SwiftUI_08.md)
+===========
+* * *

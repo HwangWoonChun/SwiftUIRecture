@@ -111,4 +111,48 @@
   }
   ```
 
-  <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_08_04.png" width = 310 height = 672> | <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_08_03.png" width = 310 height = 672>
+  <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_08_04.png" width = 310 height = 672> <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_08_03.png" width = 310 height = 672>
+
+    * 스크롤뷰 경우 화면이 꽉 차 있지 않는데 스크롤뷰의 컨텐츠는 무한대 일 수 있기 때문에 color, rectangle과 같이 크기를 지정하지 않는 뷰 일때 스크롤뷰 입장은 어디까지 표현되는지 알 수 가 없다.
+    
+    * 스크롤뷰는 내부적으로 스크롤방향에 따라 fixedSize 수식어를 적용하고 있다.
+    
+    * VStack을 스크롤 뷰 처럼 보이려면
+    
+      ```swift
+      var body: some View {
+          VStack {
+              Color.red
+              Color.green
+              Color.blue
+          }
+          .fixedSize(horizontal: false, vertical: true)
+          .frame(maxHeight: .infinity, alignment: .top)
+      }
+      ```
+
+  * 스크롤뷰를 VStack 처럼 보이려면
+  
+    ```swift
+    var body: some View {
+        ScrollView {
+            Color.red
+            Color.green.frame(idealHeight: 50)
+            Color.blue.frame(idealHeight: 100)
+        }
+    }
+    ```
+    
+  * 위 코드 스크롤뷰에 idealHeight 를 주면 통일된다. 스크롤뷰는 방향에 따라 ideal 높이 너비를 주면 개별 크기가 아닌 (50 + 100 / 2) 이 된다. 전체 크기는 (50 + 100 / 2) + (8 * 1) //간격
+  
+  * 개별 크기를 주고 싶다면 height를 주면 된다.
+  
+    ```swift
+    var body: some View {
+        ScrollView {
+            Color.red
+            Color.green.frame(height: 100)
+            Color.blue.frame(height: 200)
+        }
+    }
+    ```

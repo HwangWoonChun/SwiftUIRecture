@@ -156,3 +156,51 @@
         }
     }
     ```
+    
+* ContentOffset
+
+  * SwiftUI는 직접적으로 제공하진 않고, 부모뷰에 데이터를 전달 할 수 있는 preferenceKey 를 사용하거나, 지오메트리 리더의 글로벌 좌표를 이용한다.
+  
+  * Geometry Leader 를 이용하여 스크롤 할때 마다 색상 변경
+  
+  * .global : 지오메트리 프록시에서 글로벌 기준으로 프레임을 얻으면 윈도우의 원점을 기준으로 한 상대 좌표를 반환 한다.
+  
+    ```swift
+    struct Home: View {
+        var body: some View {
+            ScrollView {
+                ForEach(0..<10) { _ in
+                    GeometryReader {
+                        Rectangle().fill(self.color(from: $0))
+                    } .frame(width: 150, height: 150)
+                }
+            }
+        }
+        func color(from proxy: GeometryProxy) -> Color {
+            let yOffset = proxy.frame(in: .global).minY - 44  
+            //safeAreaInset.top 만큼의 크기
+            //높이 150 간격 8
+            //첫번째 셀의 Y는 44, 두번째는 202
+            let color = min(1,0.2 + Double(yOffset / 1000))
+            return Color(hue: color, saturation: color, brightness: color)
+        }
+    }
+    ```
+* 페이징 처리
+
+  * SwiftUI 는 이 기능을 직접 제공하지 않는다.
+  
+  * 외형 프록시를 이용하여 UIScrollView의 기본 설정을 변경하는 방식으로 구현 할 수 있다.
+
+    ```swift
+        var body: some View {
+            ScrollView {
+                ForEach(0..<10) { _ in
+                    GeometryReader {
+                        Rectangle().fill(self.color(from: $0))
+                    } .frame(width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height)
+                }
+            }
+            .onAppear { UIScrollView.appearance().isPagingEnabled = true }
+        }
+    ```

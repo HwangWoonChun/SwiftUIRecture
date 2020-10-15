@@ -204,3 +204,56 @@
             .onAppear { UIScrollView.appearance().isPagingEnabled = true }
         }
     ```
+    
+## 2. 탭뷰
+
+* UITabBarController 와 컨샙, 기본구조, 개념은 같다. 하지만 사용방법이 훨씬 간단해졌다.
+
+* 제약 사항
+    * 탭 아이템은 이미지 + 텍스트만 가능하다.
+    * 텍스트만 넣든 이미지만 넣든 영역은 고정이다.
+    * 두개이상 넣을때 하나만(첫번째) 채택된다.
+    * 아이템을 하나도 넣지 않아도 자리는 차지 한다.
+
+* 간단 예제
+    <tr>
+      <td> <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/tab_01.png" width = 310 height = 870> </td>
+      <td> <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/tab_02.png" width = 310 height = 870> </td>
+      <td> <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/tab_03.png" width = 310 height = 870> </td>
+    </tr>
+    
+    ```swift
+    struct Home: View {
+        var body: some View {
+            TabView {
+                VStack {
+                    Text("1 탭").font(.largeTitle)
+                    Image("SwiftUI")
+                }.tabItem {
+                    Image(systemName: "house")
+                    Text("아이템1")
+                }
+                Text("2 탭").font(.title)
+                    .padding()
+                    .background(Color.yellow)
+                    .tabItem {
+                        Image(systemName: "cube")
+                        Text("아이템2")
+                    }
+                SomeView().tabItem {
+                    Image(systemName: "person")
+                    Text("아이템3")
+                }
+            }
+        }
+
+        struct SomeView: View{
+            var body: some View {
+                VStack {
+                    Text("실제로 이렇게 개발")
+                    Text("별도 뷰를 빼서")
+                }.font(.title)
+            }
+        }
+    }
+    ```

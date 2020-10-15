@@ -257,3 +257,100 @@
         }
     }
     ```
+* 첫번째 탭 아이템은 비어있는 상태, 탭아이템은 특정뷰에서 사용되고 실제적용은 아이템이 없더라도 뷰 순서에 따라 결정된다.
+
+    <tr>
+      <td> <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/tab_04.png" width = 207 height = 448> </td>
+      <td> <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/tab_05.png" width = 207 height = 448> </td>
+      <td> <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/tab_06.png" width = 207 height = 448> </td>
+    </tr>
+
+    ```swift
+        var body: some View {
+            TabView {
+                Text("1 탭").font(.largeTitle)
+                Text("2 탭").font(.title).tabItem { Text("아이템2") }
+                Text("3 탭").font(.title).tabItem { Text("아이템3") }
+            }
+        }
+    ```
+    
+* 태그 : 태그는 TabView의 selection을 이용한다. Hashable 프로토콜을 따르는 어떤 타입도 가능하다.
+
+    ```swift
+    struct Home: View {
+        @State private var selectedTab = 0
+        var body: some View {
+            TabView(selection: $selectedTab) {
+                ForEach(0..<3) { index in
+                    Text("\(index) 탭").font(.largeTitle).fontWeight(.bold)
+                        .tag(index)
+                        .tabItem {
+                            Image(systemName: self.selectedTab != index ? "\(index).square" : "\(index).square.fill")
+                                .imageScale(.large)
+                        }
+                }
+            }
+        }
+    }
+    ```
+
+    ```swift
+    enum TapItems {
+        case A, B
+    }
+    struct Home: View {
+        @State private var selectedTab = TapItems.A
+        var body: some View {
+            TabView(selection: $selectedTab) {
+                Text("A 탭").font(.largeTitle).fontWeight(.bold).tag(TapItems.A)
+                    .tabItem { Text("A 탭 아이템") }
+                Text("B 탭").font(.largeTitle).fontWeight(.bold).tag(TapItems.B)
+                    .tabItem { Text("B 탭 아이템") }
+            }
+        }
+    }
+    ```
+    
+* 색상변경
+
+    * accentColor
+    
+        <tr>
+          <td> <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/tab_07.png" width = 207 height = 448> </td>
+        </tr>
+        
+        ```swift
+        struct Home: View {
+            @State private var selectedTab = TapItems.A
+            var body: some View {
+                TabView(selection: $selectedTab) {
+                    Text("A 탭").font(.largeTitle).fontWeight(.bold).tag(TapItems.A)
+                        .tabItem { Text("A 탭 아이템") }
+                    Text("B 탭").font(.largeTitle).fontWeight(.bold).tag(TapItems.B)
+                        .tabItem { Text("B 탭 아이템") }
+                }.accentColor(.red) //선택시 변경
+            }
+        }
+        ```
+        
+    * UITabBar 의 외형 프록시 이용 색상변경
+    
+        ```swift
+        UITabBar.appearance().backgroundColor = UIColor.yellow
+        UITabBar.appearance().unselectedItemTintColor = UIColor.blue
+        ```
+    
+    * cf) tintColor : 기본값을 가지고 있지 않는 뷰에 대해 시스템적으로 정의 해놓은 색상
+    
+        ```swift
+        view.addsubView(button)
+
+        button2.tintColor = .yellow
+        view.addsubView(button2)
+
+        view.tintColor = .systemPink
+
+        print(button.titleColor) // systemPink
+        print(button2.titleColor) // yellow
+        ```

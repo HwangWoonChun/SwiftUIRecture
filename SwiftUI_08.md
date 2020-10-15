@@ -217,9 +217,9 @@
 
 * 간단 예제
     <tr>
-      <td> <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/tab_01.png" width = 310 height = 870> </td>
-      <td> <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/tab_02.png" width = 310 height = 870> </td>
-      <td> <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/tab_03.png" width = 310 height = 870> </td>
+      <td> <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/tab_01.png" width = 207 height = 448> </td>
+      <td> <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/tab_02.png" width = 207 height = 448> </td>
+      <td> <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/tab_03.png" width = 207 height = 448> </td>
     </tr>
     
     ```swift

@@ -134,4 +134,4 @@ class UIHostingController<Content> : UIViewController where Content : View
 
 1-3. MVC?
 ===========
-1. 컨트롤러없ㄷ이 뷰와 모델만 이용하여 뷰 개발이 가능하기 때문에 아직 애플 공식 패턴이 없기 때문에 여러 논의가 필요
+1. 컨트롤러없이 뷰와 모델만 이용하여 뷰 개발이 가능하기 때문에 아직 애플 공식 패턴이 없기 때문에 여러 논의가 필요

@@ -95,12 +95,12 @@ extension Text : View {
     public typealias Body = Never
 }
 ```
-* associatedtype
+* 참조 associatedtype : Generic 에서 나온 개념, placeHolder 역할을 하며 타입의 견본을 만든다. 프로토콜이 적용 될때까지 타입이 지정되지 않는다.
 ``` swift
 protocol ExProtocol{
     var name: String { get }
 }
-//수트링, Int 등의 다양한 타입으로 받을수있다면
+//스트링, Int 등의 다양한 타입으로 받을수있다면
 protocol ExProtocol {
     associatedtype MyType
     var name: MyType { get }

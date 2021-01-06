@@ -14,8 +14,8 @@ SwiftUI Recture
             var body: some View {
                 HStack {
                     Image("apple")
-                        .resizable()
-                        .scaledToFill()
+                        .resizable()   //SwiftUI의 이미지는 기본적으로 이미지 원본을 유지하려고 하는데 resizable은 이를 커스터마이징 하기 위함이다.
+                        .scaledToFill() //원본 비율을 유지하되 최대 크기로 늘어나는데 가로세로 중 큰것을 선택하여 크기 재조정, fit 은 적은것을 선택
                         .frame(width: 140)
                         .clipped()
                 }.frame(height: 150)

@@ -50,7 +50,7 @@ SwiftUI Recture
         ```
 
 
-<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/03Rect_02.png" width = 776 height = 358>
+<img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/03Rect_02.png" width = 259 height = 119>
 
 3. 컨텐츠 추가하기
 

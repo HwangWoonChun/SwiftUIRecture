@@ -126,9 +126,11 @@ protocol ExProtocol {
         }
     }
 ```
-* class UIHostingController<Content> : UIViewController where Content : View
-  - UIViewController를 상속받고, 뷰 프로토콜을 준수하는 제네릭 매개변수 Content를 전달하는 제네릭 클래스
-* * *
+
+``` swift
+class UIHostingController<Content> : UIViewController where Content : View
+//UIViewController를 상속받고, 뷰 프로토콜을 준수하는 제네릭 매개변수 Content를 전달하는 제네릭 클래스
+``` 
 
 1-3. MVC?
 ===========

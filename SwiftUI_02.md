@@ -14,7 +14,7 @@ UITextField | TextField |
 UITextField(secure) | SecureField |
 UIButton | Button |
 UImageView | Image |
-UISlider | Text |
+UISlider | Slider |
 UIPickerView | Picker(WheelPickerStyle) |
 UISegmentedControl | Picker(SegmentedPickerStyle) |
 UITextView | 동일요소없음 |

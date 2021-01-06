@@ -441,7 +441,7 @@ struct Home_Previews: PreviewProvider {
 
 ## 4. Opaque type
 
-1. some : Opaque type 의 키워드로 프로퍼티, 첨자, 함수 등의 반환 타입에 한정적으로 사용
+1. some : Opaque type 의 키워드로 프로퍼티, 첨자, 함수 등의 반환 타입에 한정적으로 사용, 기존(5.1 이전) 버전에서는 프로토콜을 따르는 어떤 타입에 대해선 리턴이 불가능 했었다. some 키워드를 이용해 가능해 졌다.
 
 ``` swift
 var body: some View { }

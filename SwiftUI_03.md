@@ -5,7 +5,7 @@ SwiftUI Recture
 ===========
 ## 1. 기본 뷰 구성하기
 
-<img src = "https://github.com/HwangWoonChun/SwiftUIRecture/blob/master/image/reimage_01.png">
+<img src = "https://github.com/HwangWoonChun/SwiftUIRecture/blob/master/image/reimage_01.png" width = 128 height = 227>
 
 1. 이미지뷰 복습
 *. clipped() : 뷰를 벗어나는 이미지 잘라주기 

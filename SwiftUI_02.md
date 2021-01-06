@@ -13,7 +13,7 @@ UILabel | Text |
 UITextField | TextField |
 UITextField(secure) | SecureField |
 UIButton | Button |
-UImageView | Slider |
+UImageView | Image |
 UISlider | Text |
 UIPickerView | Picker(WheelPickerStyle) |
 UISegmentedControl | Picker(SegmentedPickerStyle) |

@@ -8,45 +8,46 @@ SwiftUI Recture
 <img src = "https://github.com/HwangWoonChun/SwiftUIRecture/blob/master/image/reimage_01.png" width = 128 height = 227>
 
 1. 이미지뷰 복습
-*. clipped() : 뷰를 벗어나는 이미지 잘라주기 
-``` swift
-struct Home: View {
-    var body: some View {
-        HStack {
-            Image("apple")
-                .resizable()
-                .scaledToFill()
-                .frame(width: 140)
-                .clipped()
-        }.frame(height: 150)
-    }
-}
-```
+    * clipped() : 뷰를 벗어나는 이미지 잘라주기 
+        ``` swift
+        struct Home: View {
+            var body: some View {
+                HStack {
+                    Image("apple")
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 140)
+                        .clipped()
+                }.frame(height: 150)
+            }
+        }
+        ```
 
 2. 셀 구조 잡기 : HStack 안에 여러 스택 중첩
 
-*. EmptyView() : Stack 뷰 안에 하나 이상의 뷰를 넣어야하기 때문에 추가할 기능을 구현하기전에 미리 아무기능도 아무 공간도 차지하지 않는 뷰를 집어 넣는 것
-``` swift
-struct Home: View {
-    var body: some View {
-        HStack {
-            Image("apple")
-                .resizable()
-                .scaledToFill()
-                .frame(width: 140)
-                .clipped()
-            
-            VStack {
-                EmptyView()
+    * EmptyView() : Stack 뷰 안에 하나 이상의 뷰를 넣어야하기 때문에 추가할 기능을 구현하기전에 미리 아무기능도 아무 공간도 차지하지 않는 뷰를 집어 넣는 것
+    
+        ``` swift
+        struct Home: View {
+            var body: some View {
                 HStack {
-                    EmptyView()
-                }
+                    Image("apple")
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 140)
+                        .clipped()
+
+                    VStack {
+                        EmptyView()
+                        HStack {
+                            EmptyView()
+                        }
+                    }
+
+                }.frame(height: 150)
             }
-            
-        }.frame(height: 150)
-    }
-}
-```
+        }
+        ```
 
 
 <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/03Rect_02.png" width = 776 height = 358>

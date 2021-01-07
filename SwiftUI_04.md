@@ -72,7 +72,7 @@
         }
     }
     ```
-
+ 
     * 원본색상 찾기 첫번째 방법 : 렌더링모드 변경
 
         <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/rect_04_02_4141.png" width = 41 height = 41>

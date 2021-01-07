@@ -333,7 +333,7 @@ public struct EnvironmentValues : CustomStringConvertible { }
                     }
                 }
             }
-
+            //Identifiable 프로토콜은 id 변수를 채택해야한다.
             struct Animal: Equatable, Identifiable {
                 var id = 0
                 var age = 10

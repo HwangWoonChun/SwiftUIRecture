@@ -122,7 +122,7 @@
 
 * BorderlessButtonStyle : 테두리가 없는 버튼
 
-* PlainButtonStyle : IDLE(유휴 상태, 아무런 동작이 없는) 상태에서는 어떠한 시각적 요소도 적용하지 않는 버튼  
+* PlainButtonStyle : IDLE(유휴 상태, 아무런 동작이 없는) 상태에서는 어떠한 시각적 요소도 적용하지 않는 버튼, 이미지 렌더링이 기본으로 오리지널 타입  
 
 
 

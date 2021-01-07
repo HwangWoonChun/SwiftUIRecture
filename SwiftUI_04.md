@@ -802,7 +802,7 @@ Text("frame").frame(width: 200) //ModifiedContent<Text, FrameLayout> 타입
     @inlinable public func frame(minWidth: CGFloat? = nil, idealWidth: CGFloat? = nil, maxWidth: CGFloat? = nil, minHeight: CGFloat? = nil, idealHeight: CGFloat? = nil, maxHeight: CGFloat? = nil, alignment: Alignment = .center) -> some View
     ```
 
-* idealSize는 부모 뷰의 공간과 관계없이 자신에게 가장 이상적인 idealSize를 가지고 있다. fixedSize()를 이용하면 크기 정보를 활용 할 수 있다.
+* idealSize는 부모 뷰의 공간과 관계없이 자신에게 가장 이상적인 idealSize를 가지고 있다. 그리고 fixedSize()를 이용하면 이 크기 정보를 활용 할 수 있다.
 
     <table><tr><td>
     <img src = "https://github.com/HwangWoonChun/SWIFTUIRecture/blob/master/image/rect_04_05_04.png" width = 187 height = 335>

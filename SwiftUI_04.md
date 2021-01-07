@@ -269,11 +269,12 @@ struct Home: View {
 **4) 히든 수식어**
 
 ``` swift
+//네비게이션 타이틀 숨
 struct Home: View {
     var body: some View {
         NavigationView {
             NavigationLink(destination: Text("Destination View")) {
-                Image("lemon")
+                Image("apple")
             }.buttonStyle(PlainButtonStyle())
             .navigationBarTitle("Hello World")
             .navigationBarHidden(true)
@@ -282,6 +283,7 @@ struct Home: View {
 }
 ``` 
 ``` swift
+//백버튼 숨김
 struct Home: View {
     var body: some View {
 

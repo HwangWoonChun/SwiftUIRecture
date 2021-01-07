@@ -365,7 +365,7 @@ struct Home: View {
 * * *
 ## 3. 리스트
 
-> **하나의 열에 여러개의 행으로 표현되는 UI를 굿겅하여 다중 데이터를 쉽게 나열 할 수 있도록 구성된 뷰**
+> **하나의 열에 여러개의 행으로 표현되는 UI를 하여 다중 데이터를 쉽게 나열 할 수 있도록 구성된 뷰**
 
 ``` swift
 struct Home: View {
@@ -400,13 +400,9 @@ struct Home: View {
     }   
     ```
 
-2. Random Access Collection : Random Access Collection 프로토콜을 준수하는 하는 데이터를 제공하는 방식, 각 요소들은 구분이 가능하고 식별이 가능 해야한다.
+2. Random Access Collection : Random Access Collection 프로토콜을 준수하는 하는 데이터를 제공하는 방식, 각 요소들은 구분이 가능하고 식별이 가능 해야한다. 어느 위치에 있던, 임의 인덱스 접근의 시간 복잡도는 O(1)
 
     1) id 식별자 지정 방식 : id로 사용 할 값을 직접 인수로 제공, id 매개변수에는 Hashablee 프로토콜을 준수하는 프로퍼티를 지정 할 수 있다. 타입자체가 Hasable 하다면 self도 무방
-        
-        > Hashable : 정수 Hash 값을 제공하는 타입
-        
-        > Hash 함수 : 임의의 길이를 갖는 데이터에 대해 고정된 길이의 데이터로 매핑하는 함수
         
     ``` swift
     struct Home: View {

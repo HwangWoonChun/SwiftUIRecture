@@ -1266,13 +1266,21 @@ struct ProductDetailView_Previews: PreviewProvider {
         }
     }
     //스택뷰를 생성하면 하기와 같이 내부적으로 동작한다.
-    VStack {
-        ViewBuilder.buildBlock {
-            Text("Function Builder")
+    struct ContentView: View {
+        var body: some View {
+            //스택뷰를 생성하면 하기와 같이 내부적으로 동작한다.
+            //스택뷰를 생성하면 하기와 같이 내부적으로 동작한다.
+            VStack {
+                ViewBuilder.buildBlock (
+                    Text("Function Builder"),
+
+                Bool.random() ? ViewBuilder.buildEither(first: Spacer()) :
+                                ViewBuilder.buildEither(second: Divider()),
+
+                ViewBuilder.buildIf(Bool.random() ? Text("Optional") : nil)
+                )
+            }
         }
-        Bool.random() ? ViewBuilder.buildEither(first: Spacer()) :
-                        ViewBuilder.buildEither(second: Divider())
-        ViewBuilder.buildIf(Bool.random() ? Text("Optional") : nil)
     }
     ```
     

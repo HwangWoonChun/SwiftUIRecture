@@ -65,7 +65,7 @@
             Button(action: {
             }) {
                 Image("avocado")
-                    .resizable()
+                    .resizable()    //SwiftUI의 이미지는 기본적으로 이미지 원본을 유지하려고 하는데 resizable은 이를 커스터마이징 하기 위함이다. 
                     .frame(width:40,height:40)
                     .background(Color.clear)
             }

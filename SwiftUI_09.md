@@ -91,10 +91,10 @@
 
 * 스프링 애니메이션 : 위 애니메이션 들은 시작과 끝은 고정 타이밍, 스프링 애니메이션 경우 목점지점에서 진동효과를 주어 좀더 동적인 느낌을 준다.
 
-        ```swift
-        .animation(.spring(response: 0.55, dampingFraction: 0.825, blendDuration: 0))    //애니메이션 적용
-        //response: 애니메이션 지속시간에 대한 근사치, dampingFraction: 진동수준 0에 가까울 수록 커진다, blendDuration: 진동보간
-        ```
+```swift
+.animation(.spring(response: 0.55, dampingFraction: 0.825, blendDuration: 0))    //애니메이션 적용
+//response: 애니메이션 지속시간에 대한 근사치, dampingFraction: 진동수준 0에 가까울 수록 커진다, blendDuration: 진동보간
+```
         
 * 애니메이션 제어 : 
 

@@ -113,7 +113,7 @@
                     //blur 2배속 5번 수행
                     .animation(Animation.default.speed(2).repeatCount(5, autoreverses: true))
                     .scaleEffect(reduction ? 0.7 : 1)
-                    //1초되 scaleEffect 애니메이션 실행
+                    //1초 딜레이 후 scaleEffect 애니메이션 실행
                     .animation(Animation.default.delay(1))
                     .onTapGesture {
                         self.blur.toggle()

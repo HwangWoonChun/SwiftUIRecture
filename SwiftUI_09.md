@@ -98,27 +98,27 @@
         
 * 애니메이션 제어 : 
 
-        * delay : 시간(초) 만큼 애니메이션 지연
-        * speed : 애니메이션을 지정한 배율만틈 곱한 속도로 진행
-        * repeatCount, repeatForever: 반복 수준
+    * delay : 시간(초) 만큼 애니메이션 지연
+    * speed : 애니메이션을 지정한 배율만틈 곱한 속도로 진행
+    * repeatCount, repeatForever: 반복 수준
 
-            ```swift
-            struct AnimationView: View {
-                @State private var blur: Bool = false
-                @State private var reduction: Bool = false
+        ```swift
+        struct AnimationView: View {
+            @State private var blur: Bool = false
+            @State private var reduction: Bool = false
 
-                var body: some View {
-                    Image("apple")
-                        .blur(radius: blur ? 5 : 0)
-                        //blur 2배속 5번 수행
-                        .animation(Animation.default.speed(2).repeatCount(5, autoreverses: true))
-                        .scaleEffect(reduction ? 0.7 : 1)
-                        //1초되 scaleEffect 애니메이션 실행
-                        .animation(Animation.default.delay(1))
-                        .onTapGesture {
-                            self.blur.toggle()
-                            self.reduction.toggle()
-                        }
-                }
+            var body: some View {
+                Image("apple")
+                    .blur(radius: blur ? 5 : 0)
+                    //blur 2배속 5번 수행
+                    .animation(Animation.default.speed(2).repeatCount(5, autoreverses: true))
+                    .scaleEffect(reduction ? 0.7 : 1)
+                    //1초되 scaleEffect 애니메이션 실행
+                    .animation(Animation.default.delay(1))
+                    .onTapGesture {
+                        self.blur.toggle()
+                        self.reduction.toggle()
+                    }
             }
-            ```
+        }
+        ```

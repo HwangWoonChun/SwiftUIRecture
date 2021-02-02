@@ -122,3 +122,86 @@
             }
         }
         ```
+
+## 2. 트렌지션
+
+* 뷰의 계층구조가 바뀔때 적용되는 애니메이션
+
+* 단독으로 사용 불가하며 animation, withAnimation 수식어와 함께 사용된다.
+
+* 페이드인 아웃 효과 애니메이션에 스캐일 트렌지션
+
+    ```swift
+    struct ContentView: View {
+        @State private var showText = false
+        var body: some View {
+            VStack {
+                if showText {
+                    //단독으로 사용불가 아래 withAnimation과 함께 동작
+                    Text("Transition").transition(.scale)
+                }
+                Button("display") {
+                    withAnimation {
+                        self.showText.toggle()
+                    }
+                }
+            }
+        }
+    }
+    ```
+* 트렌지션의 종류
+    * opacity : 페이드인 아웃
+    * scale : 뷰의 배율 조절
+    * slide : 미끄러 듯이
+    * move : slide는 사라질때와 나타날떄의 방향이 다르지만 move는 같다. 상하좌우 중 한 방향 선택
+    * offset : 좌표값을 전달하여 그 위치로 사라지거나 나타냄
+    
+* 트렌지션의 합성
+
+    * combined
+
+        ```swift
+            Text("Transition")
+                .transition(AnyTransition.slide.combined(with: .scale))
+        ```
+        
+    * asymetric : 뷰의 삽입과 제거에 애니메이션 추가
+
+        ```swift
+        struct ContentView: View {
+            @State private var showText = false
+            var body: some View {
+                VStack {
+                    if showText {
+                        Text("Transition").transition(myTransision)
+                    }
+                    Button("display") {
+                        withAnimation {
+                            self.showText.toggle()
+                        }
+                    }
+                }
+            }
+            var myTransision: AnyTransition {
+                //나타날때
+                let insertion = AnyTransition.offset(x: 300, y: -300)
+                    .combined(with: .scale)
+                //사라질떄
+                let removal = AnyTransition.move(edge: .leading)
+                return .asymmetric(insertion: insertion, removal: removal)
+            }
+        }
+        ```
+        
+    * ViewModifier 프로토콜을 이용 : active - 제거되기직전의 상태, identity - 뷰가 삽입되기 직전 상태를 매개변수로 전달하여 트랜지션 표현
+
+        ```swift
+        struct CustomScaleModifier: ViewModifier {
+            let scale: CGFloat
+            func body(content: Content) -> some View {
+                content.scaleEffect(scale)
+            }
+        }
+
+        Text("Transition").transition(.modifier(active: CustomScaleModifier(scale: 0), identity: CustomScaleModifier(scale: 1)))
+        ```
